@@ -997,7 +997,7 @@ contract Metadata {
     using strings for *;
 
     function tokenURI(uint _tokenId) public pure returns (string memory _infoUrl) {
-        string memory base = "https://domain.com/metadata/";
+        string memory base = "https://admiring-franklin-e4c8b6.netlify.com/metadata/";
         string memory id = uint2str(_tokenId);
         return base.toSlice().concat(id.toSlice());
     }
@@ -1019,7 +1019,7 @@ contract Metadata {
         }
         return string(bstr);
     }
-    
+
     function toBytes(uint256 x) public pure returns (bytes memory b) {
         b = new bytes(32);
         assembly { mstore(add(b, 32), x) }
