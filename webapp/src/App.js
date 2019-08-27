@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Heading, Box, Flex, Button, Card, Text, Link, Image } from "rimble-ui";
+import MintRimbleToken from "./components/MintRimbleToken";
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ function App(props) {
       // check to see if it's ready, if so, update local component state
       if (drizzleState.drizzleStatus.initialized) {
         setLoading(false);
+        // console.log("drizzleState", drizzleState);
         setDrizzleState(drizzleState);
       }
     });
@@ -49,6 +51,10 @@ function App(props) {
                 <Heading.h3 mb={3}>Attendance</Heading.h3>
                 <Image height={"200px"} width={"200px"} mb={3} />
                 <Button>Buy</Button>
+                <MintRimbleToken
+                  drizzle={props.drizzle}
+                  drizzleState={drizzleState}
+                />
               </Flex>
             </Card>
 
