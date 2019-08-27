@@ -1,19 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import {
-  Heading,
-  Box,
-  Flex,
-  Button,
-  Field,
-  Input,
-  Select,
-  Card,
-  Text,
-  Link,
-  Checkbox,
-  Image
-} from "rimble-ui";
+import { Heading, Box, Flex, Button, Card, Text, Link, Image } from "rimble-ui";
 
 function App() {
   return (

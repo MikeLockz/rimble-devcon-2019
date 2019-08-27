@@ -1,16 +1,18 @@
-require('dotenv').config()
-const HDWalletProvider = require('truffle-hdwallet-provider')
+require("dotenv").config();
+const HDWalletProvider = require("truffle-hdwallet-provider");
+const path = require("path");
 
 module.exports = {
+  contracts_build_directory: path.join(__dirname, "webapp/src/contracts"),
   networks: {
     develop: {
       provider() {
         return new HDWalletProvider(
           process.env.TRUFFLE_MNEMONIC,
-          'http://localhost:9545/'
-        )
+          "http://localhost:9545/"
+        );
       },
-      host: 'localhost',
+      host: "localhost",
       port: 9545,
       network_id: 4447
     },
@@ -18,10 +20,10 @@ module.exports = {
       provider() {
         return new HDWalletProvider(
           process.env.GANACHE_MNEMONIC,
-          'http://localhost:7545'
-        )
+          "http://localhost:7545"
+        );
       },
-      host: 'localhost',
+      host: "localhost",
       port: 7545,
       network_id: 5777,
       gas: 6721975,
@@ -32,9 +34,9 @@ module.exports = {
         // using wallet at index 1 ----------------------------------------------------------------------------------------v
         return new HDWalletProvider(
           process.env.TESTNET_MNEMONIC,
-          'https://mainnet.infura.io/v3/' + process.env.INFURA_API_KEY,
+          "https://mainnet.infura.io/v3/" + process.env.INFURA_API_KEY,
           1
-        )
+        );
       },
       network_id: 1
       // gas: 5561260
@@ -44,9 +46,9 @@ module.exports = {
         // using wallet at index 1 ----------------------------------------------------------------------------------------v
         return new HDWalletProvider(
           process.env.TESTNET_MNEMONIC,
-          'https://kovan.infura.io/v3/' + process.env.INFURA_API_KEY,
+          "https://kovan.infura.io/v3/" + process.env.INFURA_API_KEY,
           1
-        )
+        );
       },
       network_id: 42
       // gas: 5561260
@@ -55,8 +57,8 @@ module.exports = {
       provider() {
         return new HDWalletProvider(
           process.env.TESTNET_MNEMONIC,
-          'https://rinkeby.infura.io/v3/' + process.env.INFURA_API_KEY
-        )
+          "https://rinkeby.infura.io/v3/" + process.env.INFURA_API_KEY
+        );
       },
       network_id: 4,
       // gas: 4700000,
@@ -66,8 +68,8 @@ module.exports = {
       provider() {
         return new HDWalletProvider(
           process.env.TESTNET_MNEMONIC,
-          'https://ropsten.infura.io/v3/' + process.env.INFURA_API_KEY
-        )
+          "https://ropsten.infura.io/v3/" + process.env.INFURA_API_KEY
+        );
       },
       network_id: 2
       // gas: 4700000
@@ -76,8 +78,8 @@ module.exports = {
       provider() {
         return new HDWalletProvider(
           process.env.TESTNET_MNEMONIC,
-          'https://sokol.poa.network'
-        )
+          "https://sokol.poa.network"
+        );
       },
       gasPrice: 1000000000,
       network_id: 77
@@ -86,11 +88,11 @@ module.exports = {
       provider() {
         return new HDWalletProvider(
           process.env.TESTNET_MNEMONIC,
-          'https://core.poa.network'
-        )
+          "https://core.poa.network"
+        );
       },
       gasPrice: 1000000000,
       network_id: 99
     }
   }
-}
+};

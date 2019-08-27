@@ -11,7 +11,7 @@ contract RimbleToken is ERC721Full, Ownable {
     constructor(string memory name, string memory symbol, address _metadata) public ERC721Full(name, symbol) {
         metadata = _metadata;
     }
-    function mint(address recepient) public onlyOwner {
+    function mint(address recepient) public {
         _mint(recepient, totalSupply() + 1);
     }
     function updateMetadata(address _metadata) public onlyOwner {

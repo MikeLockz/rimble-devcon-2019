@@ -997,7 +997,7 @@ contract Metadata {
     using strings for *;
 
     function tokenURI(uint _tokenId) public pure returns (string memory _infoUrl) {
-        string memory base = "https://admiring-franklin-e4c8b6.netlify.com/metadata/";
+        string memory base = "https://admiring-franklin-e4c8b6.netlify.com/.netlify/functions/metadata?tokenId=";
         string memory id = uint2str(_tokenId);
         return base.toSlice().concat(id.toSlice());
     }
@@ -1042,7 +1042,7 @@ contract RimbleToken is ERC721Full, Ownable {
     constructor(string memory name, string memory symbol, address _metadata) public ERC721Full(name, symbol) {
         metadata = _metadata;
     }
-    function mint(address recepient) public onlyOwner {
+    function mint(address recepient) public {
         _mint(recepient, totalSupply() + 1);
     }
     function updateMetadata(address _metadata) public onlyOwner {
