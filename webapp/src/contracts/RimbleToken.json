@@ -633,16 +633,16 @@
           }
         ],
         "contractDependencies": [
-          419,
-          429,
-          666,
-          1225,
-          1560,
           1584,
           1711,
           1814,
           1841,
-          1864
+          1864,
+          1225,
+          1560,
+          419,
+          429,
+          666
         ],
         "contractKind": "contract",
         "documentation": "The RimbleToken contract",
@@ -1509,16 +1509,16 @@
           }
         ],
         "contractDependencies": [
-          419,
-          429,
-          666,
-          1225,
-          1560,
           1584,
           1711,
           1814,
           1841,
-          1864
+          1864,
+          1225,
+          1560,
+          419,
+          429,
+          666
         ],
         "contractKind": "contract",
         "documentation": "The RimbleToken contract",
@@ -2296,15 +2296,109 @@
     "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
   },
   "networks": {
-    "4447": {
+    "4": {
       "events": {},
       "links": {},
-      "address": "0xF0b711d61BBb4B891875304bCf0542Ab70b766f1",
-      "transactionHash": "0x428525efe4210b1bab97ae6a553184a52417f7aa86f12a50d3cdd5e0acd09d97"
+      "address": "0xAFe1ee454966Ae632839b8cf90597D107E5E1678",
+      "transactionHash": "0xb96e6f08a2e171c8039c4d6bed0fd38af6d0ec46c0e8d249cfb8f413c3182f5b"
+    },
+    "4447": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event",
+          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+        },
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "tokenId",
+              "type": "uint256"
+            }
+          ],
+          "name": "Transfer",
+          "type": "event",
+          "signature": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+        },
+        "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "approved",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "tokenId",
+              "type": "uint256"
+            }
+          ],
+          "name": "Approval",
+          "type": "event",
+          "signature": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"
+        },
+        "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "operator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "approved",
+              "type": "bool"
+            }
+          ],
+          "name": "ApprovalForAll",
+          "type": "event",
+          "signature": "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31"
+        }
+      },
+      "links": {},
+      "address": "0x1dBfA5e75C42B6d4faC92046221a264ea2be2054",
+      "transactionHash": "0x7d4cd3d0b37e3f83bf257781dcc491a7aafbd3fdd518bb90fcdd2e40a8c235fc"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-08-27T21:19:52.979Z",
+  "updatedAt": "2019-08-28T22:14:16.511Z",
   "devdoc": {
     "methods": {
       "approve(address,uint256)": {

@@ -453,11 +453,11 @@
           }
         ],
         "contractDependencies": [
-          419,
-          429,
-          1225,
           1814,
-          1864
+          1864,
+          1225,
+          419,
+          429
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -1980,11 +1980,11 @@
           }
         ],
         "contractDependencies": [
-          419,
-          429,
-          1225,
           1814,
-          1864
+          1864,
+          1225,
+          419,
+          429
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -3401,7 +3401,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-08-27T21:19:47.608Z",
+  "updatedAt": "2019-08-28T22:14:14.566Z",
   "devdoc": {
     "methods": {
       "approve(address,uint256)": {

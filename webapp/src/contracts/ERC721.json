@@ -401,9 +401,9 @@
           }
         ],
         "contractDependencies": [
+          1814,
           419,
-          429,
-          1814
+          429
         ],
         "contractKind": "contract",
         "documentation": "@title ERC721 Non-Fungible Token Standard basic implementation\n@dev see https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md",
@@ -7935,9 +7935,9 @@
           }
         ],
         "contractDependencies": [
+          1814,
           419,
-          429,
-          1814
+          429
         ],
         "contractKind": "contract",
         "documentation": "@title ERC721 Non-Fungible Token Standard basic implementation\n@dev see https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md",
@@ -15359,7 +15359,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-08-27T21:19:47.602Z",
+  "updatedAt": "2019-08-28T22:14:14.585Z",
   "devdoc": {
     "details": "see https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md",
     "methods": {

@@ -453,11 +453,11 @@
           }
         ],
         "contractDependencies": [
-          419,
-          429,
-          1225,
           1814,
-          1841
+          1841,
+          1225,
+          419,
+          429
         ],
         "contractKind": "contract",
         "documentation": "@title ERC-721 Non-Fungible Token with optional enumeration extension logic\n@dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md",
@@ -4584,11 +4584,11 @@
           }
         ],
         "contractDependencies": [
-          419,
-          429,
-          1225,
           1814,
-          1841
+          1841,
+          1225,
+          419,
+          429
         ],
         "contractKind": "contract",
         "documentation": "@title ERC-721 Non-Fungible Token with optional enumeration extension logic\n@dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md",
@@ -8609,7 +8609,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-08-27T21:19:47.605Z",
+  "updatedAt": "2019-08-28T22:14:14.575Z",
   "devdoc": {
     "details": "See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md",
     "methods": {
