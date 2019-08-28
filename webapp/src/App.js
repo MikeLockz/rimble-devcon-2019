@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Heading, Box, Flex, Button, Card, Text, Link, Image } from "rimble-ui";
-import MintRimbleToken from "./components/MintRimbleToken";
+import BuyRimbleTicket from "./components/BuyRimbleTicket";
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -42,21 +42,10 @@ function App(props) {
 
           <Text my={4} />
           <Flex justifyContent={"space-between"}>
-            <Card width={"auto"}>
-              <Flex
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                flexDirection={"column"}
-              >
-                <Heading.h3 mb={3}>Attendance</Heading.h3>
-                <Image height={"200px"} width={"200px"} mb={3} />
-                <Button>Buy</Button>
-                <MintRimbleToken
-                  drizzle={props.drizzle}
-                  drizzleState={drizzleState}
-                />
-              </Flex>
-            </Card>
+            <BuyRimbleTicket
+              drizzle={props.drizzle}
+              drizzleState={drizzleState}
+            />
 
             <Card width={"auto"}>
               <Flex
