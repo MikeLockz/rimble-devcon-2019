@@ -6,9 +6,12 @@ function BuyRimbleTicket(props) {
   const [drizzleState, setDrizzleState] = useState(props.drizzleState);
   const [dataKey, setDataKey] = useState(null);
   const [rimbleToken, setRimbleToken] = useState(null);
-  const [tokenName, setTokenName] = useState(null);
-  const [contract, setContract] = useState(props.drizzle.contracts.RimbleToken);
+  const [tokenDisplayName, setTokenDisplayName] = useState(null);
+  const [contract, setContract] = useState(
+    props.drizzle.contracts.DevConAttendance
+  );
   const [stackId, setStackId] = useState(null);
+  const [tokenName, setTokenName] = useState(props.tokenName);
 
   const buyTicket = () => {
     // Get user's current address
@@ -42,7 +45,7 @@ function BuyRimbleTicket(props) {
   };
 
   useEffect(() => {
-    const contract = drizzle.contracts.RimbleToken;
+    const contract = drizzle.contracts[tokenName];
 
     const dataKey = contract.methods["name"].cacheCall();
     setDataKey(dataKey);
@@ -56,10 +59,10 @@ function BuyRimbleTicket(props) {
       const RimbleTokenStore = props.drizzleState.contracts;
 
       // using the saved `dataKey`, get the variable we're interested in
-      setRimbleToken(RimbleTokenStore.RimbleToken[dataKey]);
+      setRimbleToken(RimbleTokenStore[tokenName][dataKey]);
 
-      if (RimbleTokenStore.RimbleToken.name["0x0"]) {
-        setTokenName(RimbleTokenStore.RimbleToken.name["0x0"].value);
+      if (RimbleTokenStore[tokenName].name["0x0"]) {
+        setTokenDisplayName(RimbleTokenStore[tokenName].name["0x0"].value);
       }
     }
   }, [props.drizzleState]);
@@ -72,10 +75,9 @@ function BuyRimbleTicket(props) {
         justifyContent={"space-between"}
         flexDirection={"column"}
       >
-        <Heading.h3 mb={3}>Attendance</Heading.h3>
+        <Heading.h3 mb={3}>{tokenDisplayName}</Heading.h3>
         <Image height={"200px"} width={"200px"} mb={3} />
         <Button onClick={buyTicket}>Buy</Button>
-        <Text my={3}>Purchasing: {tokenName}</Text>
         <Text my={3}>{getTxStatus()}</Text>
       </Flex>
     </Card>

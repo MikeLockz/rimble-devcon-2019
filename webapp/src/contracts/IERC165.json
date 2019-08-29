@@ -31,14 +31,14 @@
     "absolutePath": "/Users/work/development/consensys/rimble-devcon-2019/node_modules/openzeppelin-solidity/contracts/introspection/IERC165.sol",
     "exportedSymbols": {
       "IERC165": [
-        429
+        642
       ]
     },
-    "id": 430,
+    "id": 643,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 421,
+        "id": 634,
         "literals": [
           "solidity",
           "^",
@@ -46,7 +46,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:5"
+        "src": "0:23:8"
       },
       {
         "baseContracts": [],
@@ -54,9 +54,9 @@
         "contractKind": "interface",
         "documentation": "@title IERC165\n@dev https://github.com/ethereum/EIPs/blob/master/EIPS/eip-165.md",
         "fullyImplemented": false,
-        "id": 429,
+        "id": 642,
         "linearizedBaseContracts": [
-          429
+          642
         ],
         "name": "IERC165",
         "nodeType": "ContractDefinition",
@@ -64,23 +64,23 @@
           {
             "body": null,
             "documentation": "@notice Query if a contract implements an interface\n@param interfaceId The interface identifier, as specified in ERC-165\n@dev Interface identification is specified in ERC-165. This function\nuses less than 30,000 gas.",
-            "id": 428,
+            "id": 641,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "supportsInterface",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 424,
+              "id": 637,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 423,
+                  "id": 636,
                   "name": "interfaceId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 428,
-                  "src": "432:18:5",
+                  "scope": 641,
+                  "src": "432:18:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -88,10 +88,10 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 422,
+                    "id": 635,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
-                    "src": "432:6:5",
+                    "src": "432:6:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
@@ -101,19 +101,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "431:20:5"
+              "src": "431:20:8"
             },
             "returnParameters": {
-              "id": 427,
+              "id": 640,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 426,
+                  "id": 639,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 428,
-                  "src": "475:4:5",
+                  "scope": 641,
+                  "src": "475:4:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -121,10 +121,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 425,
+                    "id": 638,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "475:4:5",
+                    "src": "475:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -134,33 +134,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "474:6:5"
+              "src": "474:6:8"
             },
-            "scope": 429,
-            "src": "405:76:5",
+            "scope": 642,
+            "src": "405:76:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 430,
-        "src": "120:363:5"
+        "scope": 643,
+        "src": "120:363:8"
       }
     ],
-    "src": "0:484:5"
+    "src": "0:484:8"
   },
   "legacyAST": {
     "absolutePath": "/Users/work/development/consensys/rimble-devcon-2019/node_modules/openzeppelin-solidity/contracts/introspection/IERC165.sol",
     "exportedSymbols": {
       "IERC165": [
-        429
+        642
       ]
     },
-    "id": 430,
+    "id": 643,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 421,
+        "id": 634,
         "literals": [
           "solidity",
           "^",
@@ -168,7 +168,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:5"
+        "src": "0:23:8"
       },
       {
         "baseContracts": [],
@@ -176,9 +176,9 @@
         "contractKind": "interface",
         "documentation": "@title IERC165\n@dev https://github.com/ethereum/EIPs/blob/master/EIPS/eip-165.md",
         "fullyImplemented": false,
-        "id": 429,
+        "id": 642,
         "linearizedBaseContracts": [
-          429
+          642
         ],
         "name": "IERC165",
         "nodeType": "ContractDefinition",
@@ -186,23 +186,23 @@
           {
             "body": null,
             "documentation": "@notice Query if a contract implements an interface\n@param interfaceId The interface identifier, as specified in ERC-165\n@dev Interface identification is specified in ERC-165. This function\nuses less than 30,000 gas.",
-            "id": 428,
+            "id": 641,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "supportsInterface",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 424,
+              "id": 637,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 423,
+                  "id": 636,
                   "name": "interfaceId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 428,
-                  "src": "432:18:5",
+                  "scope": 641,
+                  "src": "432:18:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -210,10 +210,10 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 422,
+                    "id": 635,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
-                    "src": "432:6:5",
+                    "src": "432:6:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes4",
                       "typeString": "bytes4"
@@ -223,19 +223,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "431:20:5"
+              "src": "431:20:8"
             },
             "returnParameters": {
-              "id": 427,
+              "id": 640,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 426,
+                  "id": 639,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 428,
-                  "src": "475:4:5",
+                  "scope": 641,
+                  "src": "475:4:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -243,10 +243,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 425,
+                    "id": 638,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "475:4:5",
+                    "src": "475:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -256,20 +256,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "474:6:5"
+              "src": "474:6:8"
             },
-            "scope": 429,
-            "src": "405:76:5",
+            "scope": 642,
+            "src": "405:76:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 430,
-        "src": "120:363:5"
+        "scope": 643,
+        "src": "120:363:8"
       }
     ],
-    "src": "0:484:5"
+    "src": "0:484:8"
   },
   "compiler": {
     "name": "solc",
@@ -277,7 +277,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-08-28T22:14:14.537Z",
+  "updatedAt": "2019-08-29T14:34:51.819Z",
   "devdoc": {
     "details": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-165.md",
     "methods": {

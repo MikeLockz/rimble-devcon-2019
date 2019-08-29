@@ -16,9 +16,9 @@ function App(props) {
 
       // check to see if it's ready, if so, update local component state
       if (drizzleState.drizzleStatus.initialized) {
-        setLoading(false);
-        // console.log("drizzleState", drizzleState);
+        console.log("drizzleState", drizzleState);
         setDrizzleState(drizzleState);
+        setLoading(false);
       }
     });
 
@@ -45,31 +45,18 @@ function App(props) {
             <BuyRimbleTicket
               drizzle={props.drizzle}
               drizzleState={drizzleState}
+              tokenName={"DevConAttendance"}
             />
-
-            <Card width={"auto"}>
-              <Flex
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                flexDirection={"column"}
-              >
-                <Heading.h3 mb={3}>Food</Heading.h3>
-                <Image height={"200px"} width={"200px"} mb={3} />
-                <Button>Buy</Button>
-              </Flex>
-            </Card>
-
-            <Card width={"auto"}>
-              <Flex
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                flexDirection={"column"}
-              >
-                <Heading.h3 mb={3}>Parties</Heading.h3>
-                <Image height={"200px"} width={"200px"} mb={3} />
-                <Button>Buy</Button>
-              </Flex>
-            </Card>
+            <BuyRimbleTicket
+              drizzle={props.drizzle}
+              drizzleState={drizzleState}
+              tokenName={"DevConFood"}
+            />
+            <BuyRimbleTicket
+              drizzle={props.drizzle}
+              drizzleState={drizzleState}
+              tokenName={"DevConParties"}
+            />
           </Flex>
           <Heading.h4 mt={4} mb={2}>
             About

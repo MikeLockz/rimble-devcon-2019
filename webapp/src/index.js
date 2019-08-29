@@ -7,10 +7,13 @@ import * as serviceWorker from "./serviceWorker";
 // import drizzle functions and contract artifact
 import { Drizzle } from "drizzle";
 import RimbleToken from "./contracts/RimbleToken.json";
+import DevConAttendance from "./contracts/DevConAttendance.json";
+import DevConFood from "./contracts/DevConFood.json";
+import DevConParties from "./contracts/DevConParties.json";
 
 // let drizzle know what contracts we want and how to access our test blockchain
 const options = {
-  contracts: [RimbleToken],
+  contracts: [RimbleToken, DevConAttendance, DevConFood, DevConParties],
   web3: {
     fallback: {
       type: "ws",
