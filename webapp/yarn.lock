@@ -1061,6 +1061,22 @@
     "@nodelib/fs.scandir" "2.1.1"
     fastq "^1.6.0"
 
+"@rimble/connection-banner@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@rimble/connection-banner/-/connection-banner-1.2.1.tgz#db9a6f23d593b21a5a22dfc92b87ae906ff0f605"
+  integrity sha512-/uvXQKcaAD17etvH+Ss2xOqCMROUulpdiPeizpRLd5FazMEFD7Hm4hsgZ2HOVG6Eh20D1uSnnq1r9lOGFH06wA==
+  dependencies:
+    "@rimble/utils" "^1.2.1"
+    rimble-ui "^0.9.1"
+
+"@rimble/utils@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@rimble/utils/-/utils-1.2.1.tgz#b078f7e697c248531f6031960ae4540bf0699415"
+  integrity sha512-Hfe1ZOD9Qj+Ac3IeSHZNrzYOMgJM6tvVgZ9eg0qKr11FfRdmbNZ0H7botum5wTMdbSCKpmge7mXHhQbBP8vcJg==
+  dependencies:
+    bowser "^2.2.0"
+    rimble-ui "^0.9.1"
+
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.2.0.tgz#dadcb6218503532d6884b210e7f3c502caaa44b1"
@@ -1531,6 +1547,11 @@ acorn@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.0.0.tgz#26b8d1cd9a9b700350b71c0905546f64d1284e7a"
   integrity sha512-PaF/MduxijYYt7unVGRuds1vBC9bFxbNf+VWqhOClfdgy7RlVkQqt610ig1/yxTgsDIfW1cWDel5EBbOy3jdtQ==
+
+add@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+  integrity sha1-JI8Kn25aUo7yKV2+7DBTITCuIjU=
 
 address@1.1.0:
   version "1.1.0"
@@ -2659,6 +2680,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+bowser@^2.2.0:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.5.3.tgz#811b0a24219c566c9a6ab3402bc8a13f35a18a96"
+  integrity sha512-aWCA+CKfKNL/WGzNgjmK+Whp57JMzboZMwJ5gy2jDj2bEIjbMCb3ImGX+V++5wsJftyFiDIbOjRXl60ycniVqg==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -9989,7 +10015,7 @@ rgba-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/rgba-regex/-/rgba-regex-1.0.0.tgz#43374e2e2ca0968b0ef1523460b7d730ff22eeb3"
   integrity sha1-QzdOLiyglosO8VI0YLfXMP8i7rM=
 
-rimble-ui@^0.9.7:
+rimble-ui@^0.9.1, rimble-ui@^0.9.7:
   version "0.9.7"
   resolved "https://registry.yarnpkg.com/rimble-ui/-/rimble-ui-0.9.7.tgz#c18bfb61fc67c21aacc4ca929d8493976a03921a"
   integrity sha512-D3D1tuEjpkt9FdypM6kM4cfpIPhqGwLun4KirD+Xh4Wr2PxU1E6LzXjl4RsJYvt8CF00Y0zFzUK5sDqtJpX+Tg==
@@ -12396,6 +12422,11 @@ yargs@^13.3.0:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.1"
+
+yarn@^1.17.3:
+  version "1.17.3"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.17.3.tgz#60e0b77d079eb78e753bb616f7592b51b6a9adce"
+  integrity sha512-CgA8o7nRZaQvmeF/WBx2FC7f9W/0X59T2IaLYqgMo6637wfp5mMEsM3YXoJtKUspnpmDJKl/gGFhnqS+sON7hA==
 
 yauzl@^2.4.2:
   version "2.10.0"

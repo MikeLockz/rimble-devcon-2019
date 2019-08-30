@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Heading, Box, Flex, Button, Card, Text, Link, Image } from "rimble-ui";
 import BuyRimbleTicket from "./components/BuyRimbleTicket";
+import ConnectionBanner from "@rimble/connection-banner";
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -27,46 +28,60 @@ function App(props) {
     };
   });
 
+  const getCurrentNetwork = () => {
+    if (window.web3) {
+      window.web3.version.getNetwork(function(error, network) {
+        return network;
+      });
+    }
+  };
+
   return (
     <Box className="App">
-      <Flex justifyContent={"flex-end"} p={3}>
-        <Button>Connect</Button>
-      </Flex>
       {loading ? (
-        <Flex justifyContent={"center"}>
-          <Heading.h3>Loading...</Heading.h3>
-        </Flex>
+        <Box m={4}>
+          <ConnectionBanner
+            currentNetwork={getCurrentNetwork}
+            requiredNetwork={4}
+            onWeb3Fallback={null}
+          />
+        </Box>
       ) : (
-        <Box maxWidth={"1180px"} p={3} mx={"auto"}>
-          <Heading.h1>Buy Tickets</Heading.h1>
-
-          <Text my={4} />
-          <Flex justifyContent={"space-between"}>
-            <BuyRimbleTicket
-              drizzle={props.drizzle}
-              drizzleState={drizzleState}
-              tokenName={"DevConAttendance"}
-            />
-            <BuyRimbleTicket
-              drizzle={props.drizzle}
-              drizzleState={drizzleState}
-              tokenName={"DevConFood"}
-            />
-            <BuyRimbleTicket
-              drizzle={props.drizzle}
-              drizzleState={drizzleState}
-              tokenName={"DevConParties"}
-            />
+        <Box>
+          <Flex justifyContent={"flex-end"} p={3}>
+            <Button>Connect</Button>
           </Flex>
-          <Heading.h4 mt={4} mb={2}>
-            About
-          </Heading.h4>
+          <Box maxWidth={"1180px"} p={3} mx={"auto"}>
+            <Heading.h1>Buy Tickets</Heading.h1>
 
-          <Text mb={3} />
+            <Text my={4} />
+            <Flex justifyContent={"space-between"} mx={-3} flexWrap={"wrap"}>
+              <BuyRimbleTicket
+                drizzle={props.drizzle}
+                drizzleState={drizzleState}
+                tokenName={"DevConAttendance"}
+              />
+              <BuyRimbleTicket
+                drizzle={props.drizzle}
+                drizzleState={drizzleState}
+                tokenName={"DevConFood"}
+              />
+              <BuyRimbleTicket
+                drizzle={props.drizzle}
+                drizzleState={drizzleState}
+                tokenName={"DevConParties"}
+              />
+            </Flex>
+            <Heading.h4 mt={4} mb={2}>
+              About
+            </Heading.h4>
 
-          <Link href="https://rimble.consensys.design" target="_blank">
-            Learn more about Rimble
-          </Link>
+            <Text mb={3} />
+
+            <Link href="https://rimble.consensys.design" target="_blank">
+              Learn more about Rimble
+            </Link>
+          </Box>
         </Box>
       )}
     </Box>

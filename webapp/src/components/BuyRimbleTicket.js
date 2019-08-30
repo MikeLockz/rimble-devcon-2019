@@ -69,7 +69,7 @@ function BuyRimbleTicket(props) {
 
   // if it exists, then we display its value
   return (
-    <Card width={"auto"}>
+    <Card width={"auto"} m={3} minWidth={"300px"}>
       <Flex
         alignItems={"center"}
         justifyContent={"space-between"}
