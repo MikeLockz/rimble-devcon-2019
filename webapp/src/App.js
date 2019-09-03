@@ -4,7 +4,7 @@ import BuyRimbleTicket from "./components/BuyRimbleTicket";
 import ConnectionBanner from "@rimble/connection-banner";
 import ConfirmPurchase from "./components/ConfirmPurchase";
 import { ThemeProvider } from "styled-components";
-import { theme as rimbleTheme } from "rimble-ui";
+import CustomTheme from "./CustomTheme";
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -23,6 +23,7 @@ function App(props) {
       // check to see if it's ready, if so, update local component state
       if (drizzleState.drizzleStatus.initialized) {
         console.log("drizzleState", drizzleState);
+        console.log("drizzleState.accounts[]", drizzleState.accounts["0"]);
         setDrizzleState(drizzleState);
         setLoading(false);
         updateCurrentNetwork();
@@ -47,7 +48,7 @@ function App(props) {
   };
 
   return (
-    <ThemeProvider theme={rimbleTheme} className="App">
+    <ThemeProvider theme={CustomTheme} className="App">
       <Box>
         <ConnectionBanner
           currentNetwork={currentNetwork}
@@ -107,12 +108,15 @@ function App(props) {
                 </Button>
               </Box>
             </Box>
+
+            {/* Modals need to go here so they load after drizzleState is available */}
+            <ConfirmPurchase
+              isOpen={showConfirmPurchase}
+              toggleConfirmPurchase={toggleConfirmPurchase}
+              address={drizzleState.accounts["0"]}
+            />
           </Box>
         )}
-        <ConfirmPurchase
-          isOpen={showConfirmPurchase}
-          toggleConfirmPurchase={toggleConfirmPurchase}
-        />
       </Box>
     </ThemeProvider>
   );
