@@ -31,7 +31,7 @@ function App(props) {
       // check to see if it's ready, if so, update local component state
       if (drizzleState.drizzleStatus.initialized) {
         console.log("drizzleState", drizzleState);
-        console.log("drizzleState.accounts[]", drizzleState.accounts["0"]);
+        console.log("drizzle", drizzle);
         setDrizzleState(drizzleState);
         setLoading(false);
         updateCurrentNetwork();
@@ -69,7 +69,7 @@ function App(props) {
           </Box>
         ) : (
           <Box>
-            <HeaderNav />
+            <HeaderNav drizzleState={drizzleState} drizzle={props.drizzle} />
             <Box maxWidth={"1180px"} p={3} mx={"auto"}>
               <Text my={4} />
               <Flex justifyContent={"space-between"} mx={-3} flexWrap={"wrap"}>
