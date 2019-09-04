@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Heading, Box, Flex, Button, Card, Text, Link, Image } from "rimble-ui";
 import HeaderNav from "./components/HeaderNav";
-import BuyRimbleTicket from "./components/BuyRimbleTicket";
+import BuyCard from "./components/BuyCard";
 import ConnectionBanner from "@rimble/connection-banner";
 import ConfirmPurchase from "./components/ConfirmPurchase";
 import { ThemeProvider } from "styled-components";
 import CustomTheme from "./CustomTheme";
 import styled from "styled-components";
 import backgroundImage from "./images/background.jpg";
+import tokenDetails from "./tokenDetails";
 
 const BodyBox = styled(Box)`
   background: no-repeat center center url(${backgroundImage}) #fffff8;
@@ -72,21 +73,16 @@ function App(props) {
             <Box maxWidth={"1180px"} p={3} mx={"auto"}>
               <Text my={4} />
               <Flex justifyContent={"space-between"} mx={-3} flexWrap={"wrap"}>
-                <BuyRimbleTicket
-                  drizzle={props.drizzle}
-                  drizzleState={drizzleState}
-                  tokenName={"DevConAttendance"}
-                />
-                <BuyRimbleTicket
-                  drizzle={props.drizzle}
-                  drizzleState={drizzleState}
-                  tokenName={"DevConFood"}
-                />
-                <BuyRimbleTicket
-                  drizzle={props.drizzle}
-                  drizzleState={drizzleState}
-                  tokenName={"DevConParties"}
-                />
+                {tokenDetails.map(token => {
+                  return (
+                    <BuyCard
+                      drizzle={props.drizzle}
+                      drizzleState={drizzleState}
+                      token={token}
+                      key={token.id}
+                    />
+                  );
+                })}
               </Flex>
               <Heading.h4 mt={4} mb={2}>
                 About
