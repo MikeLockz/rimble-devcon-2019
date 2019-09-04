@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Heading, Box, Flex, Button, Card, Text, Link, Image } from "rimble-ui";
+import HeaderNav from "./components/HeaderNav";
 import BuyRimbleTicket from "./components/BuyRimbleTicket";
 import ConnectionBanner from "@rimble/connection-banner";
 import ConfirmPurchase from "./components/ConfirmPurchase";
 import { ThemeProvider } from "styled-components";
 import CustomTheme from "./CustomTheme";
+import styled from "styled-components";
+import backgroundImage from "./images/background.jpg";
+
+const BodyBox = styled(Box)`
+  background: no-repeat center center url(${backgroundImage}) #fffff8;
+`;
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -49,7 +56,7 @@ function App(props) {
 
   return (
     <ThemeProvider theme={CustomTheme} className="App">
-      <Box>
+      <BodyBox height={"100%"}>
         <ConnectionBanner
           currentNetwork={currentNetwork}
           requiredNetwork={4}
@@ -61,12 +68,8 @@ function App(props) {
           </Box>
         ) : (
           <Box>
-            <Flex justifyContent={"flex-end"} p={3}>
-              <Button>Connect</Button>
-            </Flex>
+            <HeaderNav />
             <Box maxWidth={"1180px"} p={3} mx={"auto"}>
-              <Heading.h1>Buy Tickets</Heading.h1>
-
               <Text my={4} />
               <Flex justifyContent={"space-between"} mx={-3} flexWrap={"wrap"}>
                 <BuyRimbleTicket
@@ -117,7 +120,7 @@ function App(props) {
             />
           </Box>
         )}
-      </Box>
+      </BodyBox>
     </ThemeProvider>
   );
 }
