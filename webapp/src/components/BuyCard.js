@@ -74,64 +74,59 @@ function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
 
   // if it exists, then we display its value
   return (
-    <Card
-      width={"auto"}
-      m={3}
-      minWidth={"300px"}
-      maxWidth={"333px"}
-      p={0}
-      borderColor={"#d6d6d6"}
-    >
-      <RainbowBox height={"5px"} />
-      <Flex
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        flexDirection={"column"}
-        p={3}
-      >
-        <Flex justifyContent={"center"} mt={3} mb={4}>
-          <RainbowBorder borderRadius={3}>
-            <ShadowImage
-              height={"200px"}
-              width={"200px"}
-              border={"none"}
-              borderWidth={0}
-              borderColor={"white"}
-              overflow={"hidden"}
-              bg={"white"}
-              src={"/images/" + token.image}
-            />
-          </RainbowBorder>
-        </Flex>
-
-        <Flex justifyContent={"space-between"} width={1}>
-          <Text fontWeight={600} lineHeight={"1em"}>
-            {token.name}
-          </Text>
-          <Text fontWeight={600} lineHeight={"1em"}>
-            {token.ethPrice} ETH
-          </Text>
-        </Flex>
-        <Flex justifyContent={"flex-end"} width={1}>
-          <Text color={"#979797"} lineHeight={"1.4em"}>
-            ${token.usdPrice} USD
-          </Text>
-        </Flex>
-
-        <Button
-          onClick={() => {
-            preflightCheck(() => {
-              buyTicket(token.id);
-            });
-          }}
-          width={[1]}
-          mt={"26px"}
+    <Box width={[1, 1 / 2, 1 / 3]} p={3}>
+      <Card p={0} borderColor={"#d6d6d6"}>
+        <RainbowBox height={"5px"} />
+        <Flex
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          flexDirection={"column"}
+          p={3}
         >
-          Buy ticket
-        </Button>
-        <Text my={3}>{getTxStatus()}</Text>
-      </Flex>
-    </Card>
+          <Flex justifyContent={"center"} mt={3} mb={4}>
+            <RainbowBorder borderRadius={3}>
+              <ShadowImage
+                height={"200px"}
+                width={"200px"}
+                border={"none"}
+                borderWidth={0}
+                borderColor={"white"}
+                overflow={"hidden"}
+                bg={"white"}
+                src={"/images/" + token.image}
+              />
+            </RainbowBorder>
+          </Flex>
+
+          <Flex justifyContent={"space-between"} width={1}>
+            <Text fontWeight={600} lineHeight={"1em"}>
+              {token.name}
+            </Text>
+            <Text fontWeight={600} lineHeight={"1em"}>
+              {token.ethPrice} ETH
+            </Text>
+          </Flex>
+          <Flex justifyContent={"flex-end"} width={1}>
+            <Text color={"#979797"} lineHeight={"1.4em"}>
+              ${token.usdPrice} USD
+            </Text>
+          </Flex>
+
+          <Button
+            onClick={() => {
+              preflightCheck(() => {
+                buyTicket(token.id);
+              });
+            }}
+            width={[1]}
+            mt={"26px"}
+          >
+            Buy ticket
+          </Button>
+          <Text my={3}>{getTxStatus()}</Text>
+        </Flex>
+      </Card>
+    </Box>
   );
 }
 
