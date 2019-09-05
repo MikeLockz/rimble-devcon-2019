@@ -14,7 +14,7 @@ import {
   EthAddress
 } from "rimble-ui";
 
-function ConfirmPurchase({ isOpen, toggleModal, address }, props) {
+function SendingTicket({ isOpen, toggleModal, address }, props) {
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -23,10 +23,9 @@ function ConfirmPurchase({ isOpen, toggleModal, address }, props) {
           justifyContent={"space-between"}
           flexDirection={"column"}
         >
-          <Heading.h3 mb={3}>Confirm your purchase in MetaMask</Heading.h3>
+          <Heading.h3 mb={3}>Sending your ticket...</Heading.h3>
           <Text>
-            Double check the details here &ndash; this transaction can't be
-            refunded.
+            Nice one! Your ticket should be with your account shortly.
           </Text>
 
           <Flex
@@ -40,32 +39,8 @@ function ConfirmPurchase({ isOpen, toggleModal, address }, props) {
             my={4}
           >
             <Box bg={"primary"} px={3} py={2}>
-              <Text color={"white"}>Buying DevCon V ticket #1</Text>
+              <Text color={"white"}>Transferring</Text>
             </Box>
-
-            <Flex p={3} borderBottom={"1px solid #ccc"} alignItems={"center"}>
-              <Box position={"relative"} height={"2em"} width={"2em"} mr={3}>
-                <Box position={"absolute"} top={"0"} left={"0"}>
-                  <Loader size={"2em"} />
-                </Box>
-                <Box position={"absolute"} top={".45em"} left={".45em"}>
-                  <Icon color={"primary"} name="Star" size={"18px"} />
-                </Box>
-              </Box>
-              <Box>
-                <Text fontWeight={"600"} fontSize={1} lineHeight={"1.25em"}>
-                  Waiting for confirmation...
-                </Text>
-                <Text
-                  fontSize={1}
-                  fontWeight={100}
-                  lineHeight={"1.25em"}
-                  color={"primary"}
-                >
-                  Don't see the MetaMask popup?
-                </Text>
-              </Box>
-            </Flex>
 
             <Flex justifyContent={"space-between"} bg={"#E8E8E8"} p={3}>
               <Text fontSize={1} color={"#444"} fontWeight={600}>
@@ -164,4 +139,4 @@ function ConfirmPurchase({ isOpen, toggleModal, address }, props) {
   );
 }
 
-export default ConfirmPurchase;
+export default SendingTicket;

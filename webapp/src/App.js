@@ -7,6 +7,7 @@ import BuyCard from "./components/BuyCard";
 import ConnectionBanner from "@rimble/connection-banner";
 import WrongNetwork from "./components/modals/WrongNetwork";
 import ConfirmPurchase from "./components/ConfirmPurchase";
+import SendingTicket from "./components/SendingTicket";
 
 import { Heading, Box, Flex, Button, Text, Link } from "rimble-ui";
 
@@ -20,8 +21,9 @@ const BodyBox = styled(Box)`
 function App({ drizzle, drizzleState, appConfig }, props) {
   const [currentNetwork, setCurrentNetwork] = useState(null);
   const [address, setAddress] = useState(null);
-  const [showConfirmPurchase, setShowConfirmPurchase] = useState(false);
   const [showWrongNetwork, setShowWrongNetwork] = useState(false);
+  const [showConfirmPurchase, setShowConfirmPurchase] = useState(false);
+  const [showSendingTicket, setShowSendingTicket] = useState(true);
 
   useEffect(() => {
     if (drizzleState) {
@@ -39,6 +41,10 @@ function App({ drizzle, drizzleState, appConfig }, props) {
 
   const toggleConfirmPurchase = () => {
     setShowConfirmPurchase(!showConfirmPurchase);
+  };
+
+  const toggleSendingTicket = () => {
+    setShowSendingTicket(!showSendingTicket);
   };
 
   const getNetwork = () => {
@@ -105,11 +111,14 @@ function App({ drizzle, drizzleState, appConfig }, props) {
             borderRadius={3}
             borderStyle={"solid"}
           >
+            <Button size={"small"} onClick={toggleWrongNetwork} mr={3}>
+              Toggle Wrong Network modal
+            </Button>
             <Button size={"small"} onClick={toggleConfirmPurchase} mr={3}>
               Toggle Confirm Purchase modal
             </Button>
-            <Button size={"small"} onClick={toggleWrongNetwork} mr={3}>
-              Toggle Wrong Network modal
+            <Button size={"small"} onClick={toggleSendingTicket} mr={3}>
+              Toggle Sending Ticket modal
             </Button>
           </Box>
         </Box>
@@ -121,8 +130,17 @@ function App({ drizzle, drizzleState, appConfig }, props) {
 
         <ConfirmPurchase
           isOpen={showConfirmPurchase}
-          toggleConfirmPurchase={toggleConfirmPurchase}
+          toggleModal={toggleConfirmPurchase}
           address={address}
+        />
+
+        <SendingTicket
+          isOpen={showSendingTicket}
+          toggleModal={toggleSendingTicket}
+          address={address}
+          price={"5.4"}
+          transactionFee={"0.42"}
+          estimatedTime={120}
         />
       </Box>
     </BodyBox>

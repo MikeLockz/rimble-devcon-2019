@@ -17,6 +17,9 @@ import DevConAttendance from "./contracts/DevConAttendance.json";
 import DevConFood from "./contracts/DevConFood.json";
 import DevConParties from "./contracts/DevConParties.json";
 
+// Import Rimble's ProgressAlert utility to manage transaction alerts
+import ProgressAlertUtil from "./core/utilities/ProgressAlertUtil";
+
 // Let drizzle know what contracts we want and how to access our test blockchain
 const options = {
   contracts: [DevConAttendance, DevConFood, DevConParties],
@@ -43,11 +46,22 @@ ReactDOM.render(
         {drizzleContext => {
           // console.log("drizzleContext", drizzleContext);
           return (
-            <App
-              drizzle={drizzle}
-              drizzleState={drizzleContext.drizzleState}
-              appConfig={appConfig}
-            />
+            <>
+              <App
+                drizzle={drizzle}
+                drizzleState={drizzleContext.drizzleState}
+                appConfig={appConfig}
+              />
+              {drizzleContext.drizzleState && (
+                <ProgressAlertUtil
+                  transactions={drizzleContext.drizzleState.transactions}
+                  transactionStack={
+                    drizzleContext.drizzleState.transactionStack
+                  }
+                  transactions={{}} // pass empty object until refactored
+                />
+              )}
+            </>
           );
         }}
       </DrizzleContext.Consumer>
