@@ -19,50 +19,60 @@ const prettyBalance = balance => {
 };
 
 function HeaderNav({ drizzleState, drizzle }) {
-  const [account, setAccount] = useState(drizzleState.accounts["0"]);
-  const [balance, setBalance] = useState(
-    drizzleState.accountBalances[drizzleState.accounts["0"]]
-  );
+  const [account, setAccount] = useState("");
+  const [balance, setBalance] = useState(null);
+
+  useEffect(() => {
+    if (drizzleState) {
+      // update account
+      setAccount(drizzleState.accounts["0"]);
+      // update balance
+      setBalance(drizzleState.accountBalances[drizzleState.accounts["0"]]);
+    }
+  }, [drizzleState]);
 
   return (
     <StyledHeader justifyContent={"space-between"} p={3} bg={"white"}>
       <Image src={logo} />
-      {/* <Button size={"small"}>Connect</Button> */}
-      <Flex>
-        <Flex alignItems={"center"} mr={4}>
-          <Icon size={"14px"} color={"primary"} name={"Star"} mr={2} />
-          <Box>
-            <Text
-              fontWeight={600}
-              fontSize={"12px"}
-              color={"#2B2C36"}
-              lineHeight={1}
-            >
-              Connected as
-            </Text>
-            <Text fontSize={1} fontColor={"primary"}>
-              {shortenAddress(account)}
-            </Text>
-          </Box>
-        </Flex>
+      {account ? (
+        <Flex>
+          <Flex alignItems={"center"} mr={4}>
+            <Icon size={"14px"} color={"primary"} name={"Star"} mr={2} />
+            <Box>
+              <Text
+                fontWeight={600}
+                fontSize={"12px"}
+                color={"#2B2C36"}
+                lineHeight={1}
+              >
+                Connected as
+              </Text>
+              <Text fontSize={1} fontColor={"primary"}>
+                {shortenAddress(account)}
+              </Text>
+            </Box>
+          </Flex>
 
-        <Flex alignItems={"center"}>
-          <Icon size={"14px"} color={"primary"} name={"Star"} mr={2} />
-          <Box>
-            <Text
-              fontWeight={600}
-              fontSize={"12px"}
-              color={"#2B2C36"}
-              lineHeight={1}
-            >
-              Balance
-            </Text>
-            <Text fontSize={1} fontColor={"primary"}>
-              {drizzle.web3.utils.fromWei(balance, "ether")} ETH
-            </Text>
-          </Box>
+          <Flex alignItems={"center"}>
+            <Icon size={"14px"} color={"primary"} name={"Star"} mr={2} />
+            <Box>
+              <Text
+                fontWeight={600}
+                fontSize={"12px"}
+                color={"#2B2C36"}
+                lineHeight={1}
+              >
+                Balance
+              </Text>
+              <Text fontSize={1} fontColor={"primary"}>
+                {drizzle.web3.utils.fromWei(balance, "ether")} ETH
+              </Text>
+            </Box>
+          </Flex>
         </Flex>
-      </Flex>
+      ) : (
+        <Button size={"small"}>Connect</Button>
+      )}
     </StyledHeader>
   );
 }
