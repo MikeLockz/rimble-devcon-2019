@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Rimble's conference tickets",
+  "name": "Best practices around connecting to an Ethereum dApp, purchsing ERC-721 tokens, grouping together in progress transactions, and updating user with progress.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -16,7 +16,7 @@
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
-    }	    
+    }
   ],
   "start_url": ".",
   "display": "standalone",
