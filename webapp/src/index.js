@@ -28,6 +28,10 @@ const options = {
   }
 };
 
+const appConfig = {
+  requiredNetwork: 4 // Network Id that contract is deployed to 1=mainnet, 4=rinkeby, etc
+};
+
 // Setup drizzle
 const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, drizzleStore);
@@ -38,7 +42,13 @@ ReactDOM.render(
       <DrizzleContext.Consumer>
         {drizzleContext => {
           // console.log("drizzleContext", drizzleContext);
-          return <App drizzleState={drizzleContext.drizzleState} />;
+          return (
+            <App
+              drizzle={drizzle}
+              drizzleState={drizzleContext.drizzleState}
+              appConfig={appConfig}
+            />
+          );
         }}
       </DrizzleContext.Consumer>
     </ThemeProvider>

@@ -35,7 +35,7 @@ const ShadowImage = styled(Image)`
   border-radius: 16px;
 `;
 
-function BuyCard({ token, drizzle, drizzleState }, props) {
+function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
   const [stackId, setStackId] = useState(null);
 
   const buyTicket = tokenId => {
@@ -120,7 +120,9 @@ function BuyCard({ token, drizzle, drizzleState }, props) {
 
         <Button
           onClick={() => {
-            buyTicket(token.id);
+            preflightCheck(() => {
+              buyTicket(token.id);
+            });
           }}
           width={[1]}
           mt={"26px"}

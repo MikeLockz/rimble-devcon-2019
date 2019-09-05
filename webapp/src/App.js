@@ -5,6 +5,7 @@ import styled from "styled-components";
 import HeaderNav from "./components/HeaderNav";
 import BuyCard from "./components/BuyCard";
 import ConnectionBanner from "@rimble/connection-banner";
+import WrongNetwork from "./components/modals/WrongNetwork";
 import ConfirmPurchase from "./components/ConfirmPurchase";
 
 import { Heading, Box, Flex, Button, Text, Link } from "rimble-ui";
@@ -16,95 +17,115 @@ const BodyBox = styled(Box)`
   background: no-repeat center center url(${backgroundImage}) #fffff8;
 `;
 
-function App({ drizzleState }, props) {
+function App({ drizzle, drizzleState, appConfig }, props) {
   const [currentNetwork, setCurrentNetwork] = useState(null);
   const [address, setAddress] = useState(null);
   const [showConfirmPurchase, setShowConfirmPurchase] = useState(false);
+  const [showWrongNetwork, setShowWrongNetwork] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect.drizzleState", drizzleState);
     if (drizzleState) {
       setAddress(drizzleState.accounts["0"]);
       setCurrentNetwork(drizzleState.web3.networkId);
     }
-  });
+    if (!currentNetwork) {
+      getNetwork();
+    }
+  }, drizzleState);
+
+  const toggleWrongNetwork = () => {
+    setShowWrongNetwork(!showWrongNetwork);
+  };
 
   const toggleConfirmPurchase = () => {
     setShowConfirmPurchase(!showConfirmPurchase);
   };
 
+  const getNetwork = () => {
+    window.web3.version.getNetwork((error, networkId) => {
+      setCurrentNetwork(parseInt(networkId));
+    });
+  };
+
+  const preflightCheck = callback => {
+    if (currentNetwork !== appConfig.requiredNetwork) {
+      toggleWrongNetwork();
+      return;
+    }
+    callback();
+  };
+
   return (
-    <DrizzleContext.Consumer>
-      {drizzleContext => {
-        console.log("drizzleContext", drizzleContext);
+    <BodyBox height={"100%"}>
+      <Box>
+        <HeaderNav
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+          preflightCheck={preflightCheck}
+        />
+        {!drizzleState && (
+          <Box m={4}>
+            <ConnectionBanner
+              currentNetwork={currentNetwork}
+              requiredNetwork={appConfig.requiredNetwork}
+              onWeb3Fallback={null}
+            />
+          </Box>
+        )}
+        <Box maxWidth={"1180px"} p={3} mx={"auto"}>
+          <Text my={4} />
+          <Flex justifyContent={"space-between"} mx={-3} flexWrap={"wrap"}>
+            {tokenDetails.map(token => {
+              return (
+                <BuyCard
+                  drizzle={drizzle}
+                  drizzleState={drizzleState}
+                  token={token}
+                  key={token.id}
+                  preflightCheck={preflightCheck}
+                />
+              );
+            })}
+          </Flex>
+          <Heading.h4 mt={4} mb={2}>
+            About
+          </Heading.h4>
 
-        const { drizzle, drizzleState, initialized } = drizzleContext;
+          <Text mb={3} />
 
-        return (
-          <BodyBox height={"100%"}>
-            <Box>
-              <HeaderNav drizzleState={drizzleState} drizzle={drizzle} />
-              {!initialized && (
-                <Box m={4}>
-                  <ConnectionBanner
-                    currentNetwork={1}
-                    requiredNetwork={4}
-                    onWeb3Fallback={null}
-                  />
-                </Box>
-              )}
-              <Box maxWidth={"1180px"} p={3} mx={"auto"}>
-                <Text my={4} />
-                <Flex
-                  justifyContent={"space-between"}
-                  mx={-3}
-                  flexWrap={"wrap"}
-                >
-                  {tokenDetails.map(token => {
-                    return (
-                      <BuyCard
-                        drizzle={drizzle}
-                        drizzleState={drizzleState}
-                        token={token}
-                        key={token.id}
-                      />
-                    );
-                  })}
-                </Flex>
-                <Heading.h4 mt={4} mb={2}>
-                  About
-                </Heading.h4>
+          <Link href="https://rimble.consensys.design" target="_blank">
+            Learn more about Rimble
+          </Link>
 
-                <Text mb={3} />
+          <Box
+            my={3}
+            p={3}
+            borderColor={"gray"}
+            borderWidth={1}
+            borderRadius={3}
+            borderStyle={"solid"}
+          >
+            <Button size={"small"} onClick={toggleConfirmPurchase} mr={3}>
+              Toggle Confirm Purchase modal
+            </Button>
+            <Button size={"small"} onClick={toggleWrongNetwork} mr={3}>
+              Toggle Wrong Network modal
+            </Button>
+          </Box>
+        </Box>
 
-                <Link href="https://rimble.consensys.design" target="_blank">
-                  Learn more about Rimble
-                </Link>
+        <WrongNetwork
+          isOpen={showWrongNetwork}
+          toggleWrongNetwork={toggleWrongNetwork}
+        />
 
-                <Box
-                  my={3}
-                  p={3}
-                  borderColor={"gray"}
-                  borderWidth={1}
-                  borderRadius={3}
-                  borderStyle={"solid"}
-                >
-                  <Button size={"small"} onClick={toggleConfirmPurchase}>
-                    Toggle Confirm Purchase modal
-                  </Button>
-                </Box>
-              </Box>
-
-              <ConfirmPurchase
-                isOpen={showConfirmPurchase}
-                toggleConfirmPurchase={toggleConfirmPurchase}
-                address={address}
-              />
-            </Box>
-          </BodyBox>
-        );
-      }}
-    </DrizzleContext.Consumer>
+        <ConfirmPurchase
+          isOpen={showConfirmPurchase}
+          toggleConfirmPurchase={toggleConfirmPurchase}
+          address={address}
+        />
+      </Box>
+    </BodyBox>
   );
 }
 

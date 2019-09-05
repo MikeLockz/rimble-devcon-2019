@@ -18,7 +18,12 @@ const prettyBalance = balance => {
   return balance;
 };
 
-function HeaderNav({ drizzleState, drizzle }) {
+const connectWallet = () => {
+  // initiate wallet connection
+  return;
+};
+
+function HeaderNav({ drizzle, drizzleState, preflightCheck }) {
   const [account, setAccount] = useState("");
   const [balance, setBalance] = useState(null);
 
@@ -71,7 +76,16 @@ function HeaderNav({ drizzleState, drizzle }) {
           </Flex>
         </Flex>
       ) : (
-        <Button size={"small"}>Connect</Button>
+        <Button
+          size={"small"}
+          onClick={() => {
+            preflightCheck(() => {
+              connectWallet();
+            });
+          }}
+        >
+          Connect
+        </Button>
       )}
     </StyledHeader>
   );
