@@ -4,7 +4,8 @@ const CustomTheme = {
   ...rimbleTheme,
   colors: {
     ...rimbleTheme.colors,
-    primary: "#4E174F"
+    primary: "#4E174F",
+    background: "#fffff8"
   }
 };
 

@@ -2,16 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Text, Box, Icon, Button, Flex, Image } from "rimble-ui";
 import styled from "styled-components";
 import logo from "../images/rimble-logo.svg";
+import shortenAddress from "../core/utilities/shortenAddress";
 
 const StyledHeader = styled(Flex)`
   border-bottom: 1px solid #d6d6d6;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.01);
 `;
-
-const shortenAddress = address => {
-  address = address.slice(0, 5) + "..." + address.slice(address.length - 4);
-  return address;
-};
 
 const prettyBalance = balance => {
   // balance = drizzle.web3.utils.fromWei(balance, "ether");

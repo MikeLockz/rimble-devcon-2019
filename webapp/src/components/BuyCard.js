@@ -1,39 +1,7 @@
 import React, { useState } from "react";
 import { Card, Button, Flex, Box, Image, Text } from "rimble-ui";
-import styled from "styled-components";
-
-const RainbowBox = styled(Box)`
-  background: linear-gradient(
-    270deg,
-    #efa59e 0%,
-    #f5ccd1 17.19%,
-    #f7ceb3 33.85%,
-    #eccfa5 52.08%,
-    #b9d8ae 68.23%,
-    #97d6e3 84.37%,
-    #9fb1e8 100%
-  );
-  transform: matrix(-1, 0, 0, 1, 0, 0);
-`;
-
-const RainbowBorder = styled(Flex)`
-  background: linear-gradient(
-    270deg,
-    #efa59e 0%,
-    #f5ccd1 17.19%,
-    #f7ceb3 33.85%,
-    #eccfa5 52.08%,
-    #b9d8ae 68.23%,
-    #97d6e3 84.37%,
-    #9fb1e8 100%
-  );
-  padding: 1px;
-`;
-
-const ShadowImage = styled(Image)`
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-`;
+import RainbowBox from "./RainbowBox";
+import RainbowImage from "./RainbowImage";
 
 function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
   const [stackId, setStackId] = useState(null);
@@ -84,18 +52,7 @@ function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
           p={3}
         >
           <Flex justifyContent={"center"} mt={3} mb={4}>
-            <RainbowBorder borderRadius={3}>
-              <ShadowImage
-                height={"200px"}
-                width={"200px"}
-                border={"none"}
-                borderWidth={0}
-                borderColor={"white"}
-                overflow={"hidden"}
-                bg={"white"}
-                src={"/images/" + token.image}
-              />
-            </RainbowBorder>
+            <RainbowImage src={"/images/" + token.image} />
           </Flex>
 
           <Flex justifyContent={"space-between"} width={1}>
