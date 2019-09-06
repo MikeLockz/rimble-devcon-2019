@@ -54,11 +54,11 @@ ReactDOM.render(
               />
               {drizzleContext.drizzleState && (
                 <ProgressAlertUtil
+                  drizzleState={drizzleContext.DrizzleState}
                   transactions={drizzleContext.drizzleState.transactions}
                   transactionStack={
                     drizzleContext.drizzleState.transactionStack
                   }
-                  transactions={{}} // pass empty object until refactored
                 />
               )}
             </>

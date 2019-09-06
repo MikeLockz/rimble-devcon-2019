@@ -24,7 +24,7 @@ function App({ drizzle, drizzleState, appConfig }, props) {
   const [showWrongNetwork, setShowWrongNetwork] = useState(false);
   const [showConfirmPurchase, setShowConfirmPurchase] = useState(false);
   const [showSendingTicket, setShowSendingTicket] = useState(false);
-  const [showTransactionSuccess, setShowTransactionSuccess] = useState(true);
+  const [showTransactionSuccess, setShowTransactionSuccess] = useState(false);
 
   useEffect(() => {
     if (drizzleState) {

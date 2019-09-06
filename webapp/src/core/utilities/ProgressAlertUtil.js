@@ -4,26 +4,36 @@ import { ToastMessage, Button } from "rimble-ui";
 import ProgressAlertProvider from "./components/ProgressAlertProvider";
 import { differenceWith, isEqual } from "lodash-es";
 
-const ProgressAlertUtil = ({ transactionStack, transactions }, props) => {
+const ProgressAlertUtil = (
+  { transactionStack, transactions, drizzleState },
+  props
+) => {
   const [decoratedTransactions, setDecoratedTransactions] = useState(
     transactions
   );
 
   useEffect(() => {
     console.log("transactionStack", transactionStack);
-    console.log("transactions", transactions);
-    console.log("decoratedTransactions", decoratedTransactions);
-
-    // Check if transactions has updated
-    if (
-      transactions &&
-      transactionStack &&
-      differenceWith(transactions, decoratedTransactions, isEqual).length > 0
-    ) {
-      console.log("Updating decoratedTransactions");
-      setDecoratedTransactions(transactions);
-    }
   }, [transactionStack]);
+
+  useEffect(() => {
+    console.log("transactions", transactions);
+    // if (transactionStack.length > 0) {
+    //   console.log(
+    //     "transactions[transactionStack[0]].confirmations.length",
+    //     transactions[transactionStack[0]].confirmations.length
+    //   );
+
+    //   if (transactions[transactionStack[0]].confirmations.length > 0) {
+    //     console.log(
+    //       "transactions[transactionStack[0]].status",
+    //       transactions[transactionStack[0]].status
+    //     );
+    //   }
+    // }
+
+    // Find object in collection that has changed
+  }, [transactions]);
 
   const triggerErrorProgressAlert = () => {
     window.progressAlertProvider.addMessage("Processing", {
@@ -45,14 +55,15 @@ const ProgressAlertUtil = ({ transactionStack, transactions }, props) => {
 
   return (
     <div>
-      <ToastMessage.Provider ref={node => (window.toastProvider = node)} />
-      <Button size={"small"} onClick={triggerErrorProgressAlert}>
+      <Button size={"small"} onClick={triggerErrorProgressAlert} mr={3}>
         Trigger Error ProgressAlert
       </Button>
 
       <Button size={"small"} onClick={triggerTxProgressAlert}>
         Trigger tx ProgressAlert
       </Button>
+
+      <ToastMessage.Provider ref={node => (window.toastProvider = node)} />
       <ProgressAlertProvider
         ref={node => (window.progressAlertProvider = node)}
       />
