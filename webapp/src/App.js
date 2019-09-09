@@ -66,6 +66,8 @@ function App({ drizzle, drizzleState, appConfig }, props) {
     callback();
   };
 
+  const callSmartContractFunction = ({ functionName, callback }) => {};
+
   return (
     <BodyBox height={"100%"}>
       <Box>
@@ -94,6 +96,7 @@ function App({ drizzle, drizzleState, appConfig }, props) {
                   token={token}
                   key={token.id}
                   preflightCheck={preflightCheck}
+                  toggleConfirmPurchase={toggleConfirmPurchase}
                 />
               );
             })}

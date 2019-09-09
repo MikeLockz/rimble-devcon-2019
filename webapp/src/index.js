@@ -44,7 +44,7 @@ ReactDOM.render(
     <ThemeProvider theme={CustomTheme} className="App">
       <DrizzleContext.Consumer>
         {drizzleContext => {
-          // console.log("drizzleContext", drizzleContext);
+          console.log("drizzleContext", drizzleContext);
           return (
             <>
               <App
