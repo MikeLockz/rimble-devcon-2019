@@ -156,7 +156,7 @@ function ConfirmPurchase({ isOpen, toggleModal, address }, props) {
             }}
             width={[1]}
           >
-            Cancel Purchase
+            Close
           </Button.Outline>
         </Flex>
       </Card>
