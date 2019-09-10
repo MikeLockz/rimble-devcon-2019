@@ -68,6 +68,21 @@ function App({ drizzle, drizzleState, appConfig }, props) {
 
   const callSmartContractFunction = ({ functionName, callback }) => {};
 
+  useEffect(() => {
+    if (!drizzleState) {
+      return;
+    }
+    const { transactionStack, transactions } = drizzleState;
+    // count length of transactionStack and transactions
+    if (transactionStack.length !== Object.keys(transactions).length) {
+      // assume that a tx has been initiated and show modal
+      setShowConfirmPurchase(true);
+    } else {
+      // if count is equal, then hide modal
+      setShowConfirmPurchase(false);
+    }
+  }, [drizzleState]);
+
   return (
     <BodyBox height={"100%"}>
       <Box>

@@ -3,16 +3,10 @@ import { Card, Button, Flex, Box, Image, Text } from "rimble-ui";
 import RainbowBox from "./RainbowBox";
 import RainbowImage from "./RainbowImage";
 
-function BuyCard(
-  { token, drizzle, drizzleState, preflightCheck, toggleConfirmPurchase },
-  props
-) {
+function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
   const [stackId, setStackId] = useState(null);
 
   const buyTicket = tokenId => {
-    // Show initial modal
-    toggleConfirmPurchase(true);
-
     // Get user's current address
     const address = drizzleState.accounts[0];
 
