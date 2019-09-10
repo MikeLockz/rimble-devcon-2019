@@ -68,6 +68,7 @@ function App({ drizzle, drizzleState, appConfig }, props) {
 
   const callSmartContractFunction = ({ functionName, callback }) => {};
 
+  // Show/hide tx confirmation modal
   useEffect(() => {
     if (!drizzleState) {
       return;
@@ -80,6 +81,35 @@ function App({ drizzle, drizzleState, appConfig }, props) {
     } else {
       // if count is equal, then hide modal
       setShowConfirmPurchase(false);
+    }
+  }, [drizzleState]);
+
+  // add Rimble view properties to drizzle
+  useEffect(() => {
+    if (!drizzleState) {
+      return;
+    }
+    const { transactions } = drizzleState;
+
+    // count length of transactions
+    if (Object.keys(transactions).length > 0) {
+      // check for rimble prop on each tx
+      Object.keys(transactions).map(tx => {
+        if (!transactions[tx].rimble) {
+          transactions[tx].rimble = {
+            showProgressAlert: true
+          };
+          if (transactions[tx].status !== "error") {
+            transactions[tx].rimble = {
+              ...transactions[tx].rimble,
+              showSendingTicketModal: true // also show modal when not error
+            };
+          }
+          console.log("new tx: ", transactions[tx]);
+        } else {
+          console.log("existing tx: ", transactions[tx]);
+        }
+      });
     }
   }, [drizzleState]);
 

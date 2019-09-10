@@ -16,23 +16,39 @@ const ProgressAlertUtil = (
     console.log("transactionStack", transactionStack);
   }, [transactionStack]);
 
+  // Show/hide Sending Ticket modal
   useEffect(() => {
-    console.log("transactions", transactions);
-    // if (transactionStack.length > 0) {
-    //   console.log(
-    //     "transactions[transactionStack[0]].confirmations.length",
-    //     transactions[transactionStack[0]].confirmations.length
-    //   );
+    if (!transactions) {
+      return;
+    }
 
-    //   if (transactions[transactionStack[0]].confirmations.length > 0) {
-    //     console.log(
-    //       "transactions[transactionStack[0]].status",
-    //       transactions[transactionStack[0]].status
-    //     );
-    //   }
-    // }
-
-    // Find object in collection that has changed
+    if (Object.keys(transactions).length > 0) {
+      // check for rimble prop on each tx
+      Object.keys(transactions).map(tx => {
+        console.log("transactions[tx]", transactions[tx]);
+        if (
+          transactions[tx].status === "pending" &&
+          transactions[tx].rimble.showProgressAlert
+        ) {
+          window.progressAlertProvider.addMessage("Processing", {
+            message: "Attempting to " + "testMethod",
+            transaction: tx,
+            timeEstimate: 30,
+            error: {}
+          });
+        } else if (
+          transactions[tx].status === "error" &&
+          transactions[tx].rimble.showProgressAlert
+        ) {
+          window.progressAlertProvider.addMessage("Processing", {
+            message: "Attempting to " + "testMethod",
+            transaction: tx,
+            timeEstimate: 30,
+            error: transactions[tx].error
+          });
+        }
+      });
+    }
   }, [transactions]);
 
   const triggerErrorProgressAlert = () => {
