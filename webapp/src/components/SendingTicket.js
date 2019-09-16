@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React from "react";
 import {
   Modal,
   Box,
@@ -10,7 +9,6 @@ import {
   Heading,
   Text,
   Card,
-  Loader,
   EthAddress
 } from "rimble-ui";
 

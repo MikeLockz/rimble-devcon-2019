@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Flex,
-  Box,
-  Modal,
-  Text,
-  Heading,
-  Icon,
-  Link,
-  Loader
-} from "rimble-ui";
+import { Button, Flex, Box, Modal, Text, Heading, Icon, Link } from "rimble-ui";
 import RainbowBox from "../RainbowBox";
 import RainbowImage from "../RainbowImage";
 import shortenAddress from "../../core/utilities/shortenAddress";

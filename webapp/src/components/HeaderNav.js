@@ -9,11 +9,6 @@ const StyledHeader = styled(Flex)`
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.01);
 `;
 
-const prettyBalance = balance => {
-  // balance = drizzle.web3.utils.fromWei(balance, "ether");
-  return balance;
-};
-
 const connectWallet = () => {
   // initiate wallet connection
   return;

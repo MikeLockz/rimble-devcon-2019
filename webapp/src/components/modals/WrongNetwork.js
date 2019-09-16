@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Card, Button, Flex, Box, Modal, Text, Heading } from "rimble-ui";
+import React from "react";
+import { Card, Button, Flex, Modal, Text, Heading } from "rimble-ui";
 
-function WrongNetwork({ isOpen, toggleWrongNetwork }, props) {
-  const [stackId, setStackId] = useState(null);
-
+function WrongNetwork({ isOpen, toggleWrongNetwork }) {
   return (
     <Modal isOpen={isOpen}>
       <Card maxWidth={"300px"}>

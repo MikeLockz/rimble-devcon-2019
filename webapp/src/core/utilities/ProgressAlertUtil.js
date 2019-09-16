@@ -5,7 +5,7 @@ import ProgressAlertProvider from "./components/ProgressAlertProvider";
 const ProgressAlertUtil = props => {
   const triggerErrorProgressAlert = () => {
     window.progressAlertProvider.addMessage("Processing", {
-      message: "Attempting to " + "test",
+      message: "Attempting to test",
       transaction: "123x321",
       timeEstimate: 60,
       error: { error: "error" }
@@ -14,7 +14,7 @@ const ProgressAlertUtil = props => {
 
   const triggerTxProgressAlert = () => {
     window.progressAlertProvider.addMessage("Processing", {
-      message: "Attempting to " + "testMethod",
+      message: "Attempting to testMethod",
       transaction: "123x321",
       timeEstimate: 200,
       error: {}

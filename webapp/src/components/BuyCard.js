@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Card, Button, Flex, Box, Image, Text } from "rimble-ui";
+import React from "react";
+import { Card, Button, Flex, Box, Text } from "rimble-ui";
 import RainbowBox from "./RainbowBox";
 import RainbowImage from "./RainbowImage";
 import { ContractForm } from "@drizzle/react-components"; // legacy
-// import { newContextComponents } from "@drizzle/react-components"; // new API
+// import { newContextComponents } from "@drizzle/react-components"; // new API doesn't provide contract transaction events
 // const { ContractForm } = newContextComponents;
 
 function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {

@@ -35,7 +35,7 @@ function Body({ drizzle, drizzleState, appConfig }, props) {
     if (!currentNetwork) {
       getNetwork();
     }
-  }, drizzleState);
+  }, [drizzleState]);
 
   const toggleWrongNetwork = () => {
     setShowWrongNetwork(!showWrongNetwork);
@@ -66,8 +66,6 @@ function Body({ drizzle, drizzleState, appConfig }, props) {
     }
     callback();
   };
-
-  const callSmartContractFunction = ({ functionName, callback }) => {};
 
   // Show/hide tx confirmation modal
   useEffect(() => {
