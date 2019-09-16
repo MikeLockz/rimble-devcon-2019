@@ -2,44 +2,9 @@ import React, { useState } from "react";
 import { Card, Button, Flex, Box, Image, Text } from "rimble-ui";
 import RainbowBox from "./RainbowBox";
 import RainbowImage from "./RainbowImage";
+import { ContractForm } from "@drizzle/react-components";
 
 function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
-  const [stackId, setStackId] = useState(null);
-
-  const buyTicket = tokenId => {
-    // Get user's current address
-    const address = drizzleState.accounts[0];
-
-    // let drizzle know we want to call the `mint` method with `address` as parameter
-    const stackId = drizzle.contracts[tokenId].methods["mint"].cacheSend(
-      address,
-      {
-        from: address
-      }
-    );
-
-    // save the `stackId` for later reference
-    setStackId(stackId);
-  };
-
-  const getTxStatus = () => {
-    if (!drizzleState) {
-      return null;
-    }
-    // get the transaction states from the drizzle state
-    const { transactions, transactionStack } = drizzleState;
-
-    // get the transaction hash using our saved `stackId`
-    const txHash = transactionStack[stackId];
-
-    // if transaction hash does not exist, don't display anything
-    if (!txHash) return null;
-
-    // otherwise, return the transaction status
-    return `Transaction status: ${transactions[txHash] &&
-      transactions[txHash].status}`;
-  };
-
   // if it exists, then we display its value
   return (
     <Box width={[1, 1 / 2, 1 / 3]} p={3}>
@@ -69,18 +34,29 @@ function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
             </Text>
           </Flex>
 
-          <Button
-            onClick={() => {
-              preflightCheck(() => {
-                buyTicket(token.id);
-              });
-            }}
-            width={[1]}
-            mt={"26px"}
-          >
-            Buy ticket
-          </Button>
-          <Text my={3}>{getTxStatus()}</Text>
+          {/* Use drizzle's ContractForm component, with custom renderprop for styling. This way we can get contract events from the redux store */}
+          <ContractForm
+            contract={token.id}
+            method="mint"
+            drizzle={drizzle}
+            drizzleState={drizzleState}
+            render={({ handleInputChange, handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <Button
+                  width={[1]}
+                  mt={"26px"}
+                  type={"text"} // manually set properties on the button so that the handleInputChange and handleSubmit still work properly
+                  name={"recepient"} // set the name to the method's argument key
+                  onClick={e => {
+                    e.target.value = drizzleState.accounts[0]; // set the recepient contract argument after drizzleState is available
+                    handleInputChange(e);
+                  }}
+                >
+                  Buy
+                </Button>
+              </form>
+            )}
+          />
         </Flex>
       </Card>
     </Box>

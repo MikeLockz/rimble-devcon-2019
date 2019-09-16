@@ -105,9 +105,9 @@ function App({ drizzle, drizzleState, appConfig }, props) {
               showSendingTicketModal: true // also show modal when not error
             };
           }
-          console.log("new tx: ", transactions[tx]);
+          // console.log("new tx: ", transactions[tx]);
         } else {
-          console.log("existing tx: ", transactions[tx]);
+          // console.log("existing tx: ", transactions[tx]);
         }
       });
     }
