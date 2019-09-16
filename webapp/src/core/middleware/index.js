@@ -3,6 +3,7 @@ import drizzleOptions from "../../drizzleOptions";
 
 const contractEventNotifier = store => next => action => {
   console.log("contractEventNotifier", action);
+  console.log("store", store.getState());
 
   // tx started but not confirmed or rejects
   if (action.type === "PUSH_TO_TXSTACK") {

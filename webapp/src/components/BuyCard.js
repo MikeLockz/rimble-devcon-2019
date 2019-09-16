@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Card, Button, Flex, Box, Image, Text } from "rimble-ui";
 import RainbowBox from "./RainbowBox";
 import RainbowImage from "./RainbowImage";
-import { ContractForm } from "@drizzle/react-components";
+import { ContractForm } from "@drizzle/react-components"; // legacy
+// import { newContextComponents } from "@drizzle/react-components"; // new API
+// const { ContractForm } = newContextComponents;
 
 function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
+  console.log("BuyCard drizzleState", drizzleState);
   // if it exists, then we display its value
   return (
     <Box width={[1, 1 / 2, 1 / 3]} p={3}>
@@ -35,28 +38,41 @@ function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
           </Flex>
 
           {/* Use drizzle's ContractForm component, with custom renderprop for styling. This way we can get contract events from the redux store */}
-          <ContractForm
-            contract={token.id}
-            method="mint"
-            drizzle={drizzle}
-            drizzleState={drizzleState}
-            render={({ handleInputChange, handleSubmit }) => (
-              <form onSubmit={handleSubmit}>
-                <Button
-                  width={[1]}
-                  mt={"26px"}
-                  type={"text"} // manually set properties on the button so that the handleInputChange and handleSubmit still work properly
-                  name={"recepient"} // set the name to the method's argument key
-                  onClick={e => {
-                    e.target.value = drizzleState.accounts[0]; // set the recepient contract argument after drizzleState is available
-                    handleInputChange(e);
-                  }}
-                >
-                  Buy
-                </Button>
-              </form>
-            )}
-          />
+          {drizzleState ? (
+            <ContractForm
+              contract={token.id}
+              method="mint"
+              drizzle={drizzle}
+              drizzleState={drizzleState}
+              render={({ handleInputChange, handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <Button
+                    width={[1]}
+                    mt={"26px"}
+                    mb={2}
+                    type={"text"} // manually set properties on the button so that the handleInputChange and handleSubmit still work properly
+                    name={"recepient"} // set the name to the method's argument key
+                    onClick={e => {
+                      e.target.value = drizzleState.accounts[0]; // set the recepient contract argument after drizzleState is available
+                      console.log("drizzleState", drizzleState);
+                      handleInputChange(e);
+                    }}
+                  >
+                    Buy
+                  </Button>
+                </form>
+              )}
+            />
+          ) : (
+            <Button
+              mt={"26px"}
+              mb={2}
+              type={"text"} // manually set properties on the button so that the handleInputChange and handleSubmit still work properly
+              name={"recepient"} // set the name to the method's argument key
+            >
+              Buy
+            </Button>
+          )}
         </Flex>
       </Card>
     </Box>
