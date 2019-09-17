@@ -43,23 +43,14 @@ const contractEventNotifier = store => next => action => {
   return next(action);
 };
 
+// Set initial state of UI
 const initialRimble = {
-  showConfirmation: false
+  showWrongNetworkModal: false,
+  showTxStartModal: false,
+  showTxPendingModal: false,
+  showTxSuccessModal: false,
+  showTxErrorModal: false
 };
-
-// const updateTransactionView = (state = initialRimble, action) => {
-//   switch (action.type) {
-//     case "TOGGLE_CONFIRMATION":
-//       return {
-//         ...state,
-//         rimble: {
-//           showConfirmation: !state.rimble.confirmation
-//         }
-//       };
-//     default:
-//       return state;
-//   }
-// };
 
 // selectors
 export const getRimbleState = store => {
@@ -68,29 +59,79 @@ export const getRimbleState = store => {
 };
 
 // actions
-const RIMBLE_TOGGLE_CONFIRMATION = "RIMBLE_TOGGLE_CONFIRMATION";
-const RIMBLE_RECEIVED = "RIMBLE_RECEIVED";
+const RIMBLE_TOGGLE_NETWORK_MODAL = "RIMBLE_TOGGLE_NETWORK_MODAL";
+const RIMBLE_TOGGLE_TX_START_MODAL = "RIMBLE_TOGGLE_TX_START_MODAL";
+const RIMBLE_TOGGLE_TX_PENDING_MODAL = "RIMBLE_TOGGLE_TX_PENDING_MODAL";
+const RIMBLE_TOGGLE_TX_SUCCESS_MODAL = "RIMBLE_TOGGLE_TX_SUCCESS_MODAL";
+const RIMBLE_TOGGLE_TX_ERROR_MODAL = "RIMBLE_TOGGLE_TX_ERROR_MODAL";
 
-export const toggleConfirmation = value => {
+export const toggleWrongNetworkModal = value => {
   return {
-    type: RIMBLE_TOGGLE_CONFIRMATION,
+    type: RIMBLE_TOGGLE_NETWORK_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxStartModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_START_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxPendingModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_PENDING_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxSuccessModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_SUCCESS_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxErrorModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_ERROR_MODAL,
     payload: { value }
   };
 };
 
 // reducers
 const rimbleReducer = (state = initialRimble, action) => {
-  if (action.type === RIMBLE_TOGGLE_CONFIRMATION) {
-    console.log("RIMBLE_TOGGLE_CONFIRMATION", action.payload.value);
-
-    // update your state
-    return {
-      ...state,
-
-      showConfirmation: action.payload.value
-    };
+  switch (action.type) {
+    case RIMBLE_TOGGLE_NETWORK_MODAL: {
+      return {
+        ...state,
+        showWrongNetworkModal: action.payload.value
+      };
+    }
+    case RIMBLE_TOGGLE_TX_START_MODAL: {
+      return {
+        ...state,
+        showTxStartModal: action.payload.value
+      };
+    }
+    case RIMBLE_TOGGLE_TX_PENDING_MODAL: {
+      return {
+        ...state,
+        showTxPendingModal: action.payload.value
+      };
+    }
+    case RIMBLE_TOGGLE_TX_SUCCESS_MODAL: {
+      return {
+        ...state,
+        showTxSuccessModal: action.payload.value
+      };
+    }
+    case RIMBLE_TOGGLE_TX_ERROR_MODAL: {
+      return {
+        ...state,
+        showTxErrorModal: action.payload.value
+      };
+    }
+    default:
+      return state;
   }
-  return state;
 };
 
 // fetch data from service using sagas

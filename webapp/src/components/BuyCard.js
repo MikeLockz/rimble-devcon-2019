@@ -7,7 +7,7 @@ import { ContractForm } from "@drizzle/react-components"; // legacy
 // const { ContractForm } = newContextComponents;
 
 function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
-  console.log("BuyCard drizzleState", drizzleState);
+  // console.log("BuyCard drizzleState", drizzleState);
   // if it exists, then we display its value
   return (
     <Box width={[1, 1 / 2, 1 / 3]} p={3}>

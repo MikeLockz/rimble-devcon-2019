@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Box, Button } from "rimble-ui";
 import { drizzleConnect } from "@drizzle/react-plugin";
 
@@ -6,29 +7,44 @@ import WrongNetwork from "./modals/WrongNetwork";
 import ConfirmPurchase from "./ConfirmPurchase";
 import SendingTicket from "./SendingTicket";
 import TransactionSuccess from "./modals/TransactionSuccess";
+import TxError from "./modals/TxError";
 
-import { getRimbleState, toggleConfirmation } from "../core/middleware";
+import {
+  getRimbleState,
+  toggleWrongNetworkModal,
+  toggleTxStartModal,
+  toggleTxPendingModal,
+  toggleTxSuccessModal,
+  toggleTxErrorModal
+} from "../core/middleware";
 
-const Debug = ({ address, store, rimble }) => {
-  const [showWrongNetwork, setShowWrongNetwork] = useState(false);
-  const [showConfirmPurchase, setShowConfirmPurchase] = useState(false);
-  const [showSendingTicket, setShowSendingTicket] = useState(false);
-  const [showTransactionSuccess, setShowTransactionSuccess] = useState(false);
-
-  const toggleWrongNetwork = () => {
-    setShowWrongNetwork(!showWrongNetwork);
+const Debug = ({
+  address,
+  rimble,
+  toggleWrongNetworkModal,
+  toggleTxStartModal,
+  toggleTxPendingModal,
+  toggleTxSuccessModal,
+  toggleTxErrorModal
+}) => {
+  const handleWrongNetwork = () => {
+    toggleWrongNetworkModal(!rimble.showWrongNetworkModal);
   };
 
-  const toggleConfirmPurchase = () => {
-    store.dispatch(toggleConfirmation(!rimble.showConfirmation));
+  const handleTxStartModal = () => {
+    toggleTxStartModal(!rimble.showTxStartModal);
   };
 
-  const toggleSendingTicket = () => {
-    setShowSendingTicket(!showSendingTicket);
+  const handleTxPendingModal = () => {
+    toggleTxPendingModal(!rimble.showTxPendingModal);
   };
 
-  const toggleTransactionSuccess = () => {
-    setShowTransactionSuccess(!showTransactionSuccess);
+  const handleTxSuccessModal = () => {
+    toggleTxSuccessModal(!rimble.showTxSuccessModal);
+  };
+
+  const handleTxErrorModal = () => {
+    toggleTxErrorModal(!rimble.showTxErrorModal);
   };
 
   return (
@@ -40,35 +56,38 @@ const Debug = ({ address, store, rimble }) => {
       borderRadius={3}
       borderStyle={"solid"}
     >
-      <Button size={"small"} onClick={toggleWrongNetwork} mr={3} mb={3}>
+      <Button size={"small"} onClick={handleWrongNetwork} mr={3} mb={3}>
         Toggle Wrong Network modal
       </Button>
 
       {/* Figure out how to dispatch action that changes the modal visible property */}
-      <Button size={"small"} onClick={toggleConfirmPurchase} mr={3} mb={3}>
+      <Button size={"small"} onClick={handleTxStartModal} mr={3} mb={3}>
         Toggle Confirm Purchase modal
       </Button>
-      <Button size={"small"} onClick={toggleSendingTicket} mr={3} mb={3}>
+      <Button size={"small"} onClick={handleTxPendingModal} mr={3} mb={3}>
         Toggle Sending Ticket modal
       </Button>
-      <Button size={"small"} onClick={toggleTransactionSuccess} mr={3} mb={3}>
+      <Button size={"small"} onClick={handleTxSuccessModal} mr={3} mb={3}>
         Toggle Transaction Success modal
+      </Button>
+      <Button size={"small"} onClick={handleTxErrorModal} mr={3} mb={3}>
+        Toggle Transaction Error modal
       </Button>
 
       <WrongNetwork
-        isOpen={showWrongNetwork}
-        toggleWrongNetwork={toggleWrongNetwork}
+        isOpen={rimble.showWrongNetworkModal}
+        toggleModal={handleWrongNetwork}
       />
 
       <ConfirmPurchase
-        isOpen={rimble.showConfirmation}
-        toggleModal={toggleConfirmPurchase}
+        isOpen={rimble.showTxStartModal}
+        toggleModal={handleTxStartModal}
         address={address}
       />
 
       <SendingTicket
-        isOpen={showSendingTicket}
-        toggleModal={toggleSendingTicket}
+        isOpen={rimble.showTxPendingModal}
+        toggleModal={handleTxPendingModal}
         address={address}
         price={"5.4"}
         transactionFee={"0.42"}
@@ -76,8 +95,8 @@ const Debug = ({ address, store, rimble }) => {
       />
 
       <TransactionSuccess
-        isOpen={showTransactionSuccess}
-        toggleModal={toggleTransactionSuccess}
+        isOpen={rimble.showTxSuccessModal}
+        toggleModal={handleTxSuccessModal}
         ticket={{
           description: "DevCon Conference",
           image: "conference.png",
@@ -87,6 +106,10 @@ const Debug = ({ address, store, rimble }) => {
           number: 1,
           totalAvailable: 100
         }}
+      />
+      <TxError
+        isOpen={rimble.showTxErrorModal}
+        toggleModal={handleTxErrorModal}
       />
     </Box>
   );
@@ -98,12 +121,19 @@ const Debug = ({ address, store, rimble }) => {
 
 const mapStateToProps = state => {
   const rimble = getRimbleState(state);
-
   return {
     contracts: state.contracts,
-    rimble: rimble,
-    toggleConfirmation
+    rimble: rimble
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleWrongNetworkModal: value => dispatch(toggleWrongNetworkModal(value)),
+    toggleTxStartModal: value => dispatch(toggleTxStartModal(value)),
+    toggleTxPendingModal: value => dispatch(toggleTxPendingModal(value)),
+    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value)),
+    toggleTxErrorModal: value => dispatch(toggleTxErrorModal(value))
   };
 };
 
-export default drizzleConnect(Debug, mapStateToProps);
+export default drizzleConnect(Debug, mapStateToProps, mapDispatchToProps);
