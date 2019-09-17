@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import { Box, Button } from "rimble-ui";
 import { drizzleConnect } from "@drizzle/react-plugin";
 
 import WrongNetwork from "./modals/WrongNetwork";
-import ConfirmPurchase from "./ConfirmPurchase";
-import SendingTicket from "./SendingTicket";
-import TransactionSuccess from "./modals/TransactionSuccess";
-import TxError from "./modals/TxError";
+import TxStartModal from "./modals/TxStartModal";
+import TxPendingModal from "./modals/TxPendingModal";
+import TxSuccessModal from "./modals/TxSuccessModal";
+import TxErrorModal from "./modals/TxErrorModal";
 
 import {
   getRimbleState,
@@ -79,13 +78,13 @@ const Debug = ({
         toggleModal={handleWrongNetwork}
       />
 
-      <ConfirmPurchase
+      <TxStartModal
         isOpen={rimble.showTxStartModal}
         toggleModal={handleTxStartModal}
         address={address}
       />
 
-      <SendingTicket
+      <TxPendingModal
         isOpen={rimble.showTxPendingModal}
         toggleModal={handleTxPendingModal}
         address={address}
@@ -94,7 +93,7 @@ const Debug = ({
         estimatedTime={120}
       />
 
-      <TransactionSuccess
+      <TxSuccessModal
         isOpen={rimble.showTxSuccessModal}
         toggleModal={handleTxSuccessModal}
         ticket={{
@@ -107,7 +106,7 @@ const Debug = ({
           totalAvailable: 100
         }}
       />
-      <TxError
+      <TxErrorModal
         isOpen={rimble.showTxErrorModal}
         toggleModal={handleTxErrorModal}
       />

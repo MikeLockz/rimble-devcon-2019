@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Flex, Modal, Text, Heading } from "rimble-ui";
 
-function TxError({ isOpen, toggleModal }) {
+function TxErrorModal({ isOpen, toggleModal }) {
   return (
     <Modal isOpen={isOpen}>
       <Card maxWidth={"300px"}>
@@ -18,4 +18,4 @@ function TxError({ isOpen, toggleModal }) {
   );
 }
 
-export default TxError;
+export default TxErrorModal;

@@ -158,7 +158,7 @@ function TokenDetails({ toggleShowTokenDetails, ticket }) {
   );
 }
 
-function TransactionSuccess({ isOpen, toggleModal, ticket }, props) {
+function TxSuccessModal({ isOpen, toggleModal, ticket }, props) {
   const [showTokenDetails, setShowTokenDetails] = useState(false);
 
   const toggleShowTokenDetails = () => {
@@ -206,4 +206,4 @@ function TransactionSuccess({ isOpen, toggleModal, ticket }, props) {
   );
 }
 
-export default TransactionSuccess;
+export default TxSuccessModal;
