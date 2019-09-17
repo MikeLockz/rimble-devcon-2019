@@ -4,7 +4,6 @@ import drizzleOptions from "../../drizzleOptions";
 
 const contractEventNotifier = store => next => action => {
   console.log("contractEventNotifier", action);
-  console.log("contractEventNotifier store", store.getState());
 
   // tx started but not confirmed or rejects
   if (action.type === "PUSH_TO_TXSTACK") {
@@ -62,19 +61,33 @@ const initialRimble = {
 //   }
 // };
 
+// selectors
+export const getRimbleState = store => {
+  console.log("getRimbleState", store);
+  return store.rimble;
+};
+
 // actions
-const RIMBLE_TOGGLE_CONFIRMATION = "RIMBLE/TOGGLE_CONFIRMATION";
-const RIMBLE_RECEIVED = "MY_APP/TODOS_RECEIVED";
+const RIMBLE_TOGGLE_CONFIRMATION = "RIMBLE_TOGGLE_CONFIRMATION";
+const RIMBLE_RECEIVED = "RIMBLE_RECEIVED";
+
+export const toggleConfirmation = value => {
+  return {
+    type: RIMBLE_TOGGLE_CONFIRMATION,
+    payload: { value }
+  };
+};
 
 // reducers
 const rimbleReducer = (state = initialRimble, action) => {
   if (action.type === RIMBLE_TOGGLE_CONFIRMATION) {
+    console.log("RIMBLE_TOGGLE_CONFIRMATION", action.payload.value);
+
     // update your state
     return {
       ...state,
-      rimble: {
-        showConfirmation: !state.rimble.showConfirmation
-      }
+
+      showConfirmation: action.payload.value
     };
   }
   return state;

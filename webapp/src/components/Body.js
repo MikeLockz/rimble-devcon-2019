@@ -33,7 +33,13 @@ function Body({ drizzle, drizzleState, store }) {
     <BodyBox height={"100%"}>
       {
         {
-          Home: <Landing drizzle={drizzle} drizzleState={drizzleState} />,
+          Home: (
+            <Landing
+              drizzle={drizzle}
+              drizzleState={drizzleState}
+              store={store}
+            />
+          ),
           Lesson1: <Lesson1 address={address} store={store} />,
           Lesson2: <Lesson2 address={address} store={store} />,
           Lesson3: <Lesson3 address={address} store={store} />,

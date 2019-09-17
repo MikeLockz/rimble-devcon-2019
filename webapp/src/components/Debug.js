@@ -7,7 +7,9 @@ import ConfirmPurchase from "./ConfirmPurchase";
 import SendingTicket from "./SendingTicket";
 import TransactionSuccess from "./modals/TransactionSuccess";
 
-const Debug = ({ address, store }) => {
+import { getRimbleState, toggleConfirmation } from "../core/middleware";
+
+const Debug = ({ address, store, rimble }) => {
   const [showWrongNetwork, setShowWrongNetwork] = useState(false);
   const [showConfirmPurchase, setShowConfirmPurchase] = useState(false);
   const [showSendingTicket, setShowSendingTicket] = useState(false);
@@ -18,7 +20,7 @@ const Debug = ({ address, store }) => {
   };
 
   const toggleConfirmPurchase = () => {
-    setShowConfirmPurchase(!showConfirmPurchase);
+    store.dispatch(toggleConfirmation(!rimble.showConfirmation));
   };
 
   const toggleSendingTicket = () => {
@@ -41,6 +43,8 @@ const Debug = ({ address, store }) => {
       <Button size={"small"} onClick={toggleWrongNetwork} mr={3} mb={3}>
         Toggle Wrong Network modal
       </Button>
+
+      {/* Figure out how to dispatch action that changes the modal visible property */}
       <Button size={"small"} onClick={toggleConfirmPurchase} mr={3} mb={3}>
         Toggle Confirm Purchase modal
       </Button>
@@ -57,7 +61,7 @@ const Debug = ({ address, store }) => {
       />
 
       <ConfirmPurchase
-        isOpen={showConfirmPurchase}
+        isOpen={rimble.showConfirmation}
         toggleModal={toggleConfirmPurchase}
         address={address}
       />
@@ -93,8 +97,12 @@ const Debug = ({ address, store }) => {
  */
 
 const mapStateToProps = state => {
+  const rimble = getRimbleState(state);
+
   return {
-    contracts: state.contracts
+    contracts: state.contracts,
+    rimble: rimble,
+    toggleConfirmation
   };
 };
 

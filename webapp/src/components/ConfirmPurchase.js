@@ -12,8 +12,12 @@ import {
   Loader,
   EthAddress
 } from "rimble-ui";
+import { drizzleConnect } from "@drizzle/react-plugin";
 
 function ConfirmPurchase({ isOpen, toggleModal, address }, props) {
+  {
+    /* Figure out how to connect the isOpen prop to the redux store */
+  }
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -163,4 +167,14 @@ function ConfirmPurchase({ isOpen, toggleModal, address }, props) {
   );
 }
 
-export default ConfirmPurchase;
+/*
+ * Export connected component.
+ */
+
+const mapStateToProps = state => {
+  return {
+    rimble: state.rimble
+  };
+};
+
+export default drizzleConnect(ConfirmPurchase, mapStateToProps);
