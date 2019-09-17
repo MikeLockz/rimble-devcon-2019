@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.css";
 
 // Drizzle for state and contract interactions
 import { DrizzleContext } from "@drizzle/react-plugin";

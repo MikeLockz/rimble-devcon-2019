@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Flex, Icon, Text, Button } from "rimble-ui";
 import styled from "styled-components";
 
@@ -14,7 +14,20 @@ function ProgressAlert(props) {
   // const [error, setError] = useState(props.error);
   const [error, setError] = useState({});
 
-  const checkStatus = useCallback(() => {
+  useEffect(() => {
+    console.log("props", props);
+    setRemainingTime(props.timeEstimate);
+    setEstimatedCompletionTime(props.timeEstimate);
+    setError(props.error);
+    checkStatus();
+  }, [props.timeEstimate, props.error, props.transaction]);
+
+  const resetProgressAlert = () => {
+    setProgress(0);
+    setStatus("pending");
+  };
+
+  const checkStatus = () => {
     // console.log("Object.keys(error).length", Object.keys(error).length);
     if (Object.keys(error).length !== 0) {
       setStatus("error");
@@ -24,19 +37,6 @@ function ProgressAlert(props) {
       setStatus("pending");
     }
     console.log("status", status);
-  });
-
-  useEffect(() => {
-    console.log("props", props);
-    setRemainingTime(props.timeEstimate);
-    setEstimatedCompletionTime(props.timeEstimate);
-    setError(props.error);
-    checkStatus();
-  }, [props.timeEstimate, props.error, props.transaction, checkStatus, props]);
-
-  const resetProgressAlert = () => {
-    setProgress(0);
-    setStatus("pending");
   };
 
   // Determines the amount of time remaining
