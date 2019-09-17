@@ -19,7 +19,7 @@ const drizzle = new Drizzle(drizzleOptions, drizzleStore);
 
 ReactDOM.render(
   <DrizzleProvider store={store} options={drizzleOptions}>
-    <App drizzle={drizzle} />
+    <App drizzle={drizzle} store={store} />
   </DrizzleProvider>,
   document.getElementById("root")
 );

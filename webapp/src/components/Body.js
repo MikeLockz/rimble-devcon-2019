@@ -4,11 +4,8 @@ import styled from "styled-components";
 import HeaderNav from "./HeaderNav";
 import BuyCard from "./BuyCard";
 import ConnectionBanner from "@rimble/connection-banner";
-import WrongNetwork from "./modals/WrongNetwork";
-import ConfirmPurchase from "./ConfirmPurchase";
-import SendingTicket from "./SendingTicket";
-import TransactionSuccess from "./modals/TransactionSuccess";
 import ProgressAlertUtil from "./../core/utilities/ProgressAlertUtil";
+import Debug from "./Debug";
 
 import { Heading, Box, Flex, Button, Text, Link } from "rimble-ui";
 
@@ -19,13 +16,9 @@ const BodyBox = styled(Box)`
   background: no-repeat center center url(${backgroundImage}) #fffff8;
 `;
 
-function Body({ drizzle, drizzleState, appConfig }, props) {
+function Body({ drizzle, drizzleState, appConfig, store }, props) {
   const [currentNetwork, setCurrentNetwork] = useState(null);
   const [address, setAddress] = useState(null);
-  const [showWrongNetwork, setShowWrongNetwork] = useState(false);
-  const [showConfirmPurchase, setShowConfirmPurchase] = useState(false);
-  const [showSendingTicket, setShowSendingTicket] = useState(false);
-  const [showTransactionSuccess, setShowTransactionSuccess] = useState(false);
 
   useEffect(() => {
     if (drizzleState) {
@@ -37,22 +30,6 @@ function Body({ drizzle, drizzleState, appConfig }, props) {
     }
   }, [drizzleState]);
 
-  const toggleWrongNetwork = () => {
-    setShowWrongNetwork(!showWrongNetwork);
-  };
-
-  const toggleConfirmPurchase = () => {
-    setShowConfirmPurchase(!showConfirmPurchase);
-  };
-
-  const toggleSendingTicket = () => {
-    setShowSendingTicket(!showSendingTicket);
-  };
-
-  const toggleTransactionSuccess = () => {
-    setShowTransactionSuccess(!showTransactionSuccess);
-  };
-
   const getNetwork = () => {
     window.web3.version.getNetwork((error, networkId) => {
       setCurrentNetwork(parseInt(networkId));
@@ -61,56 +38,11 @@ function Body({ drizzle, drizzleState, appConfig }, props) {
 
   const preflightCheck = callback => {
     if (currentNetwork !== appConfig.requiredNetwork) {
-      toggleWrongNetwork();
+      // toggleWrongNetwork();
       return;
     }
     callback();
   };
-
-  // Show/hide tx confirmation modal
-  useEffect(() => {
-    if (!drizzleState) {
-      return;
-    }
-    const { transactionStack, transactions } = drizzleState;
-    // count length of transactionStack and transactions
-    if (transactionStack.length !== Object.keys(transactions).length) {
-      // assume that a tx has been initiated and show modal
-      setShowConfirmPurchase(true);
-    } else {
-      // if count is equal, then hide modal
-      setShowConfirmPurchase(false);
-    }
-  }, [drizzleState]);
-
-  // add Rimble view properties to drizzle
-  useEffect(() => {
-    if (!drizzleState) {
-      return;
-    }
-    const { transactions } = drizzleState;
-
-    // count length of transactions
-    if (Object.keys(transactions).length > 0) {
-      // check for rimble prop on each tx
-      Object.keys(transactions).map(tx => {
-        if (!transactions[tx].rimble) {
-          transactions[tx].rimble = {
-            showProgressAlert: true
-          };
-          if (transactions[tx].status !== "error") {
-            transactions[tx].rimble = {
-              ...transactions[tx].rimble,
-              showSendingTicketModal: true // also show modal when not error
-            };
-          }
-          // console.log("new tx: ", transactions[tx]);
-        } else {
-          // console.log("existing tx: ", transactions[tx]);
-        }
-      });
-    }
-  }, [drizzleState]);
 
   return (
     <BodyBox height={"100%"}>
@@ -140,7 +72,6 @@ function Body({ drizzle, drizzleState, appConfig }, props) {
                   token={token}
                   key={token.id}
                   preflightCheck={preflightCheck}
-                  toggleConfirmPurchase={toggleConfirmPurchase}
                 />
               );
             })}
@@ -155,72 +86,8 @@ function Body({ drizzle, drizzleState, appConfig }, props) {
             Learn more about Rimble
           </Link>
 
-          <Box
-            my={3}
-            p={3}
-            borderColor={"gray"}
-            borderWidth={1}
-            borderRadius={3}
-            borderStyle={"solid"}
-          >
-            <Button size={"small"} onClick={toggleWrongNetwork} mr={3} mb={3}>
-              Toggle Wrong Network modal
-            </Button>
-            <Button
-              size={"small"}
-              onClick={toggleConfirmPurchase}
-              mr={3}
-              mb={3}
-            >
-              Toggle Confirm Purchase modal
-            </Button>
-            <Button size={"small"} onClick={toggleSendingTicket} mr={3} mb={3}>
-              Toggle Sending Ticket modal
-            </Button>
-            <Button
-              size={"small"}
-              onClick={toggleTransactionSuccess}
-              mr={3}
-              mb={3}
-            >
-              Toggle Transaction Success modal
-            </Button>
-          </Box>
+          <Debug address={address} store={store} />
         </Box>
-
-        <WrongNetwork
-          isOpen={showWrongNetwork}
-          toggleWrongNetwork={toggleWrongNetwork}
-        />
-
-        <ConfirmPurchase
-          isOpen={showConfirmPurchase}
-          toggleModal={toggleConfirmPurchase}
-          address={address}
-        />
-
-        <SendingTicket
-          isOpen={showSendingTicket}
-          toggleModal={toggleSendingTicket}
-          address={address}
-          price={"5.4"}
-          transactionFee={"0.42"}
-          estimatedTime={120}
-        />
-
-        <TransactionSuccess
-          isOpen={showTransactionSuccess}
-          toggleModal={toggleTransactionSuccess}
-          ticket={{
-            description: "DevCon Conference",
-            image: "conference.png",
-            owner: "0xa4738Ca27D069334d5Fe5653324bAcE18627C47e",
-            previousOwner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa",
-            price: "5.4",
-            number: 1,
-            totalAvailable: 100
-          }}
-        />
       </Box>
       <ProgressAlertUtil drizzleState={drizzleState} />
     </BodyBox>

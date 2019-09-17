@@ -4,7 +4,7 @@ import drizzleOptions from "../../drizzleOptions";
 
 const contractEventNotifier = store => next => action => {
   console.log("contractEventNotifier", action);
-  console.log("store", store.getState());
+  console.log("contractEventNotifier store", store.getState());
 
   // tx started but not confirmed or rejects
   if (action.type === "PUSH_TO_TXSTACK") {
@@ -44,11 +44,9 @@ const contractEventNotifier = store => next => action => {
   return next(action);
 };
 
-// const initialRimble = {
-//   rimble: {
-//     showConfirmation: false
-//   }
-// };
+const initialRimble = {
+  showConfirmation: false
+};
 
 // const updateTransactionView = (state = initialRimble, action) => {
 //   switch (action.type) {
@@ -65,42 +63,47 @@ const contractEventNotifier = store => next => action => {
 // };
 
 // actions
-const TODOS_FETCH = "MY_APP/TODOS_FETCH";
-const TODOS_RECEIVED = "MY_APP/TODOS_RECEIVED";
+const RIMBLE_TOGGLE_CONFIRMATION = "RIMBLE/TOGGLE_CONFIRMATION";
+const RIMBLE_RECEIVED = "MY_APP/TODOS_RECEIVED";
 
 // reducers
-const todosReducer = (state = [], action) => {
-  if (action.type === TODOS_RECEIVED) {
+const rimbleReducer = (state = initialRimble, action) => {
+  if (action.type === RIMBLE_TOGGLE_CONFIRMATION) {
     // update your state
-    return action.todos;
+    return {
+      ...state,
+      rimble: {
+        showConfirmation: !state.rimble.showConfirmation
+      }
+    };
   }
   return state;
 };
 
 // fetch data from service using sagas
-function* fetchTodos() {
-  const todos = yield fetch("https://jsonplaceholder.typicode.com/todos").then(
-    resp => resp.json()
-  );
-  yield put({ type: TODOS_RECEIVED, todos });
-}
+// function* fetchTodos() {
+//   const todos = yield fetch("https://jsonplaceholder.typicode.com/todos").then(
+//     resp => resp.json()
+//   );
+//   yield put({ type: TODOS_RECEIVED, todos });
+// }
 
 // Combine all your redux concerns
 
 // app root saga
-function* appRootSaga() {
-  yield takeEvery(TODOS_FETCH, fetchTodos);
-}
+// function* appRootSaga() {
+//   yield takeEvery(TODOS_FETCH, fetchTodos);
+// }
 
 // app Reducers and Sagas and Middlewares
-const appReducers = { todos: todosReducer };
-const appSagas = [appRootSaga];
+const appReducers = { rimble: rimbleReducer };
+// const appSagas = [appRootSaga];
 const appMiddlewares = [contractEventNotifier];
 
 export default generateStore({
   drizzleOptions,
   appReducers,
-  appSagas,
+  // appSagas,
   appMiddlewares,
   disableReduxDevTools: false
 });

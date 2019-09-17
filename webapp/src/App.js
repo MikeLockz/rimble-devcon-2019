@@ -13,7 +13,7 @@ import CustomTheme from "./CustomTheme";
 // Components that build layout
 import Body from "./components/Body";
 
-const App = ({ drizzle }) => {
+const App = ({ drizzle, store }) => {
   return (
     <DrizzleContext.Provider drizzle={drizzle}>
       <ThemeProvider theme={CustomTheme}>
@@ -24,6 +24,7 @@ const App = ({ drizzle }) => {
                 drizzle={drizzle}
                 drizzleState={drizzleState}
                 appConfig={appConfig}
+                store={store}
               />
             );
           }}
