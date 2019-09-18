@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import HeaderNav from "./HeaderNav";
-import BuyCard from "./BuyCard";
-import LessonNavigation from "./LessonNavigation";
+import BuyCardContainer from "./BuyCard.container";
+
 import ConnectionBanner from "@rimble/connection-banner";
-import ProgressAlertUtil from "./../core/utilities/ProgressAlertUtil";
+
 import Debug from "./Debug";
 
 import { Heading, Box, Flex, Button, Text, Link } from "rimble-ui";
@@ -38,21 +38,9 @@ function Landing({ drizzle, drizzleState, store }, props) {
     });
   };
 
-  const preflightCheck = callback => {
-    if (currentNetwork !== appConfig.requiredNetwork) {
-      // toggleWrongNetwork();
-      return;
-    }
-    callback();
-  };
-
   return (
     <Box>
-      <HeaderNav
-        drizzle={drizzle}
-        drizzleState={drizzleState}
-        preflightCheck={preflightCheck}
-      />
+      <HeaderNav drizzle={drizzle} drizzleState={drizzleState} />
       {!drizzleState && (
         <Box m={4}>
           <ConnectionBanner
@@ -67,12 +55,10 @@ function Landing({ drizzle, drizzleState, store }, props) {
         <Flex justifyContent={"space-between"} mx={-3} flexWrap={"wrap"}>
           {tokenDetails.map(token => {
             return (
-              <BuyCard
-                drizzle={drizzle}
-                drizzleState={drizzleState}
+              <BuyCardContainer
                 token={token}
+                address={address}
                 key={token.id}
-                preflightCheck={preflightCheck}
               />
             );
           })}

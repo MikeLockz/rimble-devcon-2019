@@ -6,9 +6,7 @@ import { ContractForm } from "@drizzle/react-components"; // legacy
 // import { newContextComponents } from "@drizzle/react-components"; // new API doesn't provide contract transaction events
 // const { ContractForm } = newContextComponents;
 
-function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
-  // console.log("BuyCard drizzleState", drizzleState);
-  // if it exists, then we display its value
+function BuyCard({ token, drizzle, drizzleState, address, preflightCheck }) {
   return (
     <Box width={[1, 1 / 2, 1 / 3]} p={3}>
       <Card p={0} borderColor={"#d6d6d6"}>
@@ -37,6 +35,15 @@ function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
             </Text>
           </Flex>
 
+          {/* <Button
+            mt={"26px"}
+            mb={2}
+            onClick={() => {
+              preflightCheck({ token, drizzle, address });
+            }}
+          >
+            Buy
+          </Button> */}
           {/* Use drizzle's ContractForm component, with custom renderprop for styling. This way we can get contract events from the redux store */}
           {drizzleState ? (
             <ContractForm
@@ -55,7 +62,17 @@ function BuyCard({ token, drizzle, drizzleState, preflightCheck }, props) {
                     onClick={e => {
                       e.target.value = drizzleState.accounts[0]; // set the recepient contract argument after drizzleState is available
                       console.log("drizzleState", drizzleState);
-                      handleInputChange(e);
+                      const callback = e => {
+                        handleInputChange(e);
+                      };
+                      const event = e;
+                      preflightCheck({
+                        token,
+                        drizzle,
+                        address,
+                        callback,
+                        event
+                      });
                     }}
                   >
                     Buy

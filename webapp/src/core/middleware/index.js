@@ -1,7 +1,9 @@
 import { put, takeEvery } from "redux-saga/effects";
 import { generateStore } from "@drizzle/store";
 import drizzleOptions from "../../drizzleOptions";
+import progressAlerts from "./../redux/reducers/progressAlerts";
 import rimbleVisibilityFilter from "./../redux/reducers/visibilityFilter";
+import { addProgressAlert, toggleProgressAlert } from "./../redux/actions";
 
 // This middleware will just add the property "async dispatch"
 // to actions with the "async" propperty set to true
@@ -85,9 +87,14 @@ export const toggleTxErrorModal = value => {
   };
 };
 
-// Rimble's reducers
+// Rimble modal reducers
 const rimbleReducer = (state = initialRimble, action) => {
   switch (action.type) {
+    // case RIMBLE_INITIATE_TX: {
+    //   return {
+    //     ...state,
+    //   }
+    // }
     case RIMBLE_TOGGLE_NETWORK_MODAL: {
       return {
         ...state,
@@ -120,54 +127,6 @@ const rimbleReducer = (state = initialRimble, action) => {
     }
     default:
       return state;
-  }
-};
-
-// Progress Alert actions
-const RIMBLE_ADD_PROGRESSALERT = "RIMBLE_ADD_PROGRESSALERT";
-
-let nextProgressAlertId = 0;
-export const addProgressAlert = content => {
-  console.log("addProgressAlert content", content);
-  return {
-    type: RIMBLE_ADD_PROGRESSALERT,
-    payload: {
-      id: ++nextProgressAlertId,
-      content
-    }
-  };
-};
-
-// Initialize rimbleAlert store
-const initialRimbleProgressAlert = {
-  allIds: [],
-  byIds: {}
-};
-
-// Managing progressAlert component's state
-const rimbleProgressAlertReducer = (
-  state = initialRimbleProgressAlert,
-  action
-) => {
-  console.log("rimbleProgressAlertReducer", action);
-  switch (action.type) {
-    case RIMBLE_ADD_PROGRESSALERT: {
-      const { id, content } = action.payload;
-      return {
-        ...state,
-        allIds: [...state.allIds, id],
-        byIds: {
-          ...state.byIds,
-          [id]: {
-            content,
-            completed: false
-          }
-        }
-      };
-    }
-    default: {
-      return state;
-    }
   }
 };
 
@@ -238,7 +197,7 @@ const contractEventNotifier = store => next => action => {
 // });
 const appReducers = {
   rimble: rimbleReducer,
-  progressAlerts: rimbleProgressAlertReducer,
+  progressAlerts: progressAlerts,
   visibilityFilter: rimbleVisibilityFilter
 };
 // const appSagas = [appRootSaga];

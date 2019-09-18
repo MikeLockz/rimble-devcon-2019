@@ -1,13 +1,17 @@
 import React from "react";
 import { drizzleConnect } from "@drizzle/react-plugin";
-import { addProgressAlert } from "./../middleware";
 import { Box, Text, Button } from "rimble-ui";
 import { getProgressAlertsByVisibilityFilter } from "./../redux/selectors";
+import { addProgressAlert, toggleProgressAlert } from "./../redux/actions";
 import { VISIBILITY_FILTERS } from "./../redux/constants";
 
 const ProgressAlert = ({ progressAlert }) => {
   console.log("ProgressAlert", progressAlert);
-  return <Text key={progressAlert.id}>{progressAlert.content.message}</Text>;
+  return (
+    <Text key={progressAlert.id}>
+      <pre>{JSON.stringify(progressAlert, null, 2)}</pre>
+    </Text>
+  );
 };
 
 const ProgressAlertContainer = ({ progressAlerts, addProgressAlert }) => {
@@ -32,7 +36,7 @@ const ProgressAlertContainer = ({ progressAlerts, addProgressAlert }) => {
               />
             );
           })
-        : "No todos, yay!"}
+        : null}
     </Box>
   );
 };
