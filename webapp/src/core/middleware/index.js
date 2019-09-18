@@ -126,26 +126,24 @@ const rimbleReducer = (state = initialRimble, action) => {
 const contractEventNotifier = store => next => action => {
   console.log("contractEventNotifier", action);
 
-  // tx started but not confirmed or rejects
+  // Tx started but not confirmed or rejected
   if (action.type === "PUSH_TO_TXSTACK") {
-    console.log("New tx started");
+    // Update UI
     store.dispatch(toggleTxStartModal(true));
   }
 
-  // Show progress alert
   if (action.type === "SEND_CONTRACT_TX") {
-    store.dispatch(toggleTxStartModal(false));
-    store.dispatch(toggleTxPendingModal(true));
   }
 
   if (action.type === "TX_BROADCASTED") {
-    // console.log("action.stackId", action.stackId);
-    // go get tx details from stack?
+    // Update UI
+    store.dispatch(toggleTxStartModal(false));
+    store.dispatch(toggleTxPendingModal(true));
 
     window.progressAlertProvider.addMessage("Processing", {
       message: "Attempting to ",
       transaction: action.txHash,
-      timeEstimate: 60,
+      timeEstimate: 10,
       error: {}
     });
   }

@@ -156,6 +156,7 @@ function TxStartModal({ isOpen, toggleModal, address }, props) {
           <Button.Outline
             onClick={() => {
               toggleModal(isOpen);
+              // How can we call the web3 api here to cancel the tx?
             }}
             width={[1]}
           >

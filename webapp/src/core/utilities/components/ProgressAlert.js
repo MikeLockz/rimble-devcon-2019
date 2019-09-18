@@ -15,7 +15,8 @@ function ProgressAlert(props) {
   const [error, setError] = useState({});
 
   useEffect(() => {
-    console.log("props", props);
+    // console.log("props", props);
+    // console.log("progressAlert", props);
     setRemainingTime(props.timeEstimate);
     setEstimatedCompletionTime(props.timeEstimate);
     setError(props.error);
@@ -36,7 +37,7 @@ function ProgressAlert(props) {
     } else {
       setStatus("pending");
     }
-    console.log("status", status);
+    // console.log("status", status);
   };
 
   // Determines the amount of time remaining
@@ -80,12 +81,12 @@ function ProgressAlert(props) {
 
   // Determines percent complete based on time remaining and estimated time
   const calculatePercentComplete = () => {
-    console.log(
-      "calculatePercentComplete: progress, remainingTime",
-      progress,
-      remainingTime,
-      status
-    );
+    // console.log(
+    //   "calculatePercentComplete: progress, remainingTime",
+    //   progress,
+    //   remainingTime,
+    //   status
+    // );
 
     const currentProgress = Math.round(
       ((estimatedCompletionTime - remainingTime) / estimatedCompletionTime) *
