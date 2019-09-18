@@ -10,7 +10,8 @@ import {
   Text,
   Card,
   Loader,
-  EthAddress
+  EthAddress,
+  Tooltip,
 } from "rimble-ui";
 import { drizzleConnect } from "@drizzle/react-plugin";
 
@@ -43,7 +44,7 @@ function TxStartModal({ isOpen, toggleModal, address }, props) {
             my={4}
           >
             <Box bg={"primary"} px={3} py={2}>
-              <Text color={"white"}>Buying DevCon V ticket #1</Text>
+              <Text color={"white"}>Conference ticket</Text>
             </Box>
 
             <Flex p={3} borderBottom={"1px solid #ccc"} alignItems={"center"}>
@@ -125,7 +126,9 @@ function TxStartModal({ isOpen, toggleModal, address }, props) {
                   Transaction fee
                 </Text>
                 <Link href="#" ml={1}>
-                  <Icon name={"InfoOutline"} size={"14px"} />
+                  <Tooltip message="Pays the Ethereum network to process your transaction. Spent even if the transaction fails." position="top">
+                    <Icon name={"InfoOutline"} size={"14px"} />
+                  </Tooltip>
                 </Link>
               </Flex>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
@@ -160,7 +163,7 @@ function TxStartModal({ isOpen, toggleModal, address }, props) {
             }}
             width={[1]}
           >
-            Close
+            Cancel purchase
           </Button.Outline>
         </Flex>
       </Card>

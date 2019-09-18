@@ -9,6 +9,7 @@ import {
   Heading,
   Text,
   Card,
+  Tooltip,
   EthAddress
 } from "rimble-ui";
 
@@ -37,7 +38,7 @@ function TxPendingModal({ isOpen, toggleModal, address }, props) {
             my={4}
           >
             <Box bg={"primary"} px={3} py={2}>
-              <Text color={"white"}>Transferring</Text>
+              <Text color={"white"}>Transaction in progress</Text>
             </Box>
 
             <Flex justifyContent={"space-between"} bg={"#E8E8E8"} p={3}>
@@ -95,7 +96,9 @@ function TxPendingModal({ isOpen, toggleModal, address }, props) {
                   Transaction fee
                 </Text>
                 <Link href="#" ml={1}>
-                  <Icon name={"InfoOutline"} size={"14px"} />
+                  <Tooltip message="Pays the Ethereum network to process your transaction. Spent even if the transaction fails." position="top">
+                    <Icon name={"InfoOutline"} size={"14px"} />
+                  </Tooltip>
                 </Link>
               </Flex>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
