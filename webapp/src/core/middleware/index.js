@@ -1,6 +1,7 @@
 import { put, takeEvery } from "redux-saga/effects";
 import { generateStore } from "@drizzle/store";
 import drizzleOptions from "../../drizzleOptions";
+import rimbleVisibilityFilter from "./../redux/reducers/visibilityFilter";
 
 // This middleware will just add the property "async dispatch"
 // to actions with the "async" propperty set to true
@@ -122,6 +123,54 @@ const rimbleReducer = (state = initialRimble, action) => {
   }
 };
 
+// Progress Alert actions
+const RIMBLE_ADD_PROGRESSALERT = "RIMBLE_ADD_PROGRESSALERT";
+
+let nextProgressAlertId = 0;
+export const addProgressAlert = content => {
+  console.log("addProgressAlert content", content);
+  return {
+    type: RIMBLE_ADD_PROGRESSALERT,
+    payload: {
+      id: ++nextProgressAlertId,
+      content
+    }
+  };
+};
+
+// Initialize rimbleAlert store
+const initialRimbleProgressAlert = {
+  allIds: [],
+  byIds: {}
+};
+
+// Managing progressAlert component's state
+const rimbleProgressAlertReducer = (
+  state = initialRimbleProgressAlert,
+  action
+) => {
+  console.log("rimbleProgressAlertReducer", action);
+  switch (action.type) {
+    case RIMBLE_ADD_PROGRESSALERT: {
+      const { id, content } = action.payload;
+      return {
+        ...state,
+        allIds: [...state.allIds, id],
+        byIds: {
+          ...state.byIds,
+          [id]: {
+            content,
+            completed: false
+          }
+        }
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 // Connecting Rimble actions to Drizzle's events
 const contractEventNotifier = store => next => action => {
   console.log("contractEventNotifier", action);
@@ -168,8 +217,8 @@ const contractEventNotifier = store => next => action => {
 };
 
 // fetch data from service using sagas
-// function* fetchTodos() {
-//   const todos = yield fetch("https://jsonplaceholder.typicode.com/todos").then(
+// function* fetchGasPrice(level) {
+//   const todos = yield fetch("").then(
 //     resp => resp.json()
 //   );
 //   yield put({ type: TODOS_RECEIVED, todos });
@@ -183,7 +232,15 @@ const contractEventNotifier = store => next => action => {
 // }
 
 // app Reducers and Sagas and Middlewares
-const appReducers = { rimble: rimbleReducer };
+// const appReducers = combineReducers({
+//   rimble: rimbleReducer,
+//   progressAlerts: rimbleProgressAlertReducer
+// });
+const appReducers = {
+  rimble: rimbleReducer,
+  progressAlerts: rimbleProgressAlertReducer,
+  visibilityFilter: rimbleVisibilityFilter
+};
 // const appSagas = [appRootSaga];
 const appMiddlewares = [contractEventNotifier, asyncDispatchMiddleware];
 
