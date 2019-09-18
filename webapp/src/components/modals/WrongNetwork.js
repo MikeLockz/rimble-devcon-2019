@@ -6,9 +6,9 @@ function WrongNetwork({ isOpen, toggleWrongNetwork }) {
     <Modal isOpen={isOpen}>
       <Card maxWidth={"300px"}>
         <Flex flexDirection={"column"} justifyContent={"space-between"}>
-          <Heading.h3>Switch to Rinkeby Network</Heading.h3>
+          <Heading.h3>Switch to Rinkeby Network in MetaMask</Heading.h3>
           <Text my={3}>
-            This dApp requires connection to the Rinkeby Network.
+            You can only buy Devcon V tickets on the Rinkeby network using Rinkeby ETH.
           </Text>
           <Button.Outline onClick={toggleWrongNetwork} width={[1]}>
             Close
