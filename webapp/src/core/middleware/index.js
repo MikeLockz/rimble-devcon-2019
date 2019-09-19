@@ -7,7 +7,8 @@ import {
   addProgressAlert,
   toggleProgressAlert,
   setProgressAlertTxHash,
-  setProgressAlertStatus
+  setProgressAlertStatus,
+  updateProgressAlertContent
 } from "./../redux/actions";
 
 // This middleware will just add the property "async dispatch"
@@ -186,6 +187,12 @@ const contractEventNotifier = store => next => action => {
     store.dispatch(
       setProgressAlertStatus({ status: "success", txHash: action.txHash })
     );
+    store.dispatch(
+      updateProgressAlertContent({
+        content: { receipt: { ...action.receipt } },
+        txHash: action.txHash
+      })
+    );
   }
 
   if (action.type === "TX_ERROR") {
@@ -193,6 +200,12 @@ const contractEventNotifier = store => next => action => {
     store.dispatch(
       setProgressAlertStatus({
         status: "error",
+        stackTempKey: action.stackTempKey
+      })
+    );
+    store.dispatch(
+      updateProgressAlertContent({
+        content: { error: action.error.message },
         stackTempKey: action.stackTempKey
       })
     );

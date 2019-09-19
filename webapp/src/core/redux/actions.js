@@ -3,6 +3,7 @@ import {
   RIMBLE_TOGGLE_PROGRESSALERT,
   RIMBLE_SET_PROGRESSALERT_STATUS,
   RIMBLE_SET_PROGRESSALERT_TX_HASH,
+  RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
   SET_FILTER
 } from "./actionTypes";
 
@@ -41,6 +42,18 @@ export const setProgressAlertTxHash = ({ stackTempKey, txHash, id }) => {
   return {
     type: RIMBLE_SET_PROGRESSALERT_TX_HASH,
     payload: { stackTempKey, txHash, id }
+  };
+};
+
+export const updateProgressAlertContent = ({
+  content,
+  txHash,
+  id,
+  stackTempKey
+}) => {
+  return {
+    type: RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
+    payload: { content, txHash, id, stackTempKey }
   };
 };
 

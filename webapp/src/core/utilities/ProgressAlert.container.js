@@ -6,7 +6,8 @@ import {
   addProgressAlert,
   toggleProgressAlert,
   setProgressAlertStatus,
-  setProgressAlertTxHash
+  setProgressAlertTxHash,
+  updateProgressAlertContent
 } from "./../redux/actions";
 import { VISIBILITY_FILTERS } from "./../redux/constants";
 
@@ -23,7 +24,8 @@ const ProgressAlertContainer = ({
   addProgressAlert,
   toggleProgressAlert,
   setProgressAlertStatus,
-  setProgressAlertTxHash
+  setProgressAlertTxHash,
+  updateProgressAlertContent
 }) => {
   const handleAddProgressAlert = () => {
     addProgressAlert({ message: "I am progressAlert!" });
@@ -42,8 +44,15 @@ const ProgressAlertContainer = ({
     setProgressAlertStatus({ status, id, stackTempKey, txHash });
   };
 
-  const handleSetProgressAlertTxHash = hash => {
-    setProgressAlertTxHash({ hash: hash, id: 0 });
+  const handleSetProgressAlertTxHash = txHash => {
+    setProgressAlertTxHash({ txHash: txHash, id: 0 });
+  };
+
+  const handleUpdateProgressAlertContent = ({ txHash }) => {
+    updateProgressAlertContent({
+      txHash,
+      content: { receipt: { confirmations: 3, status: "success" } }
+    });
   };
 
   return (
@@ -94,6 +103,17 @@ const ProgressAlertContainer = ({
         >
           Set Progress Alert Status to Error by stackTempKey
         </Button.Outline>
+
+        <Button.Outline
+          size={"small"}
+          onClick={() => {
+            handleUpdateProgressAlertContent({
+              txHash: "0x123"
+            });
+          }}
+        >
+          Update Progress Alert Content by txHash
+        </Button.Outline>
       </Box>
 
       <Button.Outline
@@ -136,7 +156,9 @@ const mapDispatchToProps = dispatch => {
     addProgressAlert: value => dispatch(addProgressAlert(value)),
     toggleProgressAlert: value => dispatch(toggleProgressAlert(value)),
     setProgressAlertStatus: value => dispatch(setProgressAlertStatus(value)),
-    setProgressAlertTxHash: value => dispatch(setProgressAlertTxHash(value))
+    setProgressAlertTxHash: value => dispatch(setProgressAlertTxHash(value)),
+    updateProgressAlertContent: value =>
+      dispatch(updateProgressAlertContent(value))
   };
 };
 
