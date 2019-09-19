@@ -2,6 +2,8 @@ import React from "react";
 import { drizzleConnect } from "@drizzle/react-plugin";
 import { Box, Text, Button } from "rimble-ui";
 import { getProgressAlertsByVisibilityFilter } from "./../redux/selectors";
+import appConfig from "./../../appConfig";
+
 import {
   addProgressAlert,
   toggleProgressAlert,
@@ -11,6 +13,23 @@ import {
 } from "./../redux/actions";
 import { VISIBILITY_FILTERS } from "./../redux/constants";
 
+const ProgressAlerts = ({ progressAlerts }) => {
+  return (
+    <>
+      {progressAlerts && progressAlerts.length
+        ? progressAlerts.map((progressAlert, index) => {
+            return (
+              <ProgressAlert
+                key={progressAlert.id}
+                progressAlert={progressAlert}
+              />
+            );
+          })
+        : null}
+    </>
+  );
+};
+
 const ProgressAlert = ({ progressAlert }) => {
   return (
     <Text key={progressAlert.id}>
@@ -19,7 +38,7 @@ const ProgressAlert = ({ progressAlert }) => {
   );
 };
 
-const ProgressAlertContainer = ({
+const DebugButtons = ({
   progressAlerts,
   addProgressAlert,
   toggleProgressAlert,
@@ -54,7 +73,6 @@ const ProgressAlertContainer = ({
       content: { receipt: { confirmations: 3, status: "success" } }
     });
   };
-
   return (
     <Box>
       <Text>Progress Alerts:</Text>
@@ -124,16 +142,32 @@ const ProgressAlertContainer = ({
       >
         Set Progress Alert Tx Hash
       </Button.Outline>
-      {progressAlerts && progressAlerts.length
-        ? progressAlerts.map((progressAlert, index) => {
-            return (
-              <ProgressAlert
-                key={progressAlert.id}
-                progressAlert={progressAlert}
-              />
-            );
-          })
-        : null}
+    </Box>
+  );
+};
+
+const ProgressAlertContainer = ({
+  progressAlerts,
+  addProgressAlert,
+  toggleProgressAlert,
+  setProgressAlertStatus,
+  setProgressAlertTxHash,
+  updateProgressAlertContent
+}) => {
+  return (
+    <Box>
+      {appConfig.debugMode && (
+        <DebugButtons
+          progressAlerts={progressAlerts}
+          addProgressAlert={addProgressAlert}
+          toggleProgressAlert={toggleProgressAlert}
+          setProgressAlertStatus={setProgressAlertStatus}
+          setProgressAlertTxHash={setProgressAlertTxHash}
+          updateProgressAlertContent={updateProgressAlertContent}
+        />
+      )}
+
+      <ProgressAlerts progressAlerts={progressAlerts} />
     </Box>
   );
 };
@@ -167,3 +201,5 @@ export default drizzleConnect(
   mapStateToProps,
   mapDispatchToProps
 );
+
+drizzleConnect(DebugButtons, mapStateToProps, mapDispatchToProps);
