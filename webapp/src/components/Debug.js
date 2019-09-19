@@ -9,13 +9,12 @@ import TxSuccessModal from "./modals/TxSuccessModal";
 import TxErrorModal from "./modals/TxErrorModal";
 
 import {
-  getRimbleState,
   toggleWrongNetworkModal,
   toggleTxStartModal,
   toggleTxPendingModal,
   toggleTxSuccessModal,
   toggleTxErrorModal
-} from "../core/middleware";
+} from "./../core/redux/actions";
 
 const Debug = ({
   address,
@@ -120,10 +119,9 @@ const Debug = ({
  */
 
 const mapStateToProps = state => {
-  const rimble = getRimbleState(state); // TODO: not sure if this is needed or can go directly from state
   return {
     contracts: state.contracts,
-    rimble: rimble,
+    rimble: state.txModals,
     progressAlerts: state.progressAlerts
   };
 };

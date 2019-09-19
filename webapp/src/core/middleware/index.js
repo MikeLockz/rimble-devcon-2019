@@ -3,13 +3,17 @@ import { generateStore } from "@drizzle/store";
 import drizzleOptions from "../../drizzleOptions";
 import progressAlerts from "./../redux/reducers/progressAlerts";
 import rimbleVisibilityFilter from "./../redux/reducers/visibilityFilter";
+import { txModals } from "./../redux/reducers/txModals";
 import {
-  addProgressAlert,
-  toggleProgressAlert,
+  toggleTxStartModal,
+  toggleTxPendingModal,
+  toggleTxSuccessModal,
+  toggleTxErrorModal,
   setProgressAlertTxHash,
   setProgressAlertStatus,
   updateProgressAlertContent
 } from "./../redux/actions";
+import { getRimbleState } from "./../redux/selectors";
 
 // This middleware will just add the property "async dispatch"
 // to actions with the "async" propperty set to true
@@ -38,102 +42,6 @@ const asyncDispatchMiddleware = store => next => action => {
   flushQueue();
 
   return res;
-};
-
-// Set Rimble's initial UI state
-const initialRimble = {
-  showWrongNetworkModal: false,
-  showTxStartModal: false,
-  showTxPendingModal: false,
-  showTxSuccessModal: false,
-  showTxErrorModal: false
-};
-
-// Rimble's selectors
-export const getRimbleState = store => {
-  return store.rimble;
-};
-
-// Rimble's actions
-const RIMBLE_TOGGLE_NETWORK_MODAL = "RIMBLE_TOGGLE_NETWORK_MODAL";
-const RIMBLE_TOGGLE_TX_START_MODAL = "RIMBLE_TOGGLE_TX_START_MODAL";
-const RIMBLE_TOGGLE_TX_PENDING_MODAL = "RIMBLE_TOGGLE_TX_PENDING_MODAL";
-const RIMBLE_TOGGLE_TX_SUCCESS_MODAL = "RIMBLE_TOGGLE_TX_SUCCESS_MODAL";
-const RIMBLE_TOGGLE_TX_ERROR_MODAL = "RIMBLE_TOGGLE_TX_ERROR_MODAL";
-
-export const toggleWrongNetworkModal = value => {
-  return {
-    type: RIMBLE_TOGGLE_NETWORK_MODAL,
-    payload: { value }
-  };
-};
-export const toggleTxStartModal = value => {
-  return {
-    type: RIMBLE_TOGGLE_TX_START_MODAL,
-    payload: { value }
-  };
-};
-export const toggleTxPendingModal = value => {
-  return {
-    type: RIMBLE_TOGGLE_TX_PENDING_MODAL,
-    payload: { value }
-  };
-};
-export const toggleTxSuccessModal = value => {
-  return {
-    type: RIMBLE_TOGGLE_TX_SUCCESS_MODAL,
-    payload: { value }
-  };
-};
-export const toggleTxErrorModal = value => {
-  return {
-    type: RIMBLE_TOGGLE_TX_ERROR_MODAL,
-    payload: { value }
-  };
-};
-
-// Rimble modal reducers
-const rimbleReducer = (state = initialRimble, action) => {
-  switch (action.type) {
-    case RIMBLE_TOGGLE_NETWORK_MODAL: {
-      return {
-        ...state,
-        showWrongNetworkModal: action.payload.value
-      };
-    }
-    case RIMBLE_TOGGLE_TX_START_MODAL: {
-      return {
-        ...state,
-        showTxStartModal: action.payload.value
-      };
-    }
-    case RIMBLE_TOGGLE_TX_PENDING_MODAL: {
-      return {
-        ...state,
-        showTxStartModal: false,
-        showTxPendingModal: action.payload.value
-      };
-    }
-    case RIMBLE_TOGGLE_TX_SUCCESS_MODAL: {
-      return {
-        ...state,
-        showTxStartModal: false,
-        showTxPendingModal: false,
-        showTxSuccessModal: action.payload.value
-      };
-    }
-    case RIMBLE_TOGGLE_TX_ERROR_MODAL: {
-      return {
-        ...state,
-        showTxStartModal: false,
-        showTxPendingModal: false,
-        showTxSuccessModal: false,
-        showTxErrorModal: action.payload.value
-      };
-    }
-    default:
-      return state;
-  }
 };
 
 // Connecting Rimble actions to Drizzle's events
@@ -234,9 +142,9 @@ const contractEventNotifier = store => next => action => {
 //   progressAlerts: rimbleProgressAlertReducer
 // });
 const appReducers = {
-  rimble: rimbleReducer,
   progressAlerts: progressAlerts,
-  visibilityFilter: rimbleVisibilityFilter
+  visibilityFilter: rimbleVisibilityFilter,
+  txModals: txModals
 };
 // const appSagas = [appRootSaga];
 const appMiddlewares = [contractEventNotifier, asyncDispatchMiddleware];

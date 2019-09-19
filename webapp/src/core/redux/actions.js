@@ -4,7 +4,12 @@ import {
   RIMBLE_SET_PROGRESSALERT_STATUS,
   RIMBLE_SET_PROGRESSALERT_TX_HASH,
   RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
-  SET_FILTER
+  SET_FILTER,
+  RIMBLE_TOGGLE_NETWORK_MODAL,
+  RIMBLE_TOGGLE_TX_START_MODAL,
+  RIMBLE_TOGGLE_TX_PENDING_MODAL,
+  RIMBLE_TOGGLE_TX_SUCCESS_MODAL,
+  RIMBLE_TOGGLE_TX_ERROR_MODAL
 } from "./actionTypes";
 
 // Progress Alert actions
@@ -59,4 +64,36 @@ export const updateProgressAlertContent = ({
 
 export const setFilter = filter => {
   return { type: SET_FILTER, payload: { filter } };
+};
+
+// Transaction modal actions
+export const toggleWrongNetworkModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_NETWORK_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxStartModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_START_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxPendingModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_PENDING_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxSuccessModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_SUCCESS_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxErrorModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_ERROR_MODAL,
+    payload: { value }
+  };
 };

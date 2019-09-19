@@ -1,5 +1,10 @@
 import { VISIBILITY_FILTERS } from "./constants";
 
+export const getRimbleState = store => {
+  return store.rimble;
+};
+
+// ProgressAlert selectors
 export const getProgressAlertsState = store => store.progressAlerts;
 
 export const getProgressAlertList = store =>
