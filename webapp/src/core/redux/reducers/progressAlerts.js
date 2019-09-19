@@ -13,7 +13,6 @@ const initialRimbleProgressAlert = {
 
 // Managing progressAlert component's state
 export default function(state = initialRimbleProgressAlert, action) {
-  console.log("rimbleProgressAlertReducer", action);
   switch (action.type) {
     case RIMBLE_ADD_PROGRESSALERT: {
       const { id, content } = action.payload;
@@ -26,7 +25,8 @@ export default function(state = initialRimbleProgressAlert, action) {
             content,
             completed: false,
             status: "unknown",
-            hash: ""
+            txHash: "0x123",
+            stackTempKey: "123"
           }
         }
       };
@@ -45,27 +45,72 @@ export default function(state = initialRimbleProgressAlert, action) {
       };
     }
     case RIMBLE_SET_PROGRESSALERT_STATUS: {
-      const { status, id } = action.payload;
-      return {
-        ...state,
-        byIds: {
-          ...state.byIds,
-          [id]: {
-            ...state.byIds[id],
-            status: status
+      const { status, id, stackTempKey, txHash } = action.payload;
+      console.log(
+        "RIMBLE_SET_PROGRESSALERT_STATUS",
+        status,
+        id,
+        stackTempKey,
+        txHash
+      );
+      if (typeof id !== "undefined") {
+        return {
+          ...state,
+          byIds: {
+            ...state.byIds,
+            [id]: {
+              ...state.byIds[id],
+              status: status
+            }
           }
-        }
-      };
+        };
+      } else if (typeof stackTempKey !== "undefined") {
+        // Get the Id
+        const id = Object.keys(state.byIds).find(keys => {
+          return state.byIds[keys].stackTempKey === stackTempKey;
+        });
+
+        return {
+          ...state,
+          byIds: {
+            ...state.byIds,
+            [id]: {
+              ...state.byIds[id],
+              status: status
+            }
+          }
+        };
+      } else if (typeof txHash !== "undefined") {
+        // Get the Id
+        const id = Object.keys(state.byIds).find(keys => {
+          return state.byIds[keys].txHash === txHash;
+        });
+        console.log("typeof txHash", id);
+
+        return {
+          ...state,
+          byIds: {
+            ...state.byIds,
+            [id]: {
+              ...state.byIds[id],
+              status: status
+            }
+          }
+        };
+      } else {
+        return state;
+      }
     }
     case RIMBLE_SET_PROGRESSALERT_TX_HASH: {
-      const { hash, id } = action.payload;
+      const { stackTempKey, txHash, id } = action.payload;
       return {
         ...state,
         byIds: {
           ...state.byIds,
           [id]: {
             ...state.byIds[id],
-            hash: hash
+            txHash: txHash,
+            stackTempKey: stackTempKey
           }
         }
       };

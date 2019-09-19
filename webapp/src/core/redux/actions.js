@@ -9,7 +9,6 @@ import {
 // Progress Alert actions
 let nextProgressAlertId = -1; // We want the first id to be 0 to match Drizzle
 export const addProgressAlert = content => {
-  console.log("addProgressAlert content", content);
   return {
     type: RIMBLE_ADD_PROGRESSALERT,
     payload: {
@@ -20,30 +19,31 @@ export const addProgressAlert = content => {
 };
 
 export const toggleProgressAlert = id => {
-  console.log("toggleProgressAlert", id);
   return {
     type: RIMBLE_TOGGLE_PROGRESSALERT,
     payload: { id }
   };
 };
 
-export const setProgressAlertStatus = ({ status, id }) => {
-  console.log("setProgressAlertStatus", status, id);
+export const setProgressAlertStatus = ({
+  status,
+  id,
+  stackTempKey,
+  txHash
+}) => {
   return {
     type: RIMBLE_SET_PROGRESSALERT_STATUS,
-    payload: { status, id }
+    payload: { status, id, stackTempKey, txHash }
   };
 };
 
-export const setProgressAlertTxHash = ({ hash, id }) => {
-  console.log("setProgressAlertTxHash", hash, id);
+export const setProgressAlertTxHash = ({ stackTempKey, txHash, id }) => {
   return {
     type: RIMBLE_SET_PROGRESSALERT_TX_HASH,
-    payload: { hash, id }
+    payload: { stackTempKey, txHash, id }
   };
 };
 
 export const setFilter = filter => {
-  console.log("setFilter", filter);
   return { type: SET_FILTER, payload: { filter } };
 };

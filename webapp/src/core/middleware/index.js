@@ -3,7 +3,12 @@ import { generateStore } from "@drizzle/store";
 import drizzleOptions from "../../drizzleOptions";
 import progressAlerts from "./../redux/reducers/progressAlerts";
 import rimbleVisibilityFilter from "./../redux/reducers/visibilityFilter";
-import { addProgressAlert, toggleProgressAlert } from "./../redux/actions";
+import {
+  addProgressAlert,
+  toggleProgressAlert,
+  setProgressAlertTxHash,
+  setProgressAlertStatus
+} from "./../redux/actions";
 
 // This middleware will just add the property "async dispatch"
 // to actions with the "async" propperty set to true
@@ -45,7 +50,6 @@ const initialRimble = {
 
 // Rimble's selectors
 export const getRimbleState = store => {
-  // console.log("getRimbleState", store);
   return store.rimble;
 };
 
@@ -90,11 +94,6 @@ export const toggleTxErrorModal = value => {
 // Rimble modal reducers
 const rimbleReducer = (state = initialRimble, action) => {
   switch (action.type) {
-    // case RIMBLE_INITIATE_TX: {
-    //   return {
-    //     ...state,
-    //   }
-    // }
     case RIMBLE_TOGGLE_NETWORK_MODAL: {
       return {
         ...state,
@@ -110,18 +109,24 @@ const rimbleReducer = (state = initialRimble, action) => {
     case RIMBLE_TOGGLE_TX_PENDING_MODAL: {
       return {
         ...state,
+        showTxStartModal: false,
         showTxPendingModal: action.payload.value
       };
     }
     case RIMBLE_TOGGLE_TX_SUCCESS_MODAL: {
       return {
         ...state,
+        showTxStartModal: false,
+        showTxPendingModal: false,
         showTxSuccessModal: action.payload.value
       };
     }
     case RIMBLE_TOGGLE_TX_ERROR_MODAL: {
       return {
         ...state,
+        showTxStartModal: false,
+        showTxPendingModal: false,
+        showTxSuccessModal: false,
         showTxErrorModal: action.payload.value
       };
     }
@@ -132,8 +137,7 @@ const rimbleReducer = (state = initialRimble, action) => {
 
 // Connecting Rimble actions to Drizzle's events
 const contractEventNotifier = store => next => action => {
-  console.log("contractEventNotifier", action);
-
+  console.log("reducers: ", action);
   // Tx started but not confirmed or rejected
   if (action.type === "PUSH_TO_TXSTACK") {
     // Update UI
@@ -141,19 +145,31 @@ const contractEventNotifier = store => next => action => {
   }
 
   if (action.type === "SEND_CONTRACT_TX") {
+    // Add linking hash property to progressAlert
+    store.dispatch(
+      setProgressAlertTxHash({
+        stackTempKey: action.stackTempKey,
+        id: action.stackId
+      })
+    );
+    store.dispatch(
+      setProgressAlertStatus({ status: "initiated", id: action.stackId })
+    );
   }
 
   if (action.type === "TX_BROADCASTED") {
     // Update UI
-    store.dispatch(toggleTxStartModal(false));
     store.dispatch(toggleTxPendingModal(true));
 
-    window.progressAlertProvider.addMessage("Processing", {
-      message: "Attempting to ",
-      transaction: action.txHash,
-      timeEstimate: 10,
-      error: {}
-    });
+    store.dispatch(
+      setProgressAlertTxHash({
+        txHash: action.txHash,
+        id: action.stackId
+      })
+    );
+    store.dispatch(
+      setProgressAlertStatus({ status: "pending", id: action.stackId })
+    );
   }
 
   //
@@ -166,11 +182,20 @@ const contractEventNotifier = store => next => action => {
 
   // tx is successful
   if (action.type === "TX_SUCCESSFUL") {
-    store.dispatch(toggleTxPendingModal(false));
     store.dispatch(toggleTxSuccessModal(true));
+    store.dispatch(
+      setProgressAlertStatus({ status: "success", txHash: action.txHash })
+    );
   }
 
-  if (action.type === "SHOW_CONFIRMATION_MODAL") {
+  if (action.type === "TX_ERROR") {
+    store.dispatch(toggleTxErrorModal(true));
+    store.dispatch(
+      setProgressAlertStatus({
+        status: "error",
+        stackTempKey: action.stackTempKey
+      })
+    );
   }
   return next(action);
 };

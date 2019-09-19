@@ -11,7 +11,6 @@ import {
 import { VISIBILITY_FILTERS } from "./../redux/constants";
 
 const ProgressAlert = ({ progressAlert }) => {
-  console.log("ProgressAlert", progressAlert);
   return (
     <Text key={progressAlert.id}>
       <pre>{JSON.stringify(progressAlert, null, 2)}</pre>
@@ -34,8 +33,13 @@ const ProgressAlertContainer = ({
     toggleProgressAlert(0);
   };
 
-  const handleSetProgressAlertStatus = status => {
-    setProgressAlertStatus({ status: status, id: 0 });
+  const handleSetProgressAlertStatus = ({
+    status,
+    id,
+    stackTempKey,
+    txHash
+  }) => {
+    setProgressAlertStatus({ status, id, stackTempKey, txHash });
   };
 
   const handleSetProgressAlertTxHash = hash => {
@@ -55,7 +59,7 @@ const ProgressAlertContainer = ({
         <Button.Outline
           size={"small"}
           onClick={() => {
-            handleSetProgressAlertStatus("started");
+            handleSetProgressAlertStatus({ status: "started", id: 0 });
           }}
         >
           Set Progress Alert Status to started
@@ -63,18 +67,32 @@ const ProgressAlertContainer = ({
         <Button.Outline
           size={"small"}
           onClick={() => {
-            handleSetProgressAlertStatus("pending");
+            handleSetProgressAlertStatus({
+              status: "pending",
+              txHash: "0x123"
+            });
           }}
         >
-          Set Progress Alert Status to pending
+          Set Progress Alert Status to pending by txHash
         </Button.Outline>
         <Button.Outline
           size={"small"}
           onClick={() => {
-            handleSetProgressAlertStatus("success");
+            handleSetProgressAlertStatus({ status: "success", id: 0 });
           }}
         >
           Set Progress Alert Status to Success
+        </Button.Outline>
+        <Button.Outline
+          size={"small"}
+          onClick={() => {
+            handleSetProgressAlertStatus({
+              status: "error",
+              stackTempKey: "123"
+            });
+          }}
+        >
+          Set Progress Alert Status to Error by stackTempKey
         </Button.Outline>
       </Box>
 
