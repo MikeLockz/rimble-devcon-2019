@@ -34,16 +34,6 @@ function BuyCard({ token, drizzle, drizzleState, address, preflightCheck }) {
               ${token.usdPrice} USD
             </Text>
           </Flex>
-
-          {/* <Button
-            mt={"26px"}
-            mb={2}
-            onClick={() => {
-              preflightCheck({ token, drizzle, address });
-            }}
-          >
-            Buy
-          </Button> */}
           {/* Use drizzle's ContractForm component, with custom renderprop for styling. This way we can get contract events from the redux store */}
           {drizzleState ? (
             <ContractForm
@@ -61,11 +51,13 @@ function BuyCard({ token, drizzle, drizzleState, address, preflightCheck }) {
                     name={"recepient"} // set the name to the method's argument key
                     onClick={e => {
                       e.target.value = drizzleState.accounts[0]; // set the recepient contract argument after drizzleState is available
-                      console.log("drizzleState", drizzleState);
+
                       const callback = e => {
                         handleInputChange(e);
                       };
                       const event = e;
+
+                      // Passing to intercepting function to make sure network and balance will allow tx to happen
                       preflightCheck({
                         token,
                         drizzle,

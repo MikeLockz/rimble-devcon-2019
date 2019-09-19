@@ -1,6 +1,8 @@
 import {
   RIMBLE_ADD_PROGRESSALERT,
-  RIMBLE_TOGGLE_PROGRESSALERT
+  RIMBLE_TOGGLE_PROGRESSALERT,
+  RIMBLE_SET_PROGRESSALERT_STATUS,
+  RIMBLE_SET_PROGRESSALERT_TX_HASH
 } from "../actionTypes";
 
 // Initialize rimbleAlert store
@@ -22,7 +24,9 @@ export default function(state = initialRimbleProgressAlert, action) {
           ...state.byIds,
           [id]: {
             content,
-            completed: false
+            completed: false,
+            status: "unknown",
+            hash: ""
           }
         }
       };
@@ -36,6 +40,32 @@ export default function(state = initialRimbleProgressAlert, action) {
           [id]: {
             ...state.byIds[id],
             completed: !state.byIds[id].completed
+          }
+        }
+      };
+    }
+    case RIMBLE_SET_PROGRESSALERT_STATUS: {
+      const { status, id } = action.payload;
+      return {
+        ...state,
+        byIds: {
+          ...state.byIds,
+          [id]: {
+            ...state.byIds[id],
+            status: status
+          }
+        }
+      };
+    }
+    case RIMBLE_SET_PROGRESSALERT_TX_HASH: {
+      const { hash, id } = action.payload;
+      return {
+        ...state,
+        byIds: {
+          ...state.byIds,
+          [id]: {
+            ...state.byIds[id],
+            hash: hash
           }
         }
       };

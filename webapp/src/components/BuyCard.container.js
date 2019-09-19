@@ -9,8 +9,19 @@ import { isContext } from "vm";
 import { DrizzleContext } from "@drizzle/react-plugin";
 
 function BuyCardContainer({ token, address, addProgressAlert }) {
+  // ToDo: Can this be refactored and put someplace else more reusable?
   const preflightCheck = ({ token, drizzle, address, callback, event }) => {
     console.log("preflightCheck", token, drizzle);
+    // Check that there is a valid network
+
+    const stackId = drizzle.contracts[token.id].methods["mint"].cacheSend(
+      address,
+      {
+        from: address
+      }
+    );
+
+    // Check that the balance is high enough
     addProgressAlert({ token });
     // can call redux dispatch add action here that we have token details
     callback(event);
