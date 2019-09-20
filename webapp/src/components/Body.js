@@ -41,11 +41,21 @@ function Body({ drizzle, drizzleState, store }) {
               store={store}
             />
           ),
-          Lesson1: <Lesson1 address={address} store={store} />,
-          Lesson2: <Lesson2 address={address} store={store} />,
-          Lesson3: <Lesson3 address={address} store={store} />,
-          Lesson4: <Lesson4 address={address} store={store} />,
-          Lesson5: <Lesson5 address={address} store={store} />
+          Lesson1: (
+            <Lesson1 address={address} store={store} setRoute={setRoute} />
+          ),
+          Lesson2: (
+            <Lesson2 address={address} store={store} setRoute={setRoute} />
+          ),
+          Lesson3: (
+            <Lesson3 address={address} store={store} setRoute={setRoute} />
+          ),
+          Lesson4: (
+            <Lesson4 address={address} store={store} setRoute={setRoute} />
+          ),
+          Lesson5: (
+            <Lesson5 address={address} store={store} setRoute={setRoute} />
+          )
         }[route]
       }
 

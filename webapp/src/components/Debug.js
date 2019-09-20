@@ -19,7 +19,6 @@ import {
 const Debug = ({
   address,
   rimble,
-  progressAlerts,
   toggleWrongNetworkModal,
   toggleTxStartModal,
   toggleTxPendingModal,
@@ -121,8 +120,7 @@ const Debug = ({
 const mapStateToProps = state => {
   return {
     contracts: state.contracts,
-    rimble: state.txModals,
-    progressAlerts: state.progressAlerts
+    rimble: state.txModals
   };
 };
 const mapDispatchToProps = dispatch => {

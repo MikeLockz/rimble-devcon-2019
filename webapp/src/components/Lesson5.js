@@ -1,29 +1,42 @@
 import React from "react";
-import Debug from "./Debug";
 import HeaderNav from "./HeaderNav";
-import RainbowBox from "./RainbowBox"
+import RainbowBox from "./RainbowBox";
+import { drizzleConnect } from "@drizzle/react-plugin";
+import { toggleTxSuccessModal } from "./../core/redux/actions";
+import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 
-
-import { Heading, Box, Flex, Button, Pill, Text, Link, Card } from "rimble-ui";
-
-function Lesson5({ address, store }, props) {
+function Lesson5({ setRoute, toggleTxSuccessModal }) {
   return (
     <Box>
       <HeaderNav />
       <Box maxWidth={"1180px"} p={3} mx={"auto"}>
         <Card borderRadius={"15px 15px 15px 15px"} p={0} mx={2} my={2}>
-          <RainbowBox borderRadius={"15px 15px 0px 0px"} height={"10px"} borderColor={"#d6d6d6"}/>
+          <RainbowBox
+            borderRadius={"15px 15px 0px 0px"}
+            height={"10px"}
+            borderColor={"#d6d6d6"}
+          />
           <Flex alignItems="center">
-            <Box width={1/2} style={{ textAlign: 'left' }}>
-              <Button.Text ml={3} mt={3}>Previous</Button.Text>
+            <Box width={1 / 2} style={{ textAlign: "left" }}>
+              <Button.Text
+                ml={3}
+                mt={3}
+                onClick={() => {
+                  setRoute("Lesson4");
+                }}
+              >
+                Previous
+              </Button.Text>
             </Box>
-            <Box width={1/2} style={{ textAlign: 'right' }}>
-              <Button.Text mr={3} mt={3}>Next</Button.Text>
-            </Box>
+            <Box width={1 / 2} style={{ textAlign: "right" }}></Box>
           </Flex>
-          <Box style={{ textAlign: 'center' }}>
-          <Pill mb={3} color="primary">Lesson 5</Pill>
-            <Heading.h1 mb={3} textAlign="center">Design for next steps</Heading.h1>
+          <Box style={{ textAlign: "center" }}>
+            <Pill mb={3} color="primary">
+              Lesson 5
+            </Pill>
+            <Heading.h1 mb={3} textAlign="center">
+              Design for next steps
+            </Heading.h1>
             <Text fontSize="5" textAlign="center">
               • Consider the post-purchase experience
             </Text>
@@ -37,8 +50,15 @@ function Lesson5({ address, store }, props) {
               • Support the eco-system
             </Text>
           </Box>
-          <Box my={4} style={{ textAlign: 'center' }}>
-            <Button size={"medium"} mr={3} mb={3}>
+          <Box my={4} style={{ textAlign: "center" }}>
+            <Button
+              size={"medium"}
+              mr={3}
+              mb={3}
+              onClick={() => {
+                toggleTxSuccessModal(true);
+              }}
+            >
               Show transaction success
             </Button>
           </Box>
@@ -48,4 +68,19 @@ function Lesson5({ address, store }, props) {
   );
 }
 
-export default Lesson5;
+/*
+ * Export connected component.
+ */
+
+const mapStateToProps = state => {
+  return {
+    rimble: state.txModals
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value))
+  };
+};
+
+export default drizzleConnect(Lesson5, mapStateToProps, mapDispatchToProps);
