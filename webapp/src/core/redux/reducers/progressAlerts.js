@@ -53,7 +53,15 @@ export default function(state = initialRimbleProgressAlert, action) {
         byIds: {
           ...state.byIds,
           [id]: {
-            content,
+            content: {
+              token: {
+                id: "DevConAttendance",
+                name: "Conference ticket",
+                ethPrice: "5.63",
+                usdPrice: "1,000.00",
+                image: "conference.png"
+              }
+            },
             completed: false,
             status: "unknown",
             txHash: "0x123",
@@ -76,46 +84,28 @@ export default function(state = initialRimbleProgressAlert, action) {
       };
     }
     case RIMBLE_SET_PROGRESSALERT_STATUS: {
-      const { status, id, stackTempKey, txHash } = action.payload;
-      if (typeof id !== "undefined") {
+      const { status, id, txHash, stackTempKey } = action.payload;
+      const pa = getProgressAlertPosition({ state, id, txHash, stackTempKey });
+
+      if (status === "pending") {
         return {
           ...state,
           byIds: {
             ...state.byIds,
-            [id]: {
-              ...state.byIds[id],
-              status: status
+            [pa]: {
+              ...state.byIds[pa],
+              status: status,
+              timeEstimate: 10
             }
           }
         };
-      } else if (typeof stackTempKey !== "undefined") {
-        // Get the Id
-        const id = Object.keys(state.byIds).find(keys => {
-          return state.byIds[keys].stackTempKey === stackTempKey;
-        });
-
+      } else if (status) {
         return {
           ...state,
           byIds: {
             ...state.byIds,
-            [id]: {
-              ...state.byIds[id],
-              status: status
-            }
-          }
-        };
-      } else if (typeof txHash !== "undefined") {
-        // Get the Id
-        const id = Object.keys(state.byIds).find(keys => {
-          return state.byIds[keys].txHash === txHash;
-        });
-
-        return {
-          ...state,
-          byIds: {
-            ...state.byIds,
-            [id]: {
-              ...state.byIds[id],
+            [pa]: {
+              ...state.byIds[pa],
               status: status
             }
           }

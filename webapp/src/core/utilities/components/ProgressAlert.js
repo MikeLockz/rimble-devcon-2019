@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { Box, Flex, Icon, Text, Button } from "rimble-ui";
 import styled from "styled-components";
 
-function ProgressAlert(props) {
+function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
   const [progress, setProgress] = useState(0); // percent of estimated time elapsed
   const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(
     props.timeEstimate
   );
-  const [remainingTime, setRemainingTime] = useState(props.timeEstimate); // estimated seconds until complete
+  const [remainingTime, setRemainingTime] = useState(
+    progressAlert.timeEstimate
+  ); // estimated seconds until complete
   const [timeString, setTimeString] = useState("calculating..."); // human-friendly time until complete
   const [delay] = useState(1000); // set "tick" time for timer
   const [status, setStatus] = useState("pending");
@@ -17,11 +20,12 @@ function ProgressAlert(props) {
   useEffect(() => {
     // console.log("props", props);
     // console.log("progressAlert", props);
-    setRemainingTime(props.timeEstimate);
-    setEstimatedCompletionTime(props.timeEstimate);
-    setError(props.error);
-    checkStatus();
-  }, [props.timeEstimate, props.error, props.transaction]);
+    setRemainingTime(progressAlert.timeEstimate);
+    setEstimatedCompletionTime(progressAlert.timeEstimate);
+    setError(progressAlert.error);
+    setStatus(progressAlert.status);
+    // checkStatus();
+  }, [progressAlert]);
 
   const resetProgressAlert = () => {
     setProgress(0);
@@ -30,13 +34,13 @@ function ProgressAlert(props) {
 
   const checkStatus = () => {
     // console.log("Object.keys(error).length", Object.keys(error).length);
-    if (Object.keys(error).length !== 0) {
-      setStatus("error");
-    } else if (remainingTime === 0) {
-      setStatus("success");
-    } else {
-      setStatus("pending");
-    }
+    // if (Object.keys(error).length !== 0) {
+    //   setStatus("error");
+    // } else if (remainingTime === 0) {
+    //   setStatus("success");
+    // } else {
+    //   setStatus("pending");
+    // }
     // console.log("status", status);
   };
 
@@ -111,9 +115,9 @@ function ProgressAlert(props) {
     <StyledProgressAlert>
       <Box>
         <ProgressBar
-          className={status === "error" ? "hasError" : ""}
+          className={status}
           height={"8px"}
-          width={status === "error" ? "100%" : progress + "%"}
+          width={status === "pending" ? progress + "%" : "100%"}
         />
       </Box>
       <Flex p={3} alignItems={"center"} justifyContent={"space-between"}>
@@ -162,11 +166,13 @@ function ProgressAlert(props) {
 
           <Flex flexDirection={"column"}>
             <Text fontWeight={"600"} color={"#fff"}>
-              {props.message}
+              Sending you a {progressAlert.content.token.name}
             </Text>
 
             <Text fontSize={"12px"} color={"#BCBCBC"}>
-              {status === "error" ? "Error: " + error.message : null}
+              {status === "error"
+                ? "Error: " + progressAlert.content.error
+                : null}
               {status === "pending" ? timeString : null}
               {status === "success" ? "Complete!" : null}
             </Text>
@@ -177,8 +183,8 @@ function ProgressAlert(props) {
           <Button.Outline
             mainColor={"white"}
             onClick={e => {
-              props.closeFunction(e);
-              resetProgressAlert();
+              toggleProgressAlert(progressAlert.id);
+              // resetProgressAlert();
             }}
           >
             Undo
@@ -190,8 +196,8 @@ function ProgressAlert(props) {
             mainColor="primary"
             p={0}
             onClick={e => {
-              props.closeFunction(e);
-              resetProgressAlert();
+              toggleProgressAlert(progressAlert.id);
+              // resetProgressAlert();
             }}
           >
             <Icon name="Close" />
@@ -223,8 +229,11 @@ const ProgressBar = styled(Box)`
     );
     transform: matrix(-1, 0, 0, 1, 0, 0);
   }
-  &.hasError {
+  &.error {
     background: ${props => props.theme.colors.danger};
+  }
+  &.success {
+    background: ${props => props.theme.colors.success};
   }
 `;
 
@@ -247,5 +256,19 @@ function useInterval(callback, delay) {
     }
   }, [delay]);
 }
+
+ProgressAlert.propTypes = {
+  progressAlert: PropTypes.shape({
+    message: PropTypes.string,
+    timeEstime: PropTypes.number,
+    error: PropTypes.shape({
+      message: PropTypes.string
+    }),
+    transaction: PropTypes.shape({
+      txHash: PropTypes.string
+    })
+  }),
+  toggleProgressAlert: PropTypes.func
+};
 
 export default ProgressAlert;

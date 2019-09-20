@@ -14,12 +14,12 @@ function BuyCardContainer({ token, address, addProgressAlert }) {
     console.log("preflightCheck", token, drizzle);
     // Check that there is a valid network
 
-    const stackId = drizzle.contracts[token.id].methods["mint"].cacheSend(
-      address,
-      {
-        from: address
-      }
-    );
+    // const stackId = drizzle.contracts[token.id].methods["mint"].cacheSend(
+    //   address,
+    //   {
+    //     from: address
+    //   }
+    // );
 
     // Check that the balance is high enough
     addProgressAlert({ token });
