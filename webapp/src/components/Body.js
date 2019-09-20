@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-
+import HeaderNav from "./HeaderNav";
 import Landing from "./Landing";
 import Lesson1 from "./Lesson1";
 import Lesson2 from "./Lesson2";
@@ -13,7 +13,7 @@ import ProgressAlertUtil from "./../core/utilities/ProgressAlertUtil";
 import ProgressAlertContainer from "../core/utilities/ProgressAlert.container";
 import Debug from "./Debug";
 
-import { Box } from "rimble-ui";
+import { Box, Flex } from "rimble-ui";
 
 import backgroundImage from "./../images/background.jpg";
 
@@ -33,36 +33,42 @@ function Body({ drizzle, drizzleState, store }) {
 
   return (
     <BodyBox height={"100%"}>
-      {
+      <Flex
+        flexDirection={"column"}
+        justifyContent={"space-between"}
+        height={"100%"}
+      >
+        <HeaderNav drizzle={drizzle} drizzleState={drizzleState} />
         {
-          Home: (
-            <Landing
-              drizzle={drizzle}
-              drizzleState={drizzleState}
-              store={store}
-            />
-          ),
-          Lesson1: (
-            <Lesson1 address={address} store={store} setRoute={setRoute} />
-          ),
-          Lesson2: (
-            <Lesson2 address={address} store={store} setRoute={setRoute} />
-          ),
-          Lesson3: (
-            <Lesson3 address={address} store={store} setRoute={setRoute} />
-          ),
-          Lesson4: (
-            <Lesson4 address={address} store={store} setRoute={setRoute} />
-          ),
-          Lesson5: (
-            <Lesson5 address={address} store={store} setRoute={setRoute} />
-          )
-        }[route]
-      }
+          {
+            Home: (
+              <Landing
+                drizzle={drizzle}
+                drizzleState={drizzleState}
+                store={store}
+              />
+            ),
+            Lesson1: (
+              <Lesson1 address={address} store={store} setRoute={setRoute} />
+            ),
+            Lesson2: (
+              <Lesson2 address={address} store={store} setRoute={setRoute} />
+            ),
+            Lesson3: (
+              <Lesson3 address={address} store={store} setRoute={setRoute} />
+            ),
+            Lesson4: (
+              <Lesson4 address={address} store={store} setRoute={setRoute} />
+            ),
+            Lesson5: (
+              <Lesson5 address={address} store={store} setRoute={setRoute} />
+            )
+          }[route]
+        }
+        <LessonNavigation setRoute={setRoute} route={route} />
+      </Flex>
 
       {/* <ProgressAlertUtil drizzleState={drizzleState} /> */}
-
-      <LessonNavigation setRoute={setRoute} />
 
       <Debug address={address} store={store} />
       <ProgressAlertContainer />

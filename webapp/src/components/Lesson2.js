@@ -1,5 +1,4 @@
 import React from "react";
-import HeaderNav from "./HeaderNav";
 import RainbowBox from "./RainbowBox";
 import { drizzleConnect } from "@drizzle/react-plugin";
 import {
@@ -11,7 +10,6 @@ import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 function Lesson2({ setRoute, toggleWrongNetworkModal, toggleTxSuccessModal }) {
   return (
     <Box>
-      <HeaderNav />
       <Box maxWidth={"1180px"} p={3} mx={"auto"}>
         <Card borderRadius={"15px 15px 15px 15px"} p={0} mx={2} my={2}>
           <RainbowBox

@@ -1,14 +1,12 @@
 import React from "react";
-import Debug from "./Debug";
-import HeaderNav from "./HeaderNav";
 import RainbowBox from "./RainbowBox";
-
+import { drizzleConnect } from "@drizzle/react-plugin";
+import { toggleTxSuccessModal } from "./../core/redux/actions";
 import { Heading, Box, Flex, Button, Pill, Text, Link, Card } from "rimble-ui";
 
-function Lesson4({ address, store, setRoute }, props) {
+function Lesson4({ setRoute, toggleTxSuccessModal }) {
   return (
     <Box>
-      <HeaderNav />
       <Box maxWidth={"1180px"} p={3} mx={"auto"}>
         <Card borderRadius={"15px 15px 15px 15px"} p={0} mx={2} my={2}>
           <RainbowBox
@@ -74,4 +72,14 @@ function Lesson4({ address, store, setRoute }, props) {
   );
 }
 
-export default Lesson4;
+/*
+ * Export connected component.
+ */
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value))
+  };
+};
+
+export default drizzleConnect(Lesson4, null, mapDispatchToProps);

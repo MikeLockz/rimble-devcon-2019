@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import HeaderNav from "./HeaderNav";
 import BuyCardContainer from "./BuyCard.container";
 
 import ConnectionBanner from "@rimble/connection-banner";
@@ -38,7 +37,6 @@ function Landing({ drizzle, drizzleState, store }, props) {
 
   return (
     <Box>
-      <HeaderNav drizzle={drizzle} drizzleState={drizzleState} />
       {!drizzleState && (
         <Box m={4}>
           <ConnectionBanner
@@ -61,15 +59,11 @@ function Landing({ drizzle, drizzleState, store }, props) {
             );
           })}
         </Flex>
-        <Heading.h4 mt={4} mb={2}>
-          About
-        </Heading.h4>
-
-        <Text mb={3} />
-
-        <Link href="https://rimble.consensys.design" target="_blank">
-          Learn more about Rimble
-        </Link>
+        <Flex justifyContent={"flex-end"}>
+          <Link href="https://rimble.consensys.design" target="_blank">
+            Learn more about Rimble
+          </Link>
+        </Flex>
       </Box>
     </Box>
   );
