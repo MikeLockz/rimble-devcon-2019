@@ -4,30 +4,30 @@ import { Box } from "rimble-ui";
 import { getProgressAlertsByVisibilityFilter } from "./../redux/selectors";
 import appConfig from "./../../appConfig";
 import ProgressAlertDebug from "./ProgressAlertDebug";
-import ProgressAlert from "./components/ProgressAlert";
+import ProgressAlert, {
+  MultipleProgressAlerts
+} from "./components/ProgressAlert";
 import { toggleProgressAlert } from "./../redux/actions";
-import { VISIBILITY_FILTERS } from "./../redux/constants";
 
 const ProgressAlerts = ({ progressAlerts, toggleProgressAlert }) => {
   const handleToggleProgressAlert = stackId => {
     console.log("handleToggleProgressAlert", stackId);
     toggleProgressAlert(stackId);
   };
-  return (
-    <>
-      {progressAlerts && progressAlerts.length
-        ? progressAlerts.map((progressAlert, index) => {
-            return (
-              <ProgressAlert
-                key={`pa-${progressAlert.id}`}
-                progressAlert={progressAlert}
-                toggleProgressAlert={handleToggleProgressAlert}
-              />
-            );
-          })
-        : null}
-    </>
-  );
+
+  if (progressAlerts && progressAlerts.length === 1) {
+    return (
+      <ProgressAlert
+        key={`pa-${progressAlerts[0].id}`}
+        progressAlert={progressAlerts[0]}
+        toggleProgressAlert={handleToggleProgressAlert}
+      />
+    );
+  }
+  if (progressAlerts.length > 1) {
+    return <MultipleProgressAlerts count={progressAlerts.length} />;
+  }
+  return null;
 };
 
 const ProgressAlertContainer = ({ progressAlerts, toggleProgressAlert }) => {
@@ -46,10 +46,9 @@ const ProgressAlertContainer = ({ progressAlerts, toggleProgressAlert }) => {
  * Export connected component.
  */
 const mapStateToProps = state => {
-  const { visibilityFilter } = state;
   const progressAlerts = getProgressAlertsByVisibilityFilter(
     state,
-    visibilityFilter
+    "incomplete"
   );
   return {
     progressAlerts: progressAlerts

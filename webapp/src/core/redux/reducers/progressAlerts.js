@@ -87,18 +87,61 @@ export default function(state = initialRimbleProgressAlert, action) {
       const { status, id, txHash, stackTempKey } = action.payload;
       const pa = getProgressAlertPosition({ state, id, txHash, stackTempKey });
 
-      if (status === "pending") {
-        return {
-          ...state,
-          byIds: {
-            ...state.byIds,
-            [pa]: {
-              ...state.byIds[pa],
-              status: status,
-              timeEstimate: 10
+      switch (status) {
+        case "started":
+          return {
+            ...state,
+            byIds: {
+              ...state.byIds,
+              [pa]: {
+                ...state.byIds[pa],
+                status: status
+              }
             }
-          }
-        };
+          };
+        case "pending":
+          return {
+            ...state,
+            byIds: {
+              ...state.byIds,
+              [pa]: {
+                ...state.byIds[pa],
+                status: status,
+                timeEstimate: 10
+              }
+            }
+          };
+        case "success":
+          return {
+            ...state,
+            byIds: {
+              ...state.byIds,
+              [pa]: {
+                ...state.byIds[pa],
+                status: status,
+                timeEstimate: null,
+                completed: true
+              }
+            }
+          };
+        case "error":
+          return {
+            ...state,
+            byIds: {
+              ...state.byIds,
+              [pa]: {
+                ...state.byIds[pa],
+                status: status,
+                timeEstimate: null,
+                completed: true
+              }
+            }
+          };
+        default:
+          return state;
+      }
+      if (status === "pending") {
+      } else if (status === "success") {
       } else if (status) {
         return {
           ...state,

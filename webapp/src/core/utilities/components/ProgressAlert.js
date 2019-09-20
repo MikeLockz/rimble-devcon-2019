@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { Box, Flex, Icon, Text, Button } from "rimble-ui";
+import { Box, Flex, Icon, Text, Button, Image } from "rimble-ui";
 import styled from "styled-components";
+import transferringIcon from "./multipleTxIcon.svg";
 
 function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
   const [progress, setProgress] = useState(0); // percent of estimated time elapsed
@@ -102,7 +103,7 @@ function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
   // Calls functions to update time and percent values
   const interval = useInterval(
     () => {
-      if (status !== "error") {
+      if (progressAlert.status !== "error") {
         calculateTimeRemaining();
         calculatePercentComplete();
         checkStatus();
@@ -197,7 +198,6 @@ function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
             p={0}
             onClick={e => {
               toggleProgressAlert(progressAlert.id);
-              // resetProgressAlert();
             }}
           >
             <Icon name="Close" />
@@ -256,6 +256,42 @@ function useInterval(callback, delay) {
     }
   }, [delay]);
 }
+
+export const MultipleProgressAlerts = ({ count }) => {
+  return (
+    <StyledProgressAlert>
+      <Flex p={3} alignItems={"center"} justifyContent={"space-between"}>
+        <Flex alignItems={"center"}>
+          <Flex
+            height={"32px"}
+            width={"32px"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            mr={3}
+          >
+            <Image src={transferringIcon} />
+          </Flex>
+
+          <Flex flexDirection={"column"}>
+            <Text fontWeight={"600"} color={"#fff"}>
+              Transferring {count} tickets
+            </Text>
+          </Flex>
+        </Flex>
+
+        <Button.Outline
+          mainColor={"white"}
+          // onClick={e => {
+          //   toggleProgressAlert(progressAlert.id);
+          //   // resetProgressAlert();
+          // }}
+        >
+          Track
+        </Button.Outline>
+      </Flex>
+    </StyledProgressAlert>
+  );
+};
 
 ProgressAlert.propTypes = {
   progressAlert: PropTypes.shape({

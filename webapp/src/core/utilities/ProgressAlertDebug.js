@@ -2,9 +2,6 @@ import React from "react";
 import { drizzleConnect } from "@drizzle/react-plugin";
 import { Box, Text, Button } from "rimble-ui";
 import { getProgressAlertsByVisibilityFilter } from "./../redux/selectors";
-import appConfig from "./../../appConfig";
-
-import ProgressAlert from "./components/ProgressAlert";
 
 import {
   addProgressAlert,
