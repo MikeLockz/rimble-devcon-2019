@@ -1,11 +1,11 @@
 import React from "react";
-import Debug from "./Debug";
 import HeaderNav from "./HeaderNav";
 import RainbowBox from "./RainbowBox";
-
+import { drizzleConnect } from "@drizzle/react-plugin";
+import { toggleTxSuccessModal } from "./../core/redux/actions";
 import { Heading, Box, Flex, Button, Pill, Text, Link, Card } from "rimble-ui";
 
-function Lesson3({ address, store, setRoute }, props) {
+function Lesson3({ setRoute, toggleTxSuccessModal }) {
   return (
     <Box>
       <HeaderNav />
@@ -88,7 +88,14 @@ function Lesson3({ address, store, setRoute }, props) {
             my={4}
             style={{ textAlign: "center" }}
           >
-            <Button size={"medium"} mr={3} mb={3}>
+            <Button
+              size={"medium"}
+              mr={3}
+              mb={3}
+              onClick={() => {
+                toggleTxSuccessModal(true);
+              }}
+            >
               Show transaction confirmation
             </Button>
             <Button size={"medium"} mr={3} mb={3}>
@@ -101,4 +108,14 @@ function Lesson3({ address, store, setRoute }, props) {
   );
 }
 
-export default Lesson3;
+/*
+ * Export connected component.
+ */
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value))
+  };
+};
+
+export default drizzleConnect(Lesson3, null, mapDispatchToProps);

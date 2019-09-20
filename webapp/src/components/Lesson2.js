@@ -1,11 +1,14 @@
 import React from "react";
-import Debug from "./Debug";
 import HeaderNav from "./HeaderNav";
 import RainbowBox from "./RainbowBox";
+import { drizzleConnect } from "@drizzle/react-plugin";
+import {
+  toggleWrongNetworkModal,
+  toggleTxSuccessModal
+} from "./../core/redux/actions";
+import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 
-import { Heading, Box, Flex, Button, Pill, Text, Link, Card } from "rimble-ui";
-
-function Lesson2({ address, store, setRoute }, props) {
+function Lesson2({ setRoute, toggleWrongNetworkModal, toggleTxSuccessModal }) {
   return (
     <Box>
       <HeaderNav />
@@ -62,10 +65,24 @@ function Lesson2({ address, store, setRoute }, props) {
             </Text>
           </Box>
           <Box my={4} style={{ textAlign: "center" }}>
-            <Button size={"medium"} mr={3} mb={3}>
+            <Button
+              size={"medium"}
+              mr={3}
+              mb={3}
+              onClick={() => {
+                toggleWrongNetworkModal(true);
+              }}
+            >
               Show wrong network modal
             </Button>
-            <Button size={"medium"} mr={3} mb={3}>
+            <Button
+              size={"medium"}
+              mr={3}
+              mb={3}
+              onClick={() => {
+                toggleTxSuccessModal(true);
+              }}
+            >
               Show transaction confirmation
             </Button>
           </Box>
@@ -75,4 +92,15 @@ function Lesson2({ address, store, setRoute }, props) {
   );
 }
 
-export default Lesson2;
+/*
+ * Export connected component.
+ */
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleWrongNetworkModal: value => dispatch(toggleWrongNetworkModal(value)),
+    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value))
+  };
+};
+
+export default drizzleConnect(Lesson2, null, mapDispatchToProps);

@@ -3,7 +3,7 @@ import { Flex, Box, Link } from "rimble-ui";
 
 const Navigation = ({ setRoute }) => {
   return (
-    <Flex>
+    <Flex justifyContent={"center"}>
       <Box mx={3}>
         <Link
           href

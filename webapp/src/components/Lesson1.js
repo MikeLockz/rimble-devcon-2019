@@ -1,12 +1,20 @@
 import React from "react";
-import Debug from "./Debug";
 import HeaderNav from "./HeaderNav";
 import RainbowBox from "./RainbowBox";
-import LessonNavigation from "./LessonNavigation";
+import { drizzleConnect } from "@drizzle/react-plugin";
+import {
+  toggleTxStartModal,
+  toggleTxPendingModal,
+  toggleTxLowBalanceModal
+} from "./../core/redux/actions";
+import { Heading, Box, Button, Text, Card, Pill } from "rimble-ui";
 
-import { Heading, Box, Flex, Button, Text, Link, Card, Pill } from "rimble-ui";
-
-function Lesson1({ address, store, setRoute }, props) {
+function Lesson1({
+  setRoute,
+  toggleTxStartModal,
+  toggleTxPendingModal,
+  toggleTxLowBalanceModal
+}) {
   return (
     <Box>
       <HeaderNav />
@@ -49,13 +57,34 @@ function Lesson1({ address, store, setRoute }, props) {
             </Text>
           </Box>
           <Box my={4} style={{ textAlign: "center" }}>
-            <Button size={"medium"} mr={3} mb={3}>
+            <Button
+              size={"medium"}
+              mr={3}
+              mb={3}
+              onClick={() => {
+                toggleTxStartModal(true);
+              }}
+            >
               Show transaction confirmation
             </Button>
-            <Button size={"medium"} mr={3} mb={3}>
+            <Button
+              size={"medium"}
+              mr={3}
+              mb={3}
+              onClick={() => {
+                toggleTxPendingModal(true);
+              }}
+            >
               Show transaction sending
             </Button>
-            <Button size={"medium"} mr={3} mb={3}>
+            <Button
+              size={"medium"}
+              mr={3}
+              mb={3}
+              onClick={() => {
+                toggleTxLowBalanceModal(true);
+              }}
+            >
               Show No ETH warning
             </Button>
           </Box>
@@ -65,4 +94,16 @@ function Lesson1({ address, store, setRoute }, props) {
   );
 }
 
-export default Lesson1;
+/*
+ * Export connected component.
+ */
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleTxStartModal: value => dispatch(toggleTxStartModal(value)),
+    toggleTxPendingModal: value => dispatch(toggleTxPendingModal(value)),
+    toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value))
+  };
+};
+
+export default drizzleConnect(Lesson1, null, mapDispatchToProps);
