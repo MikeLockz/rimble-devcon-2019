@@ -5,7 +5,8 @@ const CustomTheme = {
   colors: {
     ...rimbleTheme.colors,
     primary: "#4E174F",
-    background: "#fffff8"
+    background: "#fffff8",
+    pink: "#D2B1B5"
   }
 };
 

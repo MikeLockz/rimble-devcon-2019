@@ -10,7 +10,8 @@ import {
   RIMBLE_TOGGLE_TX_PENDING_MODAL,
   RIMBLE_TOGGLE_TX_SUCCESS_MODAL,
   RIMBLE_TOGGLE_TX_ERROR_MODAL,
-  RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL
+  RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL,
+  RIMBLE_TOGGLE_TX_ACTIVITY_MODAL
 } from "./actionTypes";
 
 // Progress Alert actions
@@ -101,6 +102,12 @@ export const toggleTxErrorModal = value => {
 export const toggleTxLowBalanceModal = value => {
   return {
     type: RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL,
+    payload: { value }
+  };
+};
+export const toggleTxActivityModal = value => {
+  return {
+    type: RIMBLE_TOGGLE_TX_ACTIVITY_MODAL,
     payload: { value }
   };
 };

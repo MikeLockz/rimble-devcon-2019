@@ -4,7 +4,8 @@ import {
   RIMBLE_TOGGLE_TX_PENDING_MODAL,
   RIMBLE_TOGGLE_TX_SUCCESS_MODAL,
   RIMBLE_TOGGLE_TX_ERROR_MODAL,
-  RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL
+  RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL,
+  RIMBLE_TOGGLE_TX_ACTIVITY_MODAL
 } from "./../actionTypes";
 
 // Set Rimble's initial UI state
@@ -14,7 +15,8 @@ const initialRimble = {
   showTxPendingModal: false,
   showTxSuccessModal: false,
   showTxErrorModal: false,
-  showTxLowBalanceModal: false
+  showTxLowBalanceModal: false,
+  showTxActivityModal: false
 };
 
 // Rimble modal reducers
@@ -61,6 +63,12 @@ export const txModals = (state = initialRimble, action) => {
       return {
         ...state,
         showTxLowBalanceModal: action.payload.value
+      };
+    }
+    case RIMBLE_TOGGLE_TX_ACTIVITY_MODAL: {
+      return {
+        ...state,
+        showTxActivityModal: action.payload.value
       };
     }
     default:

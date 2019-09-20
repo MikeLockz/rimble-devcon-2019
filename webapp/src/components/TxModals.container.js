@@ -15,9 +15,9 @@ import {
   toggleTxPendingModal,
   toggleTxSuccessModal,
   toggleTxErrorModal,
-  toggleTxLowBalanceModal
+  toggleTxLowBalanceModal,
+  toggleTxActivityModal
 } from "../core/redux/actions";
-import { getRimbleState } from "../core/redux/selectors";
 
 const TxModalsContainer = ({
   address,
@@ -27,9 +27,9 @@ const TxModalsContainer = ({
   toggleTxPendingModal,
   toggleTxSuccessModal,
   toggleTxErrorModal,
-  toggleTxLowBalanceModal
+  toggleTxLowBalanceModal,
+  toggleTxActivityModal
 }) => {
-  console.log("Debug rimble", rimble);
   const handleWrongNetwork = () => {
     toggleWrongNetworkModal(!rimble.showWrongNetworkModal);
   };
@@ -52,6 +52,10 @@ const TxModalsContainer = ({
 
   const handleTxLowBalanceModal = () => {
     toggleTxLowBalanceModal(!rimble.showTxLowBalanceModal);
+  };
+
+  const handleTxActivityModal = () => {
+    toggleTxActivityModal(!rimble.showTxActivityModal);
   };
 
   return (
@@ -82,6 +86,9 @@ const TxModalsContainer = ({
       </Button>
       <Button size={"small"} onClick={handleTxLowBalanceModal} mr={3} mb={3}>
         Toggle Low Balance modal
+      </Button>
+      <Button size={"small"} onClick={handleTxActivityModal} mr={3} mb={3}>
+        Toggle Tx Activity modal
       </Button>
 
       <WrongNetwork
@@ -117,10 +124,12 @@ const TxModalsContainer = ({
           totalAvailable: 100
         }}
       />
+
       <TxErrorModal
         isOpen={rimble.showTxErrorModal}
         toggleModal={handleTxErrorModal}
       />
+
       <TxLowBalanceModal
         isOpen={rimble.showTxLowBalanceModal}
         toggleModal={handleTxLowBalanceModal}
@@ -134,7 +143,6 @@ const TxModalsContainer = ({
  */
 
 const mapStateToProps = state => {
-  // const rimble = getRimbleState(state); // TODO: not sure if this is needed or can go directly from state
   return {
     contracts: state.contracts,
     rimble: state.txModals
@@ -147,7 +155,8 @@ const mapDispatchToProps = dispatch => {
     toggleTxPendingModal: value => dispatch(toggleTxPendingModal(value)),
     toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value)),
     toggleTxErrorModal: value => dispatch(toggleTxErrorModal(value)),
-    toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value))
+    toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value)),
+    toggleTxActivityModal: value => dispatch(toggleTxActivityModal(value))
   };
 };
 

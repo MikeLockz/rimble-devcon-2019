@@ -7,9 +7,15 @@ import ProgressAlertDebug from "./ProgressAlertDebug";
 import ProgressAlert, {
   MultipleProgressAlerts
 } from "./components/ProgressAlert";
-import { toggleProgressAlert } from "./../redux/actions";
+import TxActivityModal from "./components/TxActivityModal";
+import { toggleProgressAlert, toggleTxActivityModal } from "./../redux/actions";
 
-const ProgressAlerts = ({ progressAlerts, toggleProgressAlert }) => {
+const ProgressAlerts = ({
+  rimble,
+  progressAlerts,
+  toggleProgressAlert,
+  toggleTxActivityModal
+}) => {
   const handleToggleProgressAlert = stackId => {
     console.log("handleToggleProgressAlert", stackId);
     toggleProgressAlert(stackId);
@@ -30,12 +36,24 @@ const ProgressAlerts = ({ progressAlerts, toggleProgressAlert }) => {
   return null;
 };
 
-const ProgressAlertContainer = ({ progressAlerts, toggleProgressAlert }) => {
+const ProgressAlertContainer = ({
+  rimble,
+  progressAlerts,
+  toggleProgressAlert,
+  toggleTxActivityModal
+}) => {
   return (
     <Box>
       <ProgressAlerts
         progressAlerts={progressAlerts}
         toggleProgressAlert={toggleProgressAlert}
+        toggleTxActivityModal={toggleTxActivityModal}
+      />
+      <TxActivityModal
+        isOpen={rimble.showTxActivityModal}
+        toggleModal={() => {
+          toggleTxActivityModal(!rimble.showTxActivityModal);
+        }}
       />
       {appConfig.debugMode && <ProgressAlertDebug />}
     </Box>
@@ -51,12 +69,14 @@ const mapStateToProps = state => {
     "incomplete"
   );
   return {
+    rimble: state.txModals,
     progressAlerts: progressAlerts
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    toggleProgressAlert: value => dispatch(toggleProgressAlert(value))
+    toggleProgressAlert: value => dispatch(toggleProgressAlert(value)),
+    toggleTxActivityModal: value => dispatch(toggleTxActivityModal(value))
   };
 };
 

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Box, Flex, Icon, Text, Button, Image } from "rimble-ui";
 import styled from "styled-components";
 import transferringIcon from "./multipleTxIcon.svg";
+import ProgressBar from "./ProgressBar";
 
 function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
   const [progress, setProgress] = useState(0); // percent of estimated time elapsed
@@ -214,29 +215,6 @@ const StyledProgressAlert = styled(Box)`
   }
 `;
 
-const ProgressBar = styled(Box)`
-  & {
-    transition: all 0.15s ease;
-    background: linear-gradient(
-      270deg,
-      #efa59e 0%,
-      #f5ccd1 17.19%,
-      #f7ceb3 33.85%,
-      #eccfa5 52.08%,
-      #b9d8ae 68.23%,
-      #97d6e3 84.37%,
-      #9fb1e8 100%
-    );
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-  }
-  &.error {
-    background: ${props => props.theme.colors.danger};
-  }
-  &.success {
-    background: ${props => props.theme.colors.success};
-  }
-`;
-
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
@@ -257,7 +235,7 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-export const MultipleProgressAlerts = ({ count }) => {
+export const MultipleProgressAlerts = ({ count, toggleTxActivityModal }) => {
   return (
     <StyledProgressAlert>
       <Flex p={3} alignItems={"center"} justifyContent={"space-between"}>
@@ -281,10 +259,9 @@ export const MultipleProgressAlerts = ({ count }) => {
 
         <Button.Outline
           mainColor={"white"}
-          // onClick={e => {
-          //   toggleProgressAlert(progressAlert.id);
-          //   // resetProgressAlert();
-          // }}
+          onClick={() => {
+            toggleTxActivityModal(true);
+          }}
         >
           Track
         </Button.Outline>
