@@ -15,6 +15,7 @@ import {
   toggleTxSuccessModal,
   toggleTxErrorModal
 } from "./../core/redux/actions";
+import { getRimbleState } from "../core/redux/selectors";
 
 const Debug = ({
   address,
@@ -25,6 +26,7 @@ const Debug = ({
   toggleTxSuccessModal,
   toggleTxErrorModal
 }) => {
+  console.log("Debug rimble", rimble);
   const handleWrongNetwork = () => {
     toggleWrongNetworkModal(!rimble.showWrongNetworkModal);
   };
@@ -118,6 +120,7 @@ const Debug = ({
  */
 
 const mapStateToProps = state => {
+  // const rimble = getRimbleState(state); // TODO: not sure if this is needed or can go directly from state
   return {
     contracts: state.contracts,
     rimble: state.txModals

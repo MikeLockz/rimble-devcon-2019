@@ -5,7 +5,8 @@ import { drizzleConnect } from "@drizzle/react-plugin";
 import { toggleTxSuccessModal } from "./../core/redux/actions";
 import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 
-function Lesson5({ setRoute, toggleTxSuccessModal }) {
+function Lesson5({ setRoute, toggleTxSuccessModal, rimble }) {
+  console.log("Lesson5 rimble", rimble);
   return (
     <Box>
       <HeaderNav />
@@ -74,6 +75,7 @@ function Lesson5({ setRoute, toggleTxSuccessModal }) {
 
 const mapStateToProps = state => {
   return {
+    contracts: state.contracts,
     rimble: state.txModals
   };
 };

@@ -6,8 +6,6 @@ import BuyCardContainer from "./BuyCard.container";
 
 import ConnectionBanner from "@rimble/connection-banner";
 
-import Debug from "./Debug";
-
 import { Heading, Box, Flex, Button, Text, Link } from "rimble-ui";
 
 import backgroundImage from "./../images/background.jpg";
@@ -72,8 +70,6 @@ function Landing({ drizzle, drizzleState, store }, props) {
         <Link href="https://rimble.consensys.design" target="_blank">
           Learn more about Rimble
         </Link>
-
-        <Debug address={address} store={store} />
       </Box>
     </Box>
   );
