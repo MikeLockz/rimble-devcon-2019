@@ -16,10 +16,10 @@ import {
   toggleTxSuccessModal,
   toggleTxErrorModal,
   toggleTxLowBalanceModal
-} from "./../core/redux/actions";
+} from "../core/redux/actions";
 import { getRimbleState } from "../core/redux/selectors";
 
-const Debug = ({
+const TxModalsContainer = ({
   address,
   rimble,
   toggleWrongNetworkModal,
@@ -151,4 +151,8 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default drizzleConnect(Debug, mapStateToProps, mapDispatchToProps);
+export default drizzleConnect(
+  TxModalsContainer,
+  mapStateToProps,
+  mapDispatchToProps
+);

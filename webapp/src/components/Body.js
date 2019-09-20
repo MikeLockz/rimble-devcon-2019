@@ -11,7 +11,7 @@ import Lesson5 from "./Lesson5";
 import LessonNavigation from "./LessonNavigation";
 import ProgressAlertUtil from "./../core/utilities/ProgressAlertUtil";
 import ProgressAlertContainer from "../core/utilities/ProgressAlert.container";
-import Debug from "./Debug";
+import TxModalsContainer from "./TxModals.container";
 
 import { Box, Flex } from "rimble-ui";
 
@@ -70,7 +70,7 @@ function Body({ drizzle, drizzleState, store }) {
 
       {/* <ProgressAlertUtil drizzleState={drizzleState} /> */}
 
-      <Debug address={address} store={store} />
+      <TxModalsContainer address={address} store={store} />
       <ProgressAlertContainer />
     </BodyBox>
   );
