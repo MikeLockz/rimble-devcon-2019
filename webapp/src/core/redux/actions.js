@@ -4,6 +4,7 @@ import {
   RIMBLE_SET_PROGRESSALERT_STATUS,
   RIMBLE_SET_PROGRESSALERT_TX_HASH,
   RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
+  RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME,
   SET_FILTER,
   RIMBLE_TOGGLE_NETWORK_MODAL,
   RIMBLE_TOGGLE_TX_START_MODAL,
@@ -60,6 +61,18 @@ export const updateProgressAlertContent = ({
 }) => {
   return {
     type: RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
+    payload: { content, txHash, id, stackTempKey }
+  };
+};
+
+export const updateProgressAlertRemainingTime = ({
+  content,
+  txHash,
+  id,
+  stackTempKey
+}) => {
+  return {
+    type: RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME,
     payload: { content, txHash, id, stackTempKey }
   };
 };

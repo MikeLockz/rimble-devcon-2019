@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const ProgressBar = styled(Box)`
   & {
+    width: ${props => (props.percent ? `${props.percent}%` : 0)};
     transition: all 0.15s ease;
     background: linear-gradient(
       270deg,

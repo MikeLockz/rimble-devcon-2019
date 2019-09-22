@@ -31,7 +31,12 @@ const ProgressAlerts = ({
     );
   }
   if (progressAlerts.length > 1) {
-    return <MultipleProgressAlerts count={progressAlerts.length} />;
+    return (
+      <MultipleProgressAlerts
+        count={progressAlerts.length}
+        toggleTxActivityModal={toggleTxActivityModal}
+      />
+    );
   }
   return null;
 };
@@ -39,6 +44,7 @@ const ProgressAlerts = ({
 const ProgressAlertContainer = ({
   rimble,
   progressAlerts,
+  transactions,
   toggleProgressAlert,
   toggleTxActivityModal
 }) => {
@@ -51,6 +57,7 @@ const ProgressAlertContainer = ({
       />
       <TxActivityModal
         isOpen={rimble.showTxActivityModal}
+        transactions={transactions}
         toggleModal={() => {
           toggleTxActivityModal(!rimble.showTxActivityModal);
         }}
@@ -70,7 +77,8 @@ const mapStateToProps = state => {
   );
   return {
     rimble: state.txModals,
-    progressAlerts: progressAlerts
+    progressAlerts: progressAlerts,
+    transactions: progressAlerts
   };
 };
 const mapDispatchToProps = dispatch => {

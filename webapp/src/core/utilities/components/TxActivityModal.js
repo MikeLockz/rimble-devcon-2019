@@ -3,17 +3,21 @@ import { Modal, Box, Button, Flex, Heading, Text, Card } from "rimble-ui";
 import ProgressBar from "./ProgressBar";
 
 const Transaction = ({ transaction }) => {
+  console.log("transaction", transaction);
   return (
     <Box px={3} py={2}>
-      <Text fontWeight={"bold"}>Ticket #1</Text>
-      <ProgressBar width={"100%"} height={"10px"} />
+      <Text fontWeight={"bold"}>{transaction.content.token.name}</Text>
+      <ProgressBar
+        percent={transaction.remainingTime.percent}
+        height={"10px"}
+      />
       <Flex justifyContent={"space-between"} mt={2} alignItems={"center"}>
         <Box>
           <Text fontSize={"14px"}>
             Transferring your ticket to your account...
           </Text>
           <Text fontSize={"14px"} color={"pink"}>
-            Less than 2 minutes remaining
+            {transaction.remainingTime.string}
           </Text>
         </Box>
         <Flex
@@ -25,7 +29,7 @@ const Transaction = ({ transaction }) => {
           alignItems={"center"}
           ml={3}
         >
-          <Text fontSize={"12px"}>{30}%</Text>
+          <Text fontSize={"12px"}>{transaction.remainingTime.percent}%</Text>
         </Flex>
       </Flex>
     </Box>
@@ -33,9 +37,10 @@ const Transaction = ({ transaction }) => {
 };
 
 function TxActivityModal(
-  { isOpen, toggleModal, address, progressAlerts },
+  { isOpen, toggleModal, address, progressAlerts, transactions },
   props
 ) {
+  console.log("transactions", transactions);
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -47,7 +52,16 @@ function TxActivityModal(
           <Heading.h3 mb={3}>Activity</Heading.h3>
 
           <Flex flexDirection={"column"} my={4}>
-            <Transaction transaction={""} />
+            {transactions && transactions.length
+              ? transactions.map((transaction, index) => {
+                  return (
+                    <Transaction
+                      transaction={transaction}
+                      key={`pat-${transaction.id}`}
+                    />
+                  );
+                })
+              : null}
           </Flex>
 
           <Button.Outline

@@ -119,7 +119,7 @@ function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
         <ProgressBar
           className={status}
           height={"8px"}
-          width={status === "pending" ? progress + "%" : "100%"}
+          percent={progressAlert.remainingTime.percent}
         />
       </Box>
       <Flex p={3} alignItems={"center"} justifyContent={"space-between"}>
@@ -134,7 +134,9 @@ function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
               alignItems={"center"}
               mr={3}
             >
-              <Text fontSize={"12px"}>{progress}%</Text>
+              <Text fontSize={"12px"}>
+                {progressAlert.remainingTime.percent}%
+              </Text>
             </Flex>
           )}
 
@@ -175,7 +177,7 @@ function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
               {status === "error"
                 ? "Error: " + progressAlert.content.error
                 : null}
-              {status === "pending" ? timeString : null}
+              {status === "pending" ? progressAlert.remainingTime.string : null}
               {status === "success" ? "Complete!" : null}
             </Text>
           </Flex>

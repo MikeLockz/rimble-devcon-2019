@@ -8,7 +8,8 @@ import {
   toggleProgressAlert,
   setProgressAlertStatus,
   setProgressAlertTxHash,
-  updateProgressAlertContent
+  updateProgressAlertContent,
+  updateProgressAlertRemainingTime
 } from "./../redux/actions";
 import { VISIBILITY_FILTERS } from "./../redux/constants";
 
@@ -43,7 +44,8 @@ const ProgressAlertDebug = ({
   toggleProgressAlert,
   setProgressAlertStatus,
   setProgressAlertTxHash,
-  updateProgressAlertContent
+  updateProgressAlertContent,
+  updateProgressAlertRemainingTime
 }) => {
   const handleAddProgressAlert = () => {
     addProgressAlert({ message: "I am progressAlert!" });
@@ -68,6 +70,13 @@ const ProgressAlertDebug = ({
 
   const handleUpdateProgressAlertContent = ({ txHash }) => {
     updateProgressAlertContent({
+      txHash,
+      content: { receipt: { confirmations: 3, status: "success" } }
+    });
+  };
+
+  const handleUpdateProgressAlertRemainingTime = ({ txHash }) => {
+    updateProgressAlertRemainingTime({
       txHash,
       content: { receipt: { confirmations: 3, status: "success" } }
     });
@@ -131,6 +140,17 @@ const ProgressAlertDebug = ({
         >
           Update Progress Alert Content by txHash
         </Button.Outline>
+
+        <Button.Outline
+          size={"small"}
+          onClick={() => {
+            handleUpdateProgressAlertRemainingTime({
+              txHash: "0x123"
+            });
+          }}
+        >
+          Update Progress Alert RemainingTime by txHash
+        </Button.Outline>
       </Box>
 
       <Button.Outline
@@ -170,7 +190,9 @@ const mapDispatchToProps = dispatch => {
     setProgressAlertStatus: value => dispatch(setProgressAlertStatus(value)),
     setProgressAlertTxHash: value => dispatch(setProgressAlertTxHash(value)),
     updateProgressAlertContent: value =>
-      dispatch(updateProgressAlertContent(value))
+      dispatch(updateProgressAlertContent(value)),
+    updateProgressAlertRemainingTime: value =>
+      dispatch(updateProgressAlertRemainingTime(value))
   };
 };
 
