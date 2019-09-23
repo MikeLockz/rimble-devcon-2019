@@ -19,7 +19,13 @@ function Lesson4({
   updateProgressAlertTxFee
 }) {
   const handleTxStartModal = () => {
-    addProgressAlert();
+    addProgressAlert({
+      id: "DevConAttendance",
+      name: "Conference ticket",
+      ethPrice: "5.63",
+      usdPrice: "1,000.00",
+      image: "conference.png"
+    });
     updateProgressAlertRemainingTime({
       txHash: "0x123",
       content: {}
@@ -28,7 +34,7 @@ function Lesson4({
       txHash: "0x123",
       content: {}
     });
-    setCurrentTxId({ key: "stackId", value: 0 });
+    setCurrentTxId(0);
     toggleTxStartModal(true);
   };
 

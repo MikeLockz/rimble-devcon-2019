@@ -53,14 +53,8 @@ const contractEventNotifier = store => next => action => {
   // Tx started but not confirmed or rejected
   if (action.type === "PUSH_TO_TXSTACK") {
     store.dispatch(toggleTxStartModal(true));
-
-    // TODO: This should work here too
-    // Guess key based on length of progressAlert collection
-    const progressAlertList = getProgressAlertList(store);
-    const id = Object.keys(progressAlertList).length;
-    console.log("progressAlertList", progressAlertList);
-
-    store.dispatch(setCurrentTxId({ key: "id", value: id }));
+    const id = store.getState().progressAlerts.allIds.length - 1;
+    store.dispatch(setCurrentTxId(id));
   }
 
   if (action.type === "SEND_CONTRACT_TX") {
@@ -98,7 +92,7 @@ const contractEventNotifier = store => next => action => {
 
     store.dispatch(updateProgressAlertRemainingTime({ id: action.stackId }));
 
-    store.dispatch(setCurrentTxId({ key: "stackId", value: action.stackId }));
+    store.dispatch(setCurrentTxId(action.stackId));
   }
 
   //
@@ -145,38 +139,17 @@ const contractEventNotifier = store => next => action => {
   return next(action);
 };
 
-// fetch data from service using sagas
-// function* fetchGasPrice(level) {
-//   const todos = yield fetch("").then(
-//     resp => resp.json()
-//   );
-//   yield put({ type: TODOS_RECEIVED, todos });
-// }
-
-// Combine all your redux concerns
-
-// app root saga
-// function* appRootSaga() {
-//   yield takeEvery(TODOS_FETCH, fetchTodos);
-// }
-
-// app Reducers and Sagas and Middlewares
-// const appReducers = combineReducers({
-//   rimble: rimbleReducer,
-//   progressAlerts: rimbleProgressAlertReducer
-// });
 const appReducers = {
   progressAlerts: progressAlerts,
   visibilityFilter: rimbleVisibilityFilter,
   txModals: txModals
 };
-// const appSagas = [appRootSaga];
+
 const appMiddlewares = [contractEventNotifier, asyncDispatchMiddleware];
 
 export default generateStore({
   drizzleOptions,
   appReducers,
-  // appSagas,
   appMiddlewares,
   disableReduxDevTools: false
 });

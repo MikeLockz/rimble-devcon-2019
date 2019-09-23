@@ -51,7 +51,13 @@ const TxModalsContainer = ({
   };
 
   const handleTxStartModal = () => {
-    addProgressAlert();
+    addProgressAlert({
+      id: "DevConAttendance",
+      name: "Conference ticket",
+      ethPrice: "5.63",
+      usdPrice: "1,000.00",
+      image: "conference.png"
+    });
     updateProgressAlertRemainingTime({
       txHash: "0x123",
       content: {}
@@ -60,12 +66,18 @@ const TxModalsContainer = ({
       txHash: "0x123",
       content: {}
     });
-    setCurrentTxId({ key: "stackId", value: 0 });
+    setCurrentTxId(0);
     toggleTxStartModal(!rimble.showTxStartModal);
   };
 
   const handleTxPendingModal = () => {
-    addProgressAlert();
+    addProgressAlert({
+      id: "DevConAttendance",
+      name: "Conference ticket",
+      ethPrice: "5.63",
+      usdPrice: "1,000.00",
+      image: "conference.png"
+    });
     updateProgressAlertRemainingTime({
       txHash: "0x123",
       content: {}
@@ -74,7 +86,7 @@ const TxModalsContainer = ({
       txHash: "0x123",
       content: {}
     });
-    setCurrentTxId({ key: "stackId", value: 0 });
+    setCurrentTxId(0);
     toggleTxPendingModal(!rimble.showTxPendingModal);
   };
 
@@ -95,7 +107,7 @@ const TxModalsContainer = ({
   };
 
   const handleSetCurrentTxId = () => {
-    setCurrentTxId({ key: "stackId", value: 0 });
+    setCurrentTxId(0);
   };
 
   return (
@@ -143,7 +155,9 @@ const TxModalsContainer = ({
       {rimble.currentTxId && (
         <TxStartModal
           isOpen={rimble.showTxStartModal}
-          toggleModal={handleTxStartModal}
+          toggleModal={() => {
+            toggleTxStartModal(false);
+          }}
           address={address}
           transaction={getProgressAlertById(store, rimble.currentTxId.stackId)}
         />
@@ -153,12 +167,13 @@ const TxModalsContainer = ({
       {rimble.currentTxId && (
         <TxPendingModal
           isOpen={rimble.showTxPendingModal}
-          toggleModal={handleTxPendingModal}
+          toggleModal={() => {
+            toggleTxPendingModal(false);
+          }}
           address={address}
           price={"5.4"}
           transactionFee={"0.42"}
           estimatedTime={120}
-          // transaction={getProgressAlertById(rimble.currentTx)}
           transaction={getProgressAlertById(store, rimble.currentTxId.stackId)}
         />
       )}

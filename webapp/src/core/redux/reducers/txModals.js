@@ -73,15 +73,10 @@ export const txModals = (state = initialRimble, action) => {
       };
     }
     case RIMBLE_SET_CURRENT_TX_ID: {
-      if (action.payload.value.key === "stackTempKey") {
-        // Get the length of the current progressAlert collection
-        // Use that number as the currentTxId property
-        return;
-      }
       return {
         ...state,
         currentTxId: {
-          [action.payload.value.key]: action.payload.value.value
+          stackId: action.payload.value
         }
       };
     }

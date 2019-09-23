@@ -98,10 +98,10 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
               </Text>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
                 <Text color={"#444"} lineHeight={"1em"}>
-                  5.4 ETH
+                  {transaction.content.token.ethPrice} ETH
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
-                  $1450 USD
+                  ${transaction.content.token.usdPrice} USD
                 </Text>
               </Flex>
             </Flex>
@@ -128,10 +128,10 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
               </Flex>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
                 <Text color={"#444"} lineHeight={"1em"}>
-                  $0.42
+                  ${transaction.txFee.usd}
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
-                  0.00112 ETH
+                  {transaction.txFee.eth} ETH
                 </Text>
               </Flex>
             </Flex>

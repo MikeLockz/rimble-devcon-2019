@@ -97,7 +97,7 @@ function TxPendingModal(
               </Text>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
                 <Text color={"#444"} lineHeight={"1em"}>
-                  {transaction.content.token.ethPrice}
+                  {transaction.content.token.ethPrice} ETH
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
                   ${transaction.content.token.usdPrice} USD
@@ -130,7 +130,7 @@ function TxPendingModal(
                   ${transaction.txFee.usd}
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
-                  {transaction.txFee.usd} ETH
+                  {transaction.txFee.eth} ETH
                 </Text>
               </Flex>
             </Flex>
