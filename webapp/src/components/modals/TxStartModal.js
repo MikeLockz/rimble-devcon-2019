@@ -3,6 +3,7 @@ import {
   Modal,
   Box,
   Icon,
+  Image,
   Link,
   Button,
   Flex,
@@ -13,6 +14,9 @@ import {
   EthAddress,
   Tooltip
 } from "rimble-ui";
+import EyeIcon from "./EyeIcon";
+import MetaMaskLoader from "./MetaMaskLoader";
+import shortenAddress from "./../../core/utilities/shortenAddress";
 import { drizzleConnect } from "@drizzle/react-plugin";
 
 function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
@@ -46,14 +50,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
             </Box>
 
             <Flex p={3} borderBottom={"1px solid #ccc"} alignItems={"center"}>
-              <Box position={"relative"} height={"2em"} width={"2em"} mr={3}>
-                <Box position={"absolute"} top={"0"} left={"0"}>
-                  <Loader size={"2em"} />
-                </Box>
-                <Box position={"absolute"} top={".45em"} left={".45em"}>
-                  <Icon color={"primary"} name="Star" size={"18px"} />
-                </Box>
-              </Box>
+              <MetaMaskLoader />
               <Box>
                 <Text fontWeight={"600"} fontSize={1} lineHeight={"1.25em"}>
                   Waiting for confirmation...
@@ -77,17 +74,14 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
                 fontWeight={"normal"}
                 href={"https://rinkeby.etherscan.io/address/" + address}
                 target={"_blank"}
+                color={"primary"}
+                hoverColor={"primary"}
               >
                 <Flex alignItems={"center"}>
-                  <EthAddress
-                    fontSize={1}
-                    fontWeight={600}
-                    address={address}
-                    truncate
-                  />
-                  <Box ml={2} p={1} borderRadius={"50%"} bg={"#d3c6d3"}>
-                    <Icon color={"primary"} name="Star" size={"12px"} />
-                  </Box>
+                  <Text fontSize={1} fontWeight={600} color={"primary"}>
+                    {shortenAddress(address)}
+                  </Text>
+                  <EyeIcon />
                 </Flex>
               </Link>
             </Flex>
@@ -123,7 +117,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
                 <Text fontSize={1} color={"#444"} fontWeight={600}>
                   Transaction fee
                 </Text>
-                <Link href="#" ml={1}>
+                <Link href ml={1}>
                   <Tooltip
                     message="Pays the Ethereum network to process your transaction. Spent even if the transaction fails."
                     position="top"

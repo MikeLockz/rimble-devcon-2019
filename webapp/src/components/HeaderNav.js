@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Text, Box, Icon, Button, Flex, Image } from "rimble-ui";
 import styled from "styled-components";
 import logo from "../images/rimble-logo.svg";
+import walletIcon from "./../images/icon-wallet.svg";
+import balanceIcon from "./../images/icon-balance.svg";
 import shortenAddress from "../core/utilities/shortenAddress";
 
 const StyledHeader = styled(Flex)`
@@ -33,7 +35,7 @@ function HeaderNav({ drizzle, drizzleState, preflightCheck }) {
       {account ? (
         <Flex>
           <Flex alignItems={"center"} mr={4}>
-            <Icon size={"14px"} color={"primary"} name={"Star"} mr={2} />
+            <Image src={walletIcon} mr={2} />
             <Box>
               <Text
                 fontWeight={600}
@@ -43,14 +45,14 @@ function HeaderNav({ drizzle, drizzleState, preflightCheck }) {
               >
                 Connected as
               </Text>
-              <Text fontSize={1} fontColor={"primary"}>
+              <Text fontSize={1} color={"primary"}>
                 {shortenAddress(account)}
               </Text>
             </Box>
           </Flex>
 
           <Flex alignItems={"center"}>
-            <Icon size={"14px"} color={"primary"} name={"Star"} mr={2} />
+            <Image src={balanceIcon} mr={2} />
             <Box>
               <Text
                 fontWeight={600}
@@ -60,7 +62,7 @@ function HeaderNav({ drizzle, drizzleState, preflightCheck }) {
               >
                 Balance
               </Text>
-              <Text fontSize={1} fontColor={"primary"}>
+              <Text fontSize={1} color={"primary"}>
                 {drizzle.web3.utils.fromWei(balance, "ether")} ETH
               </Text>
             </Box>

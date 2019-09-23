@@ -17,7 +17,10 @@ import {
   toggleTxErrorModal,
   toggleTxLowBalanceModal,
   toggleTxActivityModal,
-  setCurrentTxId
+  setCurrentTxId,
+  addProgressAlert,
+  updateProgressAlertRemainingTime,
+  updateProgressAlertTxFee
 } from "../core/redux/actions";
 import { getProgressAlertById } from "./../core/redux/selectors";
 
@@ -34,7 +37,10 @@ const TxModalsContainer = ({
   toggleTxErrorModal,
   toggleTxLowBalanceModal,
   toggleTxActivityModal,
-  setCurrentTxId
+  setCurrentTxId,
+  addProgressAlert,
+  updateProgressAlertRemainingTime,
+  updateProgressAlertTxFee
 }) => {
   console.log("rimble", rimble);
   console.log("store", store);
@@ -45,10 +51,30 @@ const TxModalsContainer = ({
   };
 
   const handleTxStartModal = () => {
+    addProgressAlert();
+    updateProgressAlertRemainingTime({
+      txHash: "0x123",
+      content: {}
+    });
+    updateProgressAlertTxFee({
+      txHash: "0x123",
+      content: {}
+    });
+    setCurrentTxId({ key: "stackId", value: 0 });
     toggleTxStartModal(!rimble.showTxStartModal);
   };
 
   const handleTxPendingModal = () => {
+    addProgressAlert();
+    updateProgressAlertRemainingTime({
+      txHash: "0x123",
+      content: {}
+    });
+    updateProgressAlertTxFee({
+      txHash: "0x123",
+      content: {}
+    });
+    setCurrentTxId({ key: "stackId", value: 0 });
     toggleTxPendingModal(!rimble.showTxPendingModal);
   };
 
@@ -184,7 +210,11 @@ const mapDispatchToProps = dispatch => {
     toggleTxErrorModal: value => dispatch(toggleTxErrorModal(value)),
     toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value)),
     toggleTxActivityModal: value => dispatch(toggleTxActivityModal(value)),
-    setCurrentTxId: value => dispatch(setCurrentTxId(value))
+    setCurrentTxId: value => dispatch(setCurrentTxId(value)),
+    addProgressAlert: value => dispatch(addProgressAlert(value)),
+    updateProgressAlertRemainingTime: value =>
+      dispatch(updateProgressAlertRemainingTime(value)),
+    updateProgressAlertTxFee: value => dispatch(updateProgressAlertTxFee(value))
   };
 };
 

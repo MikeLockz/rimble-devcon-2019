@@ -3,17 +3,19 @@ import {
   Modal,
   Box,
   Icon,
+  Image,
   Link,
   Button,
   Flex,
   Heading,
   Text,
   Card,
-  Tooltip,
-  EthAddress
+  Tooltip
 } from "rimble-ui";
 import ProgressBar from "./../../core//utilities/components/ProgressBar";
 import ProgressPercentCircle from "./../../core//utilities/components/ProgressPercentCircle";
+import EyeIcon from "./EyeIcon";
+import shortenAddress from "./../../core/utilities/shortenAddress";
 
 function TxPendingModal(
   { isOpen, toggleModal, address, transaction, drizzleState },
@@ -71,17 +73,14 @@ function TxPendingModal(
                 fontWeight={"normal"}
                 href={"https://rinkeby.etherscan.io/address/" + address}
                 target={"_blank"}
+                color={"primary"}
+                hoverColor={"primary"}
               >
                 <Flex alignItems={"center"}>
-                  <EthAddress
-                    fontSize={1}
-                    fontWeight={600}
-                    address={address}
-                    truncate
-                  />
-                  <Box ml={2} p={1} borderRadius={"50%"} bg={"#d3c6d3"}>
-                    <Icon color={"primary"} name="Star" size={"12px"} />
-                  </Box>
+                  <Text fontSize={1} fontWeight={600} color={"primary"}>
+                    {shortenAddress(address)}
+                  </Text>
+                  <EyeIcon />
                 </Flex>
               </Link>
             </Flex>
