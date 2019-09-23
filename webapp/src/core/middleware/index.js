@@ -14,7 +14,8 @@ import {
   updateProgressAlertContent,
   updateProgressAlertRemainingTime,
   setCurrentTxId,
-  updateProgressAlertTxFee
+  updateProgressAlertTxFee,
+  enableBuyButton
 } from "./../redux/actions";
 import { getProgressAlertList } from "./../redux/selectors";
 
@@ -135,6 +136,10 @@ const contractEventNotifier = store => next => action => {
         stackTempKey: action.stackTempKey
       })
     );
+  }
+
+  if (action.type === "DRIZZLE_INITIALIZED") {
+    store.dispatch(enableBuyButton(true));
   }
   return next(action);
 };

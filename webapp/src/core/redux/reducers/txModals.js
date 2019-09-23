@@ -6,7 +6,8 @@ import {
   RIMBLE_TOGGLE_TX_ERROR_MODAL,
   RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL,
   RIMBLE_TOGGLE_TX_ACTIVITY_MODAL,
-  RIMBLE_SET_CURRENT_TX_ID
+  RIMBLE_SET_CURRENT_TX_ID,
+  RIMBLE_ENABLE_BUY_BUTTON
 } from "./../actionTypes";
 
 // Set Rimble's initial UI state
@@ -17,7 +18,8 @@ const initialRimble = {
   showTxSuccessModal: false,
   showTxErrorModal: false,
   showTxLowBalanceModal: false,
-  showTxActivityModal: false
+  showTxActivityModal: false,
+  enableBuyButton: false
 };
 
 // Rimble modal reducers
@@ -78,6 +80,12 @@ export const txModals = (state = initialRimble, action) => {
         currentTxId: {
           stackId: action.payload.value
         }
+      };
+    }
+    case RIMBLE_ENABLE_BUY_BUTTON: {
+      return {
+        ...state,
+        enableBuyButton: action.payload.value
       };
     }
     default:

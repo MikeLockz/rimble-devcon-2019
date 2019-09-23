@@ -1,14 +1,13 @@
 import React from "react";
 import { Button } from "rimble-ui";
 import BuyCard from "./BuyCard";
-import { drizzleConnect } from "@drizzle/react-plugin";
-import { getProgressAlertsByVisibilityFilter } from "./../core/redux/selectors";
+import { drizzleConnect, DrizzleContext } from "@drizzle/react-plugin";
 import { addProgressAlert, toggleProgressAlert } from "./../core/redux/actions";
-import { isContext } from "vm";
-// Drizzle for state and contract interactions
-import { DrizzleContext } from "@drizzle/react-plugin";
 
-function BuyCardContainer({ token, address, addProgressAlert }) {
+// Drizzle for state and contract interactions
+import {} from "@drizzle/react-plugin";
+
+function BuyCardContainer({ token, address, addProgressAlert, store }) {
   // ToDo: Can this be refactored and put someplace else more reusable?
   const preflightCheck = ({ token, drizzle, address, callback, event }) => {
     console.log("preflightCheck", token, drizzle);
@@ -28,6 +27,8 @@ function BuyCardContainer({ token, address, addProgressAlert }) {
   return (
     <DrizzleContext.Consumer>
       {({ drizzle, drizzleState }) => {
+        console.log("DrizzleContext.Consumer store", store);
+
         return (
           <BuyCard
             drizzle={drizzle}
@@ -35,6 +36,7 @@ function BuyCardContainer({ token, address, addProgressAlert }) {
             address={address}
             token={token}
             preflightCheck={preflightCheck}
+            enableBuyButton={store.txModals.enableBuyButton}
           />
         );
       }}
@@ -46,13 +48,8 @@ function BuyCardContainer({ token, address, addProgressAlert }) {
  * Export connected component.
  */
 const mapStateToProps = state => {
-  const { visibilityFilter } = state;
-  const progressAlerts = getProgressAlertsByVisibilityFilter(
-    state,
-    visibilityFilter
-  );
   return {
-    progressAlerts: progressAlerts
+    store: state
   };
 };
 const mapDispatchToProps = dispatch => {

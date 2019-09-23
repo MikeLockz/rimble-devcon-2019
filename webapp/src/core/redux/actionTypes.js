@@ -26,3 +26,6 @@ export const RIMBLE_TOGGLE_TX_ACTIVITY_MODAL =
 
 // Functions to maintain state
 export const RIMBLE_SET_CURRENT_TX_ID = "RIMBLE_SET_CURRENT_TX_ID";
+
+// Function to fix race-conditions with drizzle
+export const RIMBLE_ENABLE_BUY_BUTTON = "RIMBLE_ENABLE_BUY_BUTTON";

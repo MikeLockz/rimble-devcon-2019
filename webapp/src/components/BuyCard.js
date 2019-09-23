@@ -6,7 +6,14 @@ import { ContractForm } from "@drizzle/react-components"; // legacy
 // import { newContextComponents } from "@drizzle/react-components"; // new API doesn't provide contract transaction events
 // const { ContractForm } = newContextComponents;
 
-function BuyCard({ token, drizzle, drizzleState, address, preflightCheck }) {
+function BuyCard({
+  token,
+  drizzle,
+  drizzleState,
+  address,
+  preflightCheck,
+  enableBuyButton
+}) {
   return (
     <Box width={[1, 1 / 2, 1 / 3]} p={3}>
       <Card p={0} borderColor={"#d6d6d6"}>
@@ -35,7 +42,7 @@ function BuyCard({ token, drizzle, drizzleState, address, preflightCheck }) {
             </Text>
           </Flex>
           {/* Use drizzle's ContractForm component, with custom renderprop for styling. This way we can get contract events from the redux store */}
-          {drizzleState ? (
+          {drizzleState && enableBuyButton ? (
             <ContractForm
               contract={token.id}
               method="mint"

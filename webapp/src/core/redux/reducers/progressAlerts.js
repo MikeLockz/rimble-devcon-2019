@@ -49,16 +49,6 @@ export default function(state = initialRimbleProgressAlert, action) {
   switch (action.type) {
     case RIMBLE_ADD_PROGRESSALERT: {
       const { id, content } = action.payload;
-      debugger;
-      if (typeof content === "undefined") {
-        content.token = {
-          id: "DevConAttendance",
-          name: "Conference ticket",
-          ethPrice: "5.63",
-          usdPrice: "1,000.00",
-          image: "conference.png"
-        };
-      }
       return {
         ...state,
         allIds: [...state.allIds, id],

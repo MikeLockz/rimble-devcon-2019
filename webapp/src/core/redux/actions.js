@@ -14,7 +14,8 @@ import {
   RIMBLE_TOGGLE_TX_ERROR_MODAL,
   RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL,
   RIMBLE_TOGGLE_TX_ACTIVITY_MODAL,
-  RIMBLE_SET_CURRENT_TX_ID
+  RIMBLE_SET_CURRENT_TX_ID,
+  RIMBLE_ENABLE_BUY_BUTTON
 } from "./actionTypes";
 
 // Progress Alert actions
@@ -142,6 +143,13 @@ export const toggleTxActivityModal = value => {
 export const setCurrentTxId = value => {
   return {
     type: RIMBLE_SET_CURRENT_TX_ID,
+    payload: { value }
+  };
+};
+
+export const enableBuyButton = value => {
+  return {
+    type: RIMBLE_ENABLE_BUY_BUTTON,
     payload: { value }
   };
 };

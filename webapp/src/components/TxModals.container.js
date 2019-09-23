@@ -42,10 +42,6 @@ const TxModalsContainer = ({
   updateProgressAlertRemainingTime,
   updateProgressAlertTxFee
 }) => {
-  console.log("rimble", rimble);
-  console.log("store", store);
-  console.log("getProgressAlertById(0)", getProgressAlertById(store, 0));
-
   const handleWrongNetwork = () => {
     toggleWrongNetworkModal(!rimble.showWrongNetworkModal);
   };
