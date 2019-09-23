@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import HeaderNav from "./HeaderNav";
 import Landing from "./Landing";
+import Diagram from "./Diagram";
 import Lesson1 from "./Lesson1";
 import Lesson2 from "./Lesson2";
 import Lesson3 from "./Lesson3";
@@ -48,6 +49,7 @@ function Body({ drizzle, drizzleState, store }) {
                 store={store}
               />
             ),
+            Diagram: <Diagram setRoute={setRoute} />,
             Lesson1: (
               <Lesson1 address={address} store={store} setRoute={setRoute} />
             ),

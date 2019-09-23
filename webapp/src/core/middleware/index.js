@@ -16,7 +16,7 @@ import {
   setCurrentTxId,
   updateProgressAlertTxFee
 } from "./../redux/actions";
-import { getRimbleState } from "./../redux/selectors";
+import { getProgressAlertList } from "./../redux/selectors";
 
 // This middleware will just add the property "async dispatch"
 // to actions with the "async" propperty set to true
@@ -53,6 +53,14 @@ const contractEventNotifier = store => next => action => {
   // Tx started but not confirmed or rejected
   if (action.type === "PUSH_TO_TXSTACK") {
     store.dispatch(toggleTxStartModal(true));
+
+    // TODO: This should work here too
+    // Guess key based on length of progressAlert collection
+    const progressAlertList = getProgressAlertList(store);
+    const id = Object.keys(progressAlertList).length;
+    console.log("progressAlertList", progressAlertList);
+
+    store.dispatch(setCurrentTxId({ key: "id", value: id }));
   }
 
   if (action.type === "SEND_CONTRACT_TX") {
@@ -70,11 +78,6 @@ const contractEventNotifier = store => next => action => {
 
     store.dispatch(
       updateProgressAlertTxFee({ stackTempKey: action.stackTempKey })
-    );
-
-    // TODO: This should work here too
-    store.dispatch(
-      setCurrentTxId({ key: "stackTempKey", value: action.stackTempKey })
     );
   }
 

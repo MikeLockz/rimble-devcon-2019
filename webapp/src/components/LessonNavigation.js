@@ -34,6 +34,22 @@ const Navigation = ({ route, setRoute }) => {
       </StyledLinkContainer>
       <StyledLinkContainer
         mx={3}
+        routeName={"Diagram"}
+        route={route}
+        borderRadius={1}
+      >
+        <Link
+          href
+          p={3}
+          onClick={() => {
+            setRoute("Diagram");
+          }}
+        >
+          Diagram
+        </Link>
+      </StyledLinkContainer>
+      <StyledLinkContainer
+        mx={3}
         routeName={"Lesson1"}
         route={route}
         borderRadius={1}
