@@ -4,7 +4,8 @@ import {
   RIMBLE_SET_PROGRESSALERT_STATUS,
   RIMBLE_SET_PROGRESSALERT_TX_HASH,
   RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
-  RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME
+  RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME,
+  RIMBLE_UPDATE_PROGRESSALERT_TXFEE
 } from "../actionTypes";
 
 // Initialize rimbleAlert store
@@ -211,6 +212,25 @@ export default function(state = initialRimbleProgressAlert, action) {
               string: "Less than 2 minutes remaining",
               percent: 38,
               seconds: 100
+            }
+          }
+        }
+      };
+    }
+    case RIMBLE_UPDATE_PROGRESSALERT_TXFEE: {
+      const { content, id, txHash, stackTempKey } = action.payload;
+
+      const pa = getProgressAlertPosition({ state, id, txHash, stackTempKey });
+
+      return {
+        ...state,
+        byIds: {
+          ...state.byIds,
+          [pa]: {
+            ...state.byIds[pa],
+            txFee: {
+              usd: 0.42,
+              eth: 0.00112
             }
           }
         }

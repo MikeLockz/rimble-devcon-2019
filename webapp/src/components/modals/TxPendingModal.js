@@ -12,8 +12,14 @@ import {
   Tooltip,
   EthAddress
 } from "rimble-ui";
+import ProgressBar from "./../../core//utilities/components/ProgressBar";
+import ProgressPercentCircle from "./../../core//utilities/components/ProgressPercentCircle";
 
-function TxPendingModal({ isOpen, toggleModal, address }, props) {
+function TxPendingModal(
+  { isOpen, toggleModal, address, transaction, drizzleState },
+  props
+) {
+  console.log("drizzleState", drizzleState);
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -37,8 +43,24 @@ function TxPendingModal({ isOpen, toggleModal, address }, props) {
             overflow={"hidden"}
             my={4}
           >
-            <Box bg={"primary"} px={3} py={2}>
-              <Text color={"white"}>Transaction in progress</Text>
+            <Box>
+              <Box bg={"primary"}>
+                <ProgressBar
+                  percent={transaction.remainingTime.percent}
+                  height={"10px"}
+                />
+                <Box px={3} py={2}>
+                  <Flex alignItems={"center"}>
+                    <ProgressPercentCircle
+                      percent={transaction.remainingTime.percent}
+                      mr={3}
+                    />
+                    <Text color={"white"} ml={3}>
+                      In progress
+                    </Text>
+                  </Flex>
+                </Box>
+              </Box>
             </Box>
 
             <Flex justifyContent={"space-between"} bg={"#E8E8E8"} p={3}>
@@ -76,10 +98,10 @@ function TxPendingModal({ isOpen, toggleModal, address }, props) {
               </Text>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
                 <Text color={"#444"} lineHeight={"1em"}>
-                  5.4 ETH
+                  {transaction.content.token.ethPrice}
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
-                  $1450 USD
+                  ${transaction.content.token.usdPrice} USD
                 </Text>
               </Flex>
             </Flex>
@@ -96,17 +118,20 @@ function TxPendingModal({ isOpen, toggleModal, address }, props) {
                   Transaction fee
                 </Text>
                 <Link href="#" ml={1}>
-                  <Tooltip message="Pays the Ethereum network to process your transaction. Spent even if the transaction fails." position="top">
+                  <Tooltip
+                    message="Pays the Ethereum network to process your transaction. Spent even if the transaction fails."
+                    position="top"
+                  >
                     <Icon name={"InfoOutline"} size={"14px"} />
                   </Tooltip>
                 </Link>
               </Flex>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
                 <Text color={"#444"} lineHeight={"1em"}>
-                  $0.42
+                  ${transaction.txFee.usd}
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
-                  0.00112 ETH
+                  {transaction.txFee.usd} ETH
                 </Text>
               </Flex>
             </Flex>

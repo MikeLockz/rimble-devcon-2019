@@ -5,6 +5,7 @@ import {
   RIMBLE_SET_PROGRESSALERT_TX_HASH,
   RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
   RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME,
+  RIMBLE_UPDATE_PROGRESSALERT_TXFEE,
   SET_FILTER,
   RIMBLE_TOGGLE_NETWORK_MODAL,
   RIMBLE_TOGGLE_TX_START_MODAL,
@@ -12,7 +13,8 @@ import {
   RIMBLE_TOGGLE_TX_SUCCESS_MODAL,
   RIMBLE_TOGGLE_TX_ERROR_MODAL,
   RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL,
-  RIMBLE_TOGGLE_TX_ACTIVITY_MODAL
+  RIMBLE_TOGGLE_TX_ACTIVITY_MODAL,
+  RIMBLE_SET_CURRENT_TX_ID
 } from "./actionTypes";
 
 // Progress Alert actions
@@ -77,6 +79,18 @@ export const updateProgressAlertRemainingTime = ({
   };
 };
 
+export const updateProgressAlertTxFee = ({
+  content,
+  txHash,
+  id,
+  stackTempKey
+}) => {
+  return {
+    type: RIMBLE_UPDATE_PROGRESSALERT_TXFEE,
+    payload: { content, txHash, id, stackTempKey }
+  };
+};
+
 export const setFilter = filter => {
   return { type: SET_FILTER, payload: { filter } };
 };
@@ -121,6 +135,13 @@ export const toggleTxLowBalanceModal = value => {
 export const toggleTxActivityModal = value => {
   return {
     type: RIMBLE_TOGGLE_TX_ACTIVITY_MODAL,
+    payload: { value }
+  };
+};
+
+export const setCurrentTxId = value => {
+  return {
+    type: RIMBLE_SET_CURRENT_TX_ID,
     payload: { value }
   };
 };

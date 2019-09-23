@@ -5,7 +5,8 @@ import {
   RIMBLE_TOGGLE_TX_SUCCESS_MODAL,
   RIMBLE_TOGGLE_TX_ERROR_MODAL,
   RIMBLE_TOGGLE_TX_LOW_BALANCE_MODAL,
-  RIMBLE_TOGGLE_TX_ACTIVITY_MODAL
+  RIMBLE_TOGGLE_TX_ACTIVITY_MODAL,
+  RIMBLE_SET_CURRENT_TX_ID
 } from "./../actionTypes";
 
 // Set Rimble's initial UI state
@@ -69,6 +70,19 @@ export const txModals = (state = initialRimble, action) => {
       return {
         ...state,
         showTxActivityModal: action.payload.value
+      };
+    }
+    case RIMBLE_SET_CURRENT_TX_ID: {
+      if (action.payload.value.key === "stackTempKey") {
+        // Get the length of the current progressAlert collection
+        // Use that number as the currentTxId property
+        return;
+      }
+      return {
+        ...state,
+        currentTxId: {
+          [action.payload.value.key]: action.payload.value.value
+        }
       };
     }
     default:

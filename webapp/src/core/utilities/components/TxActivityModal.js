@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Box, Button, Flex, Heading, Text, Card } from "rimble-ui";
 import ProgressBar from "./ProgressBar";
+import ProgressPercentCircle from "./ProgressPercentCircle";
 
 const Transaction = ({ transaction }) => {
   console.log("transaction", transaction);
@@ -12,7 +13,7 @@ const Transaction = ({ transaction }) => {
         height={"10px"}
       />
       <Flex justifyContent={"space-between"} mt={2} alignItems={"center"}>
-        <Box>
+        <Box mr={3}>
           <Text fontSize={"14px"}>
             Transferring your ticket to your account...
           </Text>
@@ -20,17 +21,11 @@ const Transaction = ({ transaction }) => {
             {transaction.remainingTime.string}
           </Text>
         </Box>
-        <Flex
-          bg={"pink"}
-          borderRadius={"50%"}
-          height={"32px"}
-          width={"32px"}
-          justifyContent={"center"}
-          alignItems={"center"}
+
+        <ProgressPercentCircle
+          percent={transaction.remainingTime.percent}
           ml={3}
-        >
-          <Text fontSize={"12px"}>{transaction.remainingTime.percent}%</Text>
-        </Flex>
+        />
       </Flex>
     </Box>
   );

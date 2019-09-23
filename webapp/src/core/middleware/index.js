@@ -11,7 +11,10 @@ import {
   toggleTxErrorModal,
   setProgressAlertTxHash,
   setProgressAlertStatus,
-  updateProgressAlertContent
+  updateProgressAlertContent,
+  updateProgressAlertRemainingTime,
+  setCurrentTxId,
+  updateProgressAlertTxFee
 } from "./../redux/actions";
 import { getRimbleState } from "./../redux/selectors";
 
@@ -49,7 +52,6 @@ const contractEventNotifier = store => next => action => {
   console.log("reducers: ", action);
   // Tx started but not confirmed or rejected
   if (action.type === "PUSH_TO_TXSTACK") {
-    // Update UI
     store.dispatch(toggleTxStartModal(true));
   }
 
@@ -61,8 +63,18 @@ const contractEventNotifier = store => next => action => {
         id: action.stackId
       })
     );
+
     store.dispatch(
       setProgressAlertStatus({ status: "initiated", id: action.stackId })
+    );
+
+    store.dispatch(
+      updateProgressAlertTxFee({ stackTempKey: action.stackTempKey })
+    );
+
+    // TODO: This should work here too
+    store.dispatch(
+      setCurrentTxId({ key: "stackTempKey", value: action.stackTempKey })
     );
   }
 
@@ -76,9 +88,14 @@ const contractEventNotifier = store => next => action => {
         id: action.stackId
       })
     );
+
     store.dispatch(
       setProgressAlertStatus({ status: "pending", id: action.stackId })
     );
+
+    store.dispatch(updateProgressAlertRemainingTime({ id: action.stackId }));
+
+    store.dispatch(setCurrentTxId({ key: "stackId", value: action.stackId }));
   }
 
   //
@@ -92,9 +109,11 @@ const contractEventNotifier = store => next => action => {
   // tx is successful
   if (action.type === "TX_SUCCESSFUL") {
     store.dispatch(toggleTxSuccessModal(true));
+
     store.dispatch(
       setProgressAlertStatus({ status: "success", txHash: action.txHash })
     );
+
     store.dispatch(
       updateProgressAlertContent({
         content: { receipt: { ...action.receipt } },
@@ -105,12 +124,14 @@ const contractEventNotifier = store => next => action => {
 
   if (action.type === "TX_ERROR") {
     store.dispatch(toggleTxErrorModal(true));
+
     store.dispatch(
       setProgressAlertStatus({
         status: "error",
         stackTempKey: action.stackTempKey
       })
     );
+
     store.dispatch(
       updateProgressAlertContent({
         content: { error: action.error.message },

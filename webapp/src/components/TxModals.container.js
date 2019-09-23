@@ -16,20 +16,30 @@ import {
   toggleTxSuccessModal,
   toggleTxErrorModal,
   toggleTxLowBalanceModal,
-  toggleTxActivityModal
+  toggleTxActivityModal,
+  setCurrentTxId
 } from "../core/redux/actions";
+import { getProgressAlertById } from "./../core/redux/selectors";
+
+import { getContext } from "redux-saga/effects";
 
 const TxModalsContainer = ({
   address,
   rimble,
+  store,
   toggleWrongNetworkModal,
   toggleTxStartModal,
   toggleTxPendingModal,
   toggleTxSuccessModal,
   toggleTxErrorModal,
   toggleTxLowBalanceModal,
-  toggleTxActivityModal
+  toggleTxActivityModal,
+  setCurrentTxId
 }) => {
+  console.log("rimble", rimble);
+  console.log("store", store);
+  console.log("getProgressAlertById(0)", getProgressAlertById(store, 0));
+
   const handleWrongNetwork = () => {
     toggleWrongNetworkModal(!rimble.showWrongNetworkModal);
   };
@@ -56,6 +66,10 @@ const TxModalsContainer = ({
 
   const handleTxActivityModal = () => {
     toggleTxActivityModal(!rimble.showTxActivityModal);
+  };
+
+  const handleSetCurrentTxId = () => {
+    setCurrentTxId({ key: "stackId", value: 0 });
   };
 
   return (
@@ -91,25 +105,37 @@ const TxModalsContainer = ({
         Toggle Tx Activity modal
       </Button>
 
+      <Button size={"small"} onClick={handleSetCurrentTxId} mr={3} mb={3}>
+        Set CurrentTxId
+      </Button>
+
       <WrongNetwork
         isOpen={rimble.showWrongNetworkModal}
         toggleModal={handleWrongNetwork}
       />
 
-      <TxStartModal
-        isOpen={rimble.showTxStartModal}
-        toggleModal={handleTxStartModal}
-        address={address}
-      />
+      {rimble.currentTxId && (
+        <TxStartModal
+          isOpen={rimble.showTxStartModal}
+          toggleModal={handleTxStartModal}
+          address={address}
+          transaction={getProgressAlertById(store, rimble.currentTxId.stackId)}
+        />
+      )}
 
-      <TxPendingModal
-        isOpen={rimble.showTxPendingModal}
-        toggleModal={handleTxPendingModal}
-        address={address}
-        price={"5.4"}
-        transactionFee={"0.42"}
-        estimatedTime={120}
-      />
+      {/* Only show when there is a currentTxId value */}
+      {rimble.currentTxId && (
+        <TxPendingModal
+          isOpen={rimble.showTxPendingModal}
+          toggleModal={handleTxPendingModal}
+          address={address}
+          price={"5.4"}
+          transactionFee={"0.42"}
+          estimatedTime={120}
+          // transaction={getProgressAlertById(rimble.currentTx)}
+          transaction={getProgressAlertById(store, rimble.currentTxId.stackId)}
+        />
+      )}
 
       <TxSuccessModal
         isOpen={rimble.showTxSuccessModal}
@@ -145,7 +171,8 @@ const TxModalsContainer = ({
 const mapStateToProps = state => {
   return {
     contracts: state.contracts,
-    rimble: state.txModals
+    rimble: state.txModals,
+    store: state
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -156,7 +183,8 @@ const mapDispatchToProps = dispatch => {
     toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value)),
     toggleTxErrorModal: value => dispatch(toggleTxErrorModal(value)),
     toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value)),
-    toggleTxActivityModal: value => dispatch(toggleTxActivityModal(value))
+    toggleTxActivityModal: value => dispatch(toggleTxActivityModal(value)),
+    setCurrentTxId: value => dispatch(setCurrentTxId(value))
   };
 };
 
