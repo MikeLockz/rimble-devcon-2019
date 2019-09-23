@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Flex, Box, Modal, Text, Heading, Icon, Link } from "rimble-ui";
 import RainbowBox from "../RainbowBox";
 import RainbowImage from "../RainbowImage";
+import EyeIcon from "./EyeIcon";
 import shortenAddress from "../../core/utilities/shortenAddress";
 
 function SuccessBody({
@@ -113,9 +114,7 @@ function TokenDetails({ toggleShowTokenDetails, ticket }) {
               <Text fontSize={1} fontWeight={600} color={"primary"}>
                 {shortenAddress(ticket.previousOwner)}
               </Text>
-              <Box ml={2} p={1} borderRadius={"50%"} bg={"#d3c6d3"}>
-                <Icon color={"primary"} name="Star" size={"12px"} />
-              </Box>
+              <EyeIcon />
             </Flex>
           </Link>
         </Flex>

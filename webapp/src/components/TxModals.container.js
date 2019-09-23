@@ -185,6 +185,7 @@ const TxModalsContainer = ({
       <TxLowBalanceModal
         isOpen={rimble.showTxLowBalanceModal}
         toggleModal={handleTxLowBalanceModal}
+        address={address}
       />
     </Box>
   );
