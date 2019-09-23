@@ -1,10 +1,39 @@
 import React from "react";
 import RainbowBox from "./RainbowBox";
 import { drizzleConnect } from "@drizzle/react-plugin";
-import { toggleTxSuccessModal } from "./../core/redux/actions";
+import {
+  toggleTxStartModal,
+  toggleTxSuccessModal,
+  setCurrentTxId,
+  addProgressAlert,
+  updateProgressAlertRemainingTime,
+  updateProgressAlertTxFee
+} from "./../core/redux/actions";
 import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 
-function Lesson3({ setRoute, toggleTxSuccessModal }) {
+function Lesson3({
+  setRoute,
+  toggleTxStartModal,
+  toggleTxSuccessModal,
+  setCurrentTxId,
+  addProgressAlert,
+  updateProgressAlertRemainingTime,
+  updateProgressAlertTxFee
+}) {
+  const handleTxStartModal = () => {
+    addProgressAlert();
+    updateProgressAlertRemainingTime({
+      txHash: "0x123",
+      content: {}
+    });
+    updateProgressAlertTxFee({
+      txHash: "0x123",
+      content: {}
+    });
+    setCurrentTxId({ key: "stackId", value: 0 });
+    toggleTxStartModal(true);
+  };
+
   return (
     <Box>
       <Box maxWidth={"1180px"} p={3} mx={"auto"}>
@@ -58,29 +87,7 @@ function Lesson3({ setRoute, toggleTxSuccessModal }) {
               • Avoid vague statements
             </Text>
           </Box>
-          <Box
-            mx={"auto"}
-            maxWidth={"1000px"}
-            mt={3}
-            bg="#E8E8E8"
-            borderColor={"#000000"}
-          >
-            <code>
-              <center>Enter example code here if we want to show it</center>
-            </code>
-            <code>
-              <center>Enter example code here if we want to show it</center>
-            </code>
-            <code>
-              <center>Enter example code here if we want to show it</center>
-            </code>
-            <code>
-              <center>Enter example code here if we want to show it</center>
-            </code>
-            <code>
-              <center>Enter example code here if we want to show it</center>
-            </code>
-          </Box>
+
           <Box
             style={{ textAlign: "center" }}
             my={4}
@@ -96,7 +103,7 @@ function Lesson3({ setRoute, toggleTxSuccessModal }) {
             >
               Show transaction confirmation
             </Button>
-            <Button size={"medium"} mr={3} mb={3}>
+            <Button size={"medium"} mr={3} mb={3} onClick={handleTxStartModal}>
               Start transaction
             </Button>
           </Box>
@@ -112,7 +119,13 @@ function Lesson3({ setRoute, toggleTxSuccessModal }) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value))
+    toggleTxStartModal: value => dispatch(toggleTxStartModal(value)),
+    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value)),
+    setCurrentTxId: value => dispatch(setCurrentTxId(value)),
+    addProgressAlert: value => dispatch(addProgressAlert(value)),
+    updateProgressAlertRemainingTime: value =>
+      dispatch(updateProgressAlertRemainingTime(value)),
+    updateProgressAlertTxFee: value => dispatch(updateProgressAlertTxFee(value))
   };
 };
 

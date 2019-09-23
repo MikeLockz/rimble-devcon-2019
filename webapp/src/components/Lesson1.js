@@ -4,7 +4,11 @@ import { drizzleConnect } from "@drizzle/react-plugin";
 import {
   toggleTxStartModal,
   toggleTxPendingModal,
-  toggleTxLowBalanceModal
+  toggleTxLowBalanceModal,
+  setCurrentTxId,
+  addProgressAlert,
+  updateProgressAlertRemainingTime,
+  updateProgressAlertTxFee
 } from "./../core/redux/actions";
 import { Heading, Box, Button, Text, Card, Pill } from "rimble-ui";
 
@@ -12,8 +16,40 @@ function Lesson1({
   setRoute,
   toggleTxStartModal,
   toggleTxPendingModal,
-  toggleTxLowBalanceModal
+  toggleTxLowBalanceModal,
+  setCurrentTxId,
+  addProgressAlert,
+  updateProgressAlertRemainingTime,
+  updateProgressAlertTxFee
 }) {
+  const handleTxStartModal = () => {
+    addProgressAlert();
+    updateProgressAlertRemainingTime({
+      txHash: "0x123",
+      content: {}
+    });
+    updateProgressAlertTxFee({
+      txHash: "0x123",
+      content: {}
+    });
+    setCurrentTxId({ key: "stackId", value: 0 });
+    toggleTxStartModal(true);
+  };
+
+  const handleTxPendingModal = () => {
+    addProgressAlert();
+    updateProgressAlertRemainingTime({
+      txHash: "0x123",
+      content: {}
+    });
+    updateProgressAlertTxFee({
+      txHash: "0x123",
+      content: {}
+    });
+    setCurrentTxId({ key: "stackId", value: 0 });
+    toggleTxPendingModal(true);
+  };
+
   return (
     <Box>
       <Box maxWidth={"1180px"} p={3} mx={"auto"}>
@@ -55,23 +91,14 @@ function Lesson1({
             </Text>
           </Box>
           <Box my={4} style={{ textAlign: "center" }}>
-            <Button
-              size={"medium"}
-              mr={3}
-              mb={3}
-              onClick={() => {
-                toggleTxStartModal(true);
-              }}
-            >
+            <Button size={"medium"} mr={3} mb={3} onClick={handleTxStartModal}>
               Show transaction confirmation
             </Button>
             <Button
               size={"medium"}
               mr={3}
               mb={3}
-              onClick={() => {
-                toggleTxPendingModal(true);
-              }}
+              onClick={handleTxPendingModal}
             >
               Show transaction sending
             </Button>
@@ -100,7 +127,12 @@ const mapDispatchToProps = dispatch => {
   return {
     toggleTxStartModal: value => dispatch(toggleTxStartModal(value)),
     toggleTxPendingModal: value => dispatch(toggleTxPendingModal(value)),
-    toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value))
+    toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value)),
+    setCurrentTxId: value => dispatch(setCurrentTxId(value)),
+    addProgressAlert: value => dispatch(addProgressAlert(value)),
+    updateProgressAlertRemainingTime: value =>
+      dispatch(updateProgressAlertRemainingTime(value)),
+    updateProgressAlertTxFee: value => dispatch(updateProgressAlertTxFee(value))
   };
 };
 
