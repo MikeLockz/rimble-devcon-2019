@@ -20,11 +20,18 @@ function Lesson4({
 }) {
   const handleTxStartModal = () => {
     addProgressAlert({
-      id: "DevConAttendance",
-      name: "Conference ticket",
-      ethPrice: "5.63",
-      usdPrice: "1,000.00",
-      image: "conference.png"
+      token: {
+        id: "DevConAttendance",
+        name: "Conference ticket",
+        ethPrice: "5.63",
+        usdPrice: "1,000.00",
+        image: "conference.png",
+        successTitle: "You're going to DevCon!",
+        successInstructions:
+          "Just show this ticket token in your wallet when you arrive at the conference venue.",
+        owner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa",
+        previousOwner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa"
+      }
     });
     updateProgressAlertRemainingTime({
       txHash: "0x123",

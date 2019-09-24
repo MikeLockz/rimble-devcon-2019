@@ -48,11 +48,13 @@ const TxModalsContainer = ({
 
   const handleTxStartModal = () => {
     addProgressAlert({
-      id: "DevConAttendance",
-      name: "Conference ticket",
-      ethPrice: "5.63",
-      usdPrice: "1,000.00",
-      image: "conference.png"
+      token: {
+        id: "DevConAttendance",
+        name: "Conference ticket",
+        ethPrice: "5.63",
+        usdPrice: "1,000.00",
+        image: "conference.png"
+      }
     });
     updateProgressAlertRemainingTime({
       txHash: "0x123",
@@ -68,11 +70,13 @@ const TxModalsContainer = ({
 
   const handleTxPendingModal = () => {
     addProgressAlert({
-      id: "DevConAttendance",
-      name: "Conference ticket",
-      ethPrice: "5.63",
-      usdPrice: "1,000.00",
-      image: "conference.png"
+      token: {
+        id: "DevConAttendance",
+        name: "Conference ticket",
+        ethPrice: "5.63",
+        usdPrice: "1,000.00",
+        image: "conference.png"
+      }
     });
     updateProgressAlertRemainingTime({
       txHash: "0x123",
@@ -87,6 +91,29 @@ const TxModalsContainer = ({
   };
 
   const handleTxSuccessModal = () => {
+    addProgressAlert({
+      token: {
+        id: "DevConAttendance",
+        name: "Conference ticket",
+        ethPrice: "5.63",
+        usdPrice: "1,000.00",
+        image: "conference.png",
+        successTitle: "You're going to DevCon!",
+        successInstructions:
+          "Just show this ticket token in your wallet when you arrive at the conference venue.",
+        owner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa",
+        previousOwner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa"
+      }
+    });
+    updateProgressAlertRemainingTime({
+      txHash: "0x123",
+      content: {}
+    });
+    updateProgressAlertTxFee({
+      txHash: "0x123",
+      content: {}
+    });
+    setCurrentTxId(0);
     toggleTxSuccessModal(!rimble.showTxSuccessModal);
   };
 
@@ -148,45 +175,57 @@ const TxModalsContainer = ({
         toggleModal={handleWrongNetwork}
       />
 
-      {rimble.currentTxId && (
-        <TxStartModal
-          isOpen={rimble.showTxStartModal}
-          toggleModal={() => {
-            toggleTxStartModal(false);
-          }}
-          address={address}
-          transaction={getProgressAlertById(store, rimble.currentTxId.stackId)}
-        />
-      )}
-
       {/* Only show when there is a currentTxId value */}
       {rimble.currentTxId && (
-        <TxPendingModal
-          isOpen={rimble.showTxPendingModal}
-          toggleModal={() => {
-            toggleTxPendingModal(false);
-          }}
-          address={address}
-          price={"5.4"}
-          transactionFee={"0.42"}
-          estimatedTime={120}
-          transaction={getProgressAlertById(store, rimble.currentTxId.stackId)}
-        />
-      )}
+        <>
+          <TxStartModal
+            isOpen={rimble.showTxStartModal}
+            toggleModal={() => {
+              toggleTxStartModal(false);
+            }}
+            address={address}
+            transaction={getProgressAlertById(
+              store,
+              rimble.currentTxId.stackId
+            )}
+          />
 
-      <TxSuccessModal
-        isOpen={rimble.showTxSuccessModal}
-        toggleModal={handleTxSuccessModal}
-        ticket={{
-          description: "DevCon Conference",
-          image: "conference.png",
-          owner: "0xa4738Ca27D069334d5Fe5653324bAcE18627C47e",
-          previousOwner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa",
-          price: "5.4",
-          number: 1,
-          totalAvailable: 100
-        }}
-      />
+          <TxPendingModal
+            isOpen={rimble.showTxPendingModal}
+            toggleModal={() => {
+              toggleTxPendingModal(false);
+            }}
+            address={address}
+            price={"5.4"}
+            transactionFee={"0.42"}
+            estimatedTime={120}
+            transaction={getProgressAlertById(
+              store,
+              rimble.currentTxId.stackId
+            )}
+          />
+
+          <TxSuccessModal
+            isOpen={rimble.showTxSuccessModal}
+            toggleModal={() => {
+              toggleTxSuccessModal(false);
+            }}
+            // token={{
+            //   description: "DevCon Conference",
+            //   image: "conference.png",
+            //   owner: "0xa4738Ca27D069334d5Fe5653324bAcE18627C47e",
+            //   previousOwner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa",
+            //   price: "5.4",
+            //   number: 1,
+            //   totalAvailable: 100
+            // }}
+            transaction={getProgressAlertById(
+              store,
+              rimble.currentTxId.stackId
+            )}
+          />
+        </>
+      )}
 
       <TxErrorModal
         isOpen={rimble.showTxErrorModal}

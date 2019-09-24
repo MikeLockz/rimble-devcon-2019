@@ -1,10 +1,50 @@
 import React from "react";
 import RainbowBox from "./RainbowBox";
 import { drizzleConnect } from "@drizzle/react-plugin";
-import { toggleTxSuccessModal } from "./../core/redux/actions";
+import {
+  toggleTxSuccessModal,
+  setCurrentTxId,
+  addProgressAlert,
+  updateProgressAlertRemainingTime,
+  updateProgressAlertTxFee
+} from "./../core/redux/actions";
 import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 
-function Lesson5({ setRoute, toggleTxSuccessModal }) {
+function Lesson5({
+  setRoute,
+  toggleTxSuccessModal,
+  setCurrentTxId,
+  addProgressAlert,
+  updateProgressAlertRemainingTime,
+  updateProgressAlertTxFee
+}) {
+  const handleTxSuccessModal = () => {
+    addProgressAlert({
+      token: {
+        id: "DevConAttendance",
+        name: "Conference ticket",
+        ethPrice: "5.63",
+        usdPrice: "1,000.00",
+        image: "conference.png",
+        successTitle: "You're going to DevCon!",
+        successInstructions:
+          "Just show this ticket token in your wallet when you arrive at the conference venue.",
+        owner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa",
+        previousOwner: "0xBEFa5641D7681950213b490596cc0e7c3d9f2eAa"
+      }
+    });
+    updateProgressAlertRemainingTime({
+      txHash: "0x123",
+      content: {}
+    });
+    updateProgressAlertTxFee({
+      txHash: "0x123",
+      content: {}
+    });
+    setCurrentTxId(0);
+    toggleTxSuccessModal(true);
+  };
+
   return (
     <Box>
       <Box maxWidth={"1180px"} p={3} mx={"auto"}>
@@ -53,9 +93,7 @@ function Lesson5({ setRoute, toggleTxSuccessModal }) {
               size={"medium"}
               mr={3}
               mb={3}
-              onClick={() => {
-                toggleTxSuccessModal(true);
-              }}
+              onClick={handleTxSuccessModal}
             >
               Show transaction success
             </Button>
@@ -72,7 +110,12 @@ function Lesson5({ setRoute, toggleTxSuccessModal }) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value))
+    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value)),
+    setCurrentTxId: value => dispatch(setCurrentTxId(value)),
+    addProgressAlert: value => dispatch(addProgressAlert(value)),
+    updateProgressAlertRemainingTime: value =>
+      dispatch(updateProgressAlertRemainingTime(value)),
+    updateProgressAlertTxFee: value => dispatch(updateProgressAlertTxFee(value))
   };
 };
 
