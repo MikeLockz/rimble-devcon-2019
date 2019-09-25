@@ -45,7 +45,6 @@ export const txModals = (state = initialRimble, action) => {
       };
     }
     case RIMBLE_TOGGLE_TX_SUCCESS_MODAL: {
-      console.log("RIMBLE_TOGGLE_TX_SUCCESS_MODAL", action);
       return {
         ...state,
         showTxStartModal: false,

@@ -15,7 +15,7 @@ const StyledLinkContainer = styled(Box)`
 
 const Navigation = ({ route, setRoute }) => {
   return (
-    <Flex justifyContent={"center"} p={3}>
+    <Flex justifyContent={"center"} p={3} mb={"70px"}>
       <StyledLinkContainer
         mx={3}
         routeName={"Home"}

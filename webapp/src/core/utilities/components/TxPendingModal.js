@@ -16,14 +16,7 @@ import ProgressPercentCircle from "./ProgressPercentCircle";
 import EyeIcon from "./EyeIcon";
 import shortenAddress from "./../shortenAddress";
 
-function TxPendingModal({
-  isOpen,
-  toggleModal,
-  address,
-  transaction,
-  drizzleState
-}) {
-  console.log("drizzleState", drizzleState);
+function TxPendingModal({ isOpen, toggleModal, address, transaction }) {
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>

@@ -99,6 +99,11 @@ function ProgressAlert({
 const StyledProgressAlert = styled(Box)`
   & {
     background: ${props => props.theme.colors.primary};
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
   }
 `;
 
