@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { Box, Flex, Icon, Text, Button, Image } from "rimble-ui";
+import { Box, Flex, Text, Button, Image } from "rimble-ui";
 import styled from "styled-components";
 import transferringIcon from "./multipleTxIcon.svg";
 import ProgressBar from "./ProgressBar";
@@ -11,7 +11,7 @@ function ProgressAlert({
   getPercentComplete,
   getTimeToCompletionString
 }) {
-  const [progress, setProgress] = useState(0); // percent of estimated time elapsed // KEEP!
+  const [progress, setProgress] = useState(null); // percent of estimated time elapsed // KEEP!
   const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(null); // keep
   const [delay] = useState(1000); // set "tick" time for timer
 
@@ -39,33 +39,17 @@ function ProgressAlert({
       </Box>
       <Flex p={3} alignItems={"center"} justifyContent={"space-between"}>
         <Flex alignItems={"center"}>
-          {status === "pending" && (
-            <Flex
-              bg="#DADADA"
-              borderRadius={"50%"}
-              height={"32px"}
-              width={"32px"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              mr={3}
-            >
-              <Text fontSize={"12px"}>{progress}%</Text>
-            </Flex>
-          )}
-
-          {status === "error" && (
-            <Flex
-              bg="#E94E4A"
-              borderRadius={"50%"}
-              height={"32px"}
-              width={"32px"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              mr={3}
-            >
-              <Icon name="Error" />
-            </Flex>
-          )}
+          <Flex
+            bg="#DADADA"
+            borderRadius={"50%"}
+            height={"32px"}
+            width={"32px"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            mr={3}
+          >
+            <Text fontSize={"12px"}>{progress}%</Text>
+          </Flex>
 
           <Flex flexDirection={"column"}>
             <Text fontWeight={"600"} color={"#fff"}>
@@ -73,10 +57,7 @@ function ProgressAlert({
             </Text>
 
             <Text fontSize={"12px"} color={"#BCBCBC"}>
-              {status === "error"
-                ? "Error: " + progressAlert.content.error
-                : null}
-              {status === "pending" ? estimatedCompletionTime : null}
+              {estimatedCompletionTime}
             </Text>
           </Flex>
         </Flex>

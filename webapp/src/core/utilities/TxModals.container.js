@@ -27,7 +27,9 @@ const TxModalsContainer = ({
   toggleTxPendingModal,
   toggleTxSuccessModal,
   toggleTxErrorModal,
-  toggleTxLowBalanceModal
+  toggleTxLowBalanceModal,
+  getPercentComplete,
+  getTimeToCompletionString
 }) => {
   return (
     <Box>
@@ -66,6 +68,8 @@ const TxModalsContainer = ({
               store,
               rimble.currentTxId.stackId
             )}
+            getPercentComplete={getPercentComplete}
+            getTimeToCompletionString={getTimeToCompletionString}
           />
 
           <TxSuccessModal

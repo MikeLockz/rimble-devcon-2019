@@ -74,7 +74,7 @@ export const updateProgressAlertRemainingTime = ({
   id,
   stackTempKey
 }) => {
-  // generate random time here, remove when hooked up to Saga that will fetch this automatically?
+  // TODO: remove when hooked up to Saga that will fetch and then call this action
   const getRandom = () => {
     const min = 10 * 1000; // 10s
     const max = 100 * 1000; // 100s

@@ -137,7 +137,12 @@ const ProgressAlertContainer = ({
         getTimeToCompletionString={getTimeToCompletionString}
       />
 
-      <TxModalsContainer address={address} store={store} />
+      <TxModalsContainer
+        address={address}
+        store={store}
+        getPercentComplete={getPercentComplete}
+        getTimeToCompletionString={getTimeToCompletionString}
+      />
       {process.env.NODE_ENV === "development" && <ProgressAlertDebug />}
     </Box>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Modal,
   Box,
@@ -16,7 +16,33 @@ import ProgressPercentCircle from "./ProgressPercentCircle";
 import EyeIcon from "./EyeIcon";
 import shortenAddress from "./../shortenAddress";
 
-function TxPendingModal({ isOpen, toggleModal, address, transaction }) {
+function TxPendingModal({
+  isOpen,
+  toggleModal,
+  address,
+  transaction,
+  getPercentComplete,
+  getTimeToCompletionString
+}) {
+  const [progress, setProgress] = useState(null); // percent of estimated time elapsed
+  const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(null); // string of time remaining
+  const [delay] = useState(1000); // set "tick" time for timer
+
+  const { status, completed } = transaction;
+  const { startTime, timeEstimate } = transaction.remainingTime;
+
+  // Calls functions to update time and percent values
+  useInterval(
+    () => {
+      const percentComplete = getPercentComplete({ startTime, timeEstimate });
+      setProgress(percentComplete);
+
+      const timeString = getTimeToCompletionString({ startTime, timeEstimate });
+      setEstimatedCompletionTime(timeString);
+    },
+    !completed && progress < 100 && status === "pending" ? delay : null // Stop timer when conditions aren't true
+  );
+
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -42,16 +68,10 @@ function TxPendingModal({ isOpen, toggleModal, address, transaction }) {
           >
             <Box>
               <Box bg={"primary"}>
-                <ProgressBar
-                  percent={transaction.remainingTime.percent}
-                  height={"10px"}
-                />
+                <ProgressBar percent={progress} height={"10px"} />
                 <Box px={3} py={2}>
                   <Flex alignItems={"center"}>
-                    <ProgressPercentCircle
-                      percent={transaction.remainingTime.percent}
-                      mr={3}
-                    />
+                    <ProgressPercentCircle percent={progress} mr={3} />
                     <Text color={"white"} ml={3}>
                       In progress
                     </Text>
@@ -140,7 +160,7 @@ function TxPendingModal({ isOpen, toggleModal, address, transaction }) {
                 Estimated Time
               </Text>
               <Text fontSize={1} color={"#444"} ml={3}>
-                Less than 2 minutes
+                {estimatedCompletionTime}
               </Text>
             </Flex>
           </Flex>
@@ -157,6 +177,27 @@ function TxPendingModal({ isOpen, toggleModal, address, transaction }) {
       </Card>
     </Modal>
   );
+}
+
+// Duplicated in TxActivityModal so that each component can manage progress
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest function.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
 }
 
 export default TxPendingModal;
