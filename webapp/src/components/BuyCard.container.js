@@ -9,7 +9,6 @@ import {} from "@drizzle/react-plugin";
 function BuyCardContainer({ token, address, addProgressAlert, store }) {
   // ToDo: Can this be refactored and put someplace else more reusable?
   const preflightCheck = ({ token, drizzle, address, callback, event }) => {
-    console.log("preflightCheck", token, drizzle);
     // Check that the wallet is connected
     // Check that there is a valid network
     // Check that the balance is high enough

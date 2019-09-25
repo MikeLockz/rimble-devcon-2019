@@ -115,7 +115,6 @@ const ProgressAlertContainer = ({
       timeString = "expected to finish soon";
     }
 
-    console.log("timeString", timeString);
     return timeString;
   };
 

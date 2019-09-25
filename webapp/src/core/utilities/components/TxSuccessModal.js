@@ -189,7 +189,6 @@ function TxSuccessModal({ isOpen, toggleModal, transaction }, props) {
   };
 
   const token = { ...transaction.content.token };
-  console.log("token", token);
 
   return (
     <Modal isOpen={isOpen}>

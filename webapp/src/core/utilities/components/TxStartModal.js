@@ -16,7 +16,6 @@ import MetaMaskLoader from "./MetaMaskLoader";
 import shortenAddress from "./../shortenAddress";
 
 function TxStartModal({ isOpen, toggleModal, address, transaction }) {
-  console.log("TxStartModal - transaction", transaction);
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>

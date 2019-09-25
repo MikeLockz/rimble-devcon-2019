@@ -23,9 +23,10 @@ const Navigation = ({ route, setRoute }) => {
         borderRadius={1}
       >
         <Link
-          href
+          href={"home"}
           p={3}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             setRoute("Home");
           }}
         >
@@ -39,9 +40,10 @@ const Navigation = ({ route, setRoute }) => {
         borderRadius={1}
       >
         <Link
-          href
+          href={"diagram"}
           p={3}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             setRoute("Diagram");
           }}
         >
@@ -55,9 +57,10 @@ const Navigation = ({ route, setRoute }) => {
         borderRadius={1}
       >
         <Link
-          href
+          href={""}
           p={3}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             setRoute("Lesson1");
           }}
         >
@@ -71,9 +74,10 @@ const Navigation = ({ route, setRoute }) => {
         borderRadius={2}
       >
         <Link
-          href
+          href={""}
           p={3}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             setRoute("Lesson2");
           }}
         >
@@ -87,9 +91,10 @@ const Navigation = ({ route, setRoute }) => {
         borderRadius={1}
       >
         <Link
-          href
+          href={""}
           p={3}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             setRoute("Lesson3");
           }}
         >
@@ -103,9 +108,10 @@ const Navigation = ({ route, setRoute }) => {
         borderRadius={1}
       >
         <Link
-          href
+          href={""}
           p={3}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             setRoute("Lesson4");
           }}
         >
@@ -119,9 +125,10 @@ const Navigation = ({ route, setRoute }) => {
         borderRadius={1}
       >
         <Link
-          href
+          href={""}
           p={3}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             setRoute("Lesson5");
           }}
         >
