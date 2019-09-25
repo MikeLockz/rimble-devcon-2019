@@ -57,7 +57,7 @@ const ProgressAlertContainer = ({
 }) => {
   // Put functions to calculate progress bar percentage here so that it can be shared between progress alerts and modal
   const getPercentComplete = ({ startTime, timeEstimate }) => {
-    // Can't calculate percent
+    // Not enough information for calculation
     if (timeEstimate === null) {
       return null;
     }
@@ -86,7 +86,6 @@ const ProgressAlertContainer = ({
     const remainingSeconds = Math.round(
       (timeEstimate + startTime - Date.now()) / 1000
     );
-    console.log("remainingSeconds", remainingSeconds);
 
     const timeObject = new Date();
     const estimatedCompletion = new Date(

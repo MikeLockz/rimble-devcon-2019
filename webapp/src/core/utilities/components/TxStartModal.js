@@ -149,8 +149,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }) {
 
           <Button.Outline
             onClick={() => {
-              toggleModal(isOpen);
-              // How can we call the web3 api here to cancel the tx?
+              toggleModal(isOpen); // Cancel the tx via the web3 api
             }}
             width={[1]}
           >

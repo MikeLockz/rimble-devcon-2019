@@ -1,6 +1,6 @@
 import React from "react";
 import { drizzleConnect } from "@drizzle/react-plugin";
-import { Box, Text, Button } from "rimble-ui";
+import { Box, Text, Button, Heading } from "rimble-ui";
 import { getProgressAlertsByVisibilityFilter } from "./../redux/selectors";
 
 import {
@@ -99,100 +99,108 @@ const ProgressAlertDebug = ({
     });
   };
   return (
-    <Box>
-      <Text>Trigger Progress Alerts:</Text>
-      <Button.Outline size={"small"} onClick={handleAddProgressAlert}>
-        Add Progress Alert
-      </Button.Outline>
-      <Button.Outline size={"small"} onClick={handleToggleProgressAlert}>
-        Toggle Progress Alert Comlete
-      </Button.Outline>
-      <Box>
-        <Button.Outline
-          size={"small"}
-          onClick={() => {
-            handleSetProgressAlertStatus({ status: "started", id: 0 });
-          }}
-        >
-          Set Progress Alert Status to started
-        </Button.Outline>
-        <Button.Outline
-          size={"small"}
-          onClick={() => {
-            handleSetProgressAlertStatus({
-              status: "pending",
-              txHash: "0x123"
-            });
-          }}
-        >
-          Set Progress Alert Status to pending by txHash
-        </Button.Outline>
-        <Button.Outline
-          size={"small"}
-          onClick={() => {
-            handleSetProgressAlertStatus({ status: "success", id: 0 });
-          }}
-        >
-          Set Progress Alert Status to Success
-        </Button.Outline>
-        <Button.Outline
-          size={"small"}
-          onClick={() => {
-            handleSetProgressAlertStatus({
-              status: "error",
-              stackTempKey: "123"
-            });
-          }}
-        >
-          Set Progress Alert Status to Error by stackTempKey
-        </Button.Outline>
-
-        <Button.Outline
-          size={"small"}
-          onClick={() => {
-            handleUpdateProgressAlertContent({
-              txHash: "0x123"
-            });
-          }}
-        >
-          Update Progress Alert Content by txHash
-        </Button.Outline>
-
-        <Button.Outline
-          size={"small"}
-          onClick={() => {
-            handleUpdateProgressAlertRemainingTime({
-              txHash: "0x123"
-            });
-          }}
-        >
-          Update Progress Alert RemainingTime by txHash
-        </Button.Outline>
-
-        <Button.Outline
-          size={"small"}
-          onClick={() => {
-            handleUpdateProgressAlertTxFee({
-              txHash: "0x123"
-            });
-          }}
-        >
-          Update Progress Alert TxFee by txHash
-        </Button.Outline>
-      </Box>
-
-      <Button.Outline
-        size={"small"}
-        onClick={() => {
-          handleSetProgressAlertTxHash("0x123..4321");
-        }}
+    <Box m={3}>
+      <Heading as={"h4"}>Progress Alert Debug</Heading>
+      <Box
+        p={3}
+        borderColor={"gray"}
+        borderWidth={1}
+        borderRadius={3}
+        borderStyle={"solid"}
       >
-        Set Progress Alert Tx Hash
-      </Button.Outline>
+        <Button.Outline size={"small"} onClick={handleAddProgressAlert}>
+          Add Progress Alert
+        </Button.Outline>
+        <Button.Outline size={"small"} onClick={handleToggleProgressAlert}>
+          Toggle Progress Alert Comlete
+        </Button.Outline>
+        <Box>
+          <Button.Outline
+            size={"small"}
+            onClick={() => {
+              handleSetProgressAlertStatus({ status: "started", id: 0 });
+            }}
+          >
+            Set Progress Alert Status to started
+          </Button.Outline>
+          <Button.Outline
+            size={"small"}
+            onClick={() => {
+              handleSetProgressAlertStatus({
+                status: "pending",
+                txHash: "0x123"
+              });
+            }}
+          >
+            Set Progress Alert Status to pending by txHash
+          </Button.Outline>
+          <Button.Outline
+            size={"small"}
+            onClick={() => {
+              handleSetProgressAlertStatus({ status: "success", id: 0 });
+            }}
+          >
+            Set Progress Alert Status to Success
+          </Button.Outline>
+          <Button.Outline
+            size={"small"}
+            onClick={() => {
+              handleSetProgressAlertStatus({
+                status: "error",
+                stackTempKey: "123"
+              });
+            }}
+          >
+            Set Progress Alert Status to Error by stackTempKey
+          </Button.Outline>
 
-      <Box>
-        <Text>Progress Alerts Text</Text>
-        <ProressAlertsText progressAlerts={progressAlerts} />
+          <Button.Outline
+            size={"small"}
+            onClick={() => {
+              handleUpdateProgressAlertContent({
+                txHash: "0x123"
+              });
+            }}
+          >
+            Update Progress Alert Content by txHash
+          </Button.Outline>
+
+          <Button.Outline
+            size={"small"}
+            onClick={() => {
+              handleUpdateProgressAlertRemainingTime({
+                txHash: "0x123"
+              });
+            }}
+          >
+            Update Progress Alert RemainingTime by txHash
+          </Button.Outline>
+
+          <Button.Outline
+            size={"small"}
+            onClick={() => {
+              handleUpdateProgressAlertTxFee({
+                txHash: "0x123"
+              });
+            }}
+          >
+            Update Progress Alert TxFee by txHash
+          </Button.Outline>
+        </Box>
+
+        <Button.Outline
+          size={"small"}
+          onClick={() => {
+            handleSetProgressAlertTxHash("0x123..4321");
+          }}
+        >
+          Set Progress Alert Tx Hash
+        </Button.Outline>
+
+        <Box mt={3}>
+          <Text>Progress Alerts Text</Text>
+          <ProressAlertsText progressAlerts={progressAlerts} />
+        </Box>
       </Box>
     </Box>
   );

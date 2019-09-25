@@ -12,18 +12,15 @@ const Transaction = ({
   const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(null);
   const [delay] = useState(1000); // set "tick" time for timer
 
-  console.log("txActivityModal transaction", transaction);
+  const { startTime, timeEstimate } = transaction.remainingTime;
 
   // Calls functions to update time and percent values
   useInterval(
     () => {
-      const { startTime, timeEstimate } = transaction.remainingTime;
       const percentComplete = getPercentComplete({ startTime, timeEstimate });
-      console.log("percentComplete", percentComplete);
       setProgress(percentComplete);
 
       const timeString = getTimeToCompletionString({ startTime, timeEstimate });
-      console.log("timeString", timeString);
       setEstimatedCompletionTime(timeString);
     },
     !transaction.completed && transaction.status === "pending" && progress < 100
@@ -51,18 +48,13 @@ const Transaction = ({
   );
 };
 
-function TxActivityModal(
-  {
-    isOpen,
-    toggleModal,
-    address,
-    progressAlerts,
-    transactions,
-    getPercentComplete,
-    getTimeToCompletionString
-  },
-  props
-) {
+function TxActivityModal({
+  isOpen,
+  toggleModal,
+  transactions,
+  getPercentComplete,
+  getTimeToCompletionString
+}) {
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>

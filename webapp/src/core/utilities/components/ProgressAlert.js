@@ -18,23 +18,18 @@ function ProgressAlert({
   const { status } = progressAlert;
   const { startTime, timeEstimate } = progressAlert.remainingTime;
 
-  useEffect(() => {
-    // checkStatus();
-  }, [progressAlert]);
-
   // Calls functions to update time and percent values
   useInterval(
     () => {
       const percentComplete = getPercentComplete({ startTime, timeEstimate });
-      console.log("percentComplete", percentComplete);
       setProgress(percentComplete);
+
       const timeString = getTimeToCompletionString({ startTime, timeEstimate });
-      console.log("timeString", timeString);
       setEstimatedCompletionTime(timeString);
     },
     !progressAlert.completed && progress < 100 && status === "pending"
       ? delay
-      : null // how to know when to stop timer?
+      : null // Stop timer when conditions aren't true
   );
 
   return (
@@ -82,7 +77,6 @@ function ProgressAlert({
                 ? "Error: " + progressAlert.content.error
                 : null}
               {status === "pending" ? estimatedCompletionTime : null}
-              {status === "success" ? "Complete!" : null}
             </Text>
           </Flex>
         </Flex>

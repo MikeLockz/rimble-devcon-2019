@@ -1,13 +1,11 @@
 import React from "react";
 import RainbowBox from "./RainbowBox";
-import { drizzleConnect } from "@drizzle/react-plugin";
-import { toggleTxSuccessModal } from "../core/redux/actions";
 import { Box, Flex, Image, Card, Link } from "rimble-ui";
 import diagramHeading from "./../images/rimble-ethereum-transaction-flow-headers.png";
 import diagramSwimlanes from "./../images/rimble-ethereum-transaction-flow-swimlanes.png";
 import fullDiagram from "./../images/rimble-ethereum-transaction-flow-swimlane-diagram.png";
 
-function Diagram({ setRoute, toggleTxSuccessModal }) {
+function Diagram() {
   return (
     <Box zIndex={"9"}>
       <Box maxWidth={"1180px"} p={3} mx={"auto"}>
@@ -41,14 +39,4 @@ function Diagram({ setRoute, toggleTxSuccessModal }) {
   );
 }
 
-/*
- * Export connected component.
- */
-
-const mapDispatchToProps = dispatch => {
-  return {
-    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value))
-  };
-};
-
-export default drizzleConnect(Diagram, null, mapDispatchToProps);
+export default Diagram;

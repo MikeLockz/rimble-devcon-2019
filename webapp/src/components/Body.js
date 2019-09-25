@@ -8,12 +8,9 @@ import Lesson2 from "./Lesson2";
 import Lesson3 from "./Lesson3";
 import Lesson4 from "./Lesson4";
 import Lesson5 from "./Lesson5";
-
 import LessonNavigation from "./LessonNavigation";
 import ProgressAlertContainer from "../core/utilities/ProgressAlert.container";
-
 import { Box, Flex } from "rimble-ui";
-
 import backgroundImage from "./../images/background.jpg";
 
 const BodyBox = styled(Box)`
@@ -68,7 +65,6 @@ function Body({ drizzle, drizzleState, store }) {
         <LessonNavigation setRoute={setRoute} route={route} />
       </Flex>
 
-      {/* <ProgressAlertUtil drizzleState={drizzleState} /> */}
       <ProgressAlertContainer address={address} store={store} />
     </BodyBox>
   );

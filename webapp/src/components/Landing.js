@@ -5,7 +5,7 @@ import { Box, Flex, Text, Link } from "rimble-ui";
 import tokenDetails from "./../tokenDetails";
 import appConfig from "../appConfig";
 
-function Landing({ drizzle, drizzleState, store }, props) {
+function Landing({ drizzle, drizzleState, store }) {
   const [currentNetwork, setCurrentNetwork] = useState(null);
   const [address, setAddress] = useState(null);
 
