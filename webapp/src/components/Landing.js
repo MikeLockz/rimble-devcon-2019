@@ -5,7 +5,7 @@ import BuyCardContainer from "./BuyCard.container";
 
 import ConnectionBanner from "@rimble/connection-banner";
 
-import { Heading, Box, Flex, Button, Text, Link } from "rimble-ui";
+import { Box, Flex, Text, Link } from "rimble-ui";
 
 import backgroundImage from "./../images/background.jpg";
 import tokenDetails from "./../tokenDetails";

@@ -1,6 +1,7 @@
 import React from "react";
 import { drizzleConnect } from "@drizzle/react-plugin";
 import { Box } from "rimble-ui";
+import TxModalsContainer from "./TxModals.container";
 import { getProgressAlertsByVisibilityFilter } from "./../redux/selectors";
 import appConfig from "./../../appConfig";
 import ProgressAlertDebug from "./ProgressAlertDebug";
@@ -52,7 +53,9 @@ const ProgressAlertContainer = ({
   progressAlerts,
   transactions,
   toggleProgressAlert,
-  toggleTxActivityModal
+  toggleTxActivityModal,
+  address,
+  store
 }) => {
   // Put functions to calculate progress bar percentage here so that it can be shared between progress alerts and modal
   const getPercentComplete = ({ startTime, timeEstimate }) => {
@@ -142,6 +145,8 @@ const ProgressAlertContainer = ({
         getPercentComplete={getPercentComplete}
         getTimeToCompletionString={getTimeToCompletionString}
       />
+
+      <TxModalsContainer address={address} store={store} />
       {appConfig.debugMode && <ProgressAlertDebug />}
     </Box>
   );

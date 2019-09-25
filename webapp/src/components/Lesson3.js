@@ -128,11 +128,7 @@ function Lesson3({
             </Text>
           </Box>
 
-          <Box
-            style={{ textAlign: "center" }}
-            my={4}
-            style={{ textAlign: "center" }}
-          >
+          <Box style={{ textAlign: "center" }} my={4}>
             <Button size={"medium"} mr={3} mb={3} onClick={handleTxStartModal}>
               Show transaction confirmation
             </Button>

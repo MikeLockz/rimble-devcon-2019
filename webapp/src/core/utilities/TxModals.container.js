@@ -2,12 +2,12 @@ import React from "react";
 import { Box, Button } from "rimble-ui";
 import { drizzleConnect } from "@drizzle/react-plugin";
 
-import WrongNetwork from "./modals/WrongNetwork";
-import TxStartModal from "./modals/TxStartModal";
-import TxPendingModal from "./modals/TxPendingModal";
-import TxSuccessModal from "./modals/TxSuccessModal";
-import TxErrorModal from "./modals/TxErrorModal";
-import TxLowBalanceModal from "./modals/TxLowBalanceModal";
+import WrongNetwork from "./components/WrongNetwork";
+import TxStartModal from "./components/TxStartModal";
+import TxPendingModal from "./components/TxPendingModal";
+import TxSuccessModal from "./components/TxSuccessModal";
+import TxErrorModal from "./components/TxErrorModal";
+import TxLowBalanceModal from "./components/TxLowBalanceModal";
 
 import {
   toggleWrongNetworkModal,
@@ -21,10 +21,8 @@ import {
   addProgressAlert,
   updateProgressAlertRemainingTime,
   updateProgressAlertTxFee
-} from "../core/redux/actions";
-import { getProgressAlertById } from "./../core/redux/selectors";
-
-import { getContext } from "redux-saga/effects";
+} from "../redux/actions";
+import { getProgressAlertById } from "../redux/selectors";
 
 const TxModalsContainer = ({
   address,

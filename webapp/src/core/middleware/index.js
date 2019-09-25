@@ -1,4 +1,3 @@
-import { put, takeEvery } from "redux-saga/effects";
 import { generateStore } from "@drizzle/store";
 import drizzleOptions from "../../drizzleOptions";
 import progressAlerts from "./../redux/reducers/progressAlerts";
@@ -17,7 +16,6 @@ import {
   updateProgressAlertTxFee,
   enableBuyButton
 } from "./../redux/actions";
-import { getProgressAlertList } from "./../redux/selectors";
 
 // This middleware will just add the property "async dispatch"
 // to actions with the "async" propperty set to true

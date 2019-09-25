@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Image } from "rimble-ui";
-import eyeIcon from "./../../images/icon-eye.svg";
+import eyeIcon from "./../../../images/icon-eye.svg";
 
 const EyeIcon = () => {
   return (

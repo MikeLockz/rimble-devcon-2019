@@ -1,8 +1,7 @@
 import React from "react";
-import { Button } from "rimble-ui";
 import BuyCard from "./BuyCard";
 import { drizzleConnect, DrizzleContext } from "@drizzle/react-plugin";
-import { addProgressAlert, toggleProgressAlert } from "./../core/redux/actions";
+import { addProgressAlert } from "./../core/redux/actions";
 
 // Drizzle for state and contract interactions
 import {} from "@drizzle/react-plugin";

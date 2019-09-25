@@ -1,6 +1,6 @@
 import React from "react";
-import { Flex, Image, Box, Loader } from "rimble-ui";
-import metaMaskIcon from "./../../images/icon-metamask.svg";
+import { Image, Box, Loader } from "rimble-ui";
+import metaMaskIcon from "./../../../images/icon-metamask.svg";
 
 const MetaMaskLoader = () => {
   return (

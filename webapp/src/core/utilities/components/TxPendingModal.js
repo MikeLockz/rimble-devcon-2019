@@ -3,24 +3,24 @@ import {
   Modal,
   Box,
   Icon,
-  Image,
   Link,
   Button,
   Flex,
   Heading,
   Text,
   Card,
-  Loader,
-  EthAddress,
   Tooltip
 } from "rimble-ui";
+import ProgressBar from "./ProgressBar";
+import ProgressPercentCircle from "./ProgressPercentCircle";
 import EyeIcon from "./EyeIcon";
-import MetaMaskLoader from "./MetaMaskLoader";
-import shortenAddress from "./../../core/utilities/shortenAddress";
-import { drizzleConnect } from "@drizzle/react-plugin";
+import shortenAddress from "./../shortenAddress";
 
-function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
-  console.log("TxStartModal - transaction", transaction);
+function TxPendingModal(
+  { isOpen, toggleModal, address, transaction, drizzleState },
+  props
+) {
+  console.log("drizzleState", drizzleState);
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -29,10 +29,9 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
           justifyContent={"space-between"}
           flexDirection={"column"}
         >
-          <Heading.h3 mb={3}>Confirm your purchase in MetaMask</Heading.h3>
+          <Heading.h3 mb={3}>Sending your ticket...</Heading.h3>
           <Text>
-            Double check the details here &ndash; this transaction can't be
-            refunded.
+            Nice one! Your ticket should be with your account shortly.
           </Text>
 
           <Flex
@@ -45,26 +44,25 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
             overflow={"hidden"}
             my={4}
           >
-            <Box bg={"primary"} px={3} py={2}>
-              <Text color={"white"}>{transaction.content.token.name}</Text>
-            </Box>
-
-            <Flex p={3} borderBottom={"1px solid #ccc"} alignItems={"center"}>
-              <MetaMaskLoader />
-              <Box>
-                <Text fontWeight={"600"} fontSize={1} lineHeight={"1.25em"}>
-                  Waiting for confirmation...
-                </Text>
-                <Text
-                  fontSize={1}
-                  fontWeight={100}
-                  lineHeight={"1.25em"}
-                  color={"primary"}
-                >
-                  Don't see the MetaMask popup?
-                </Text>
+            <Box>
+              <Box bg={"primary"}>
+                <ProgressBar
+                  percent={transaction.remainingTime.percent}
+                  height={"10px"}
+                />
+                <Box px={3} py={2}>
+                  <Flex alignItems={"center"}>
+                    <ProgressPercentCircle
+                      percent={transaction.remainingTime.percent}
+                      mr={3}
+                    />
+                    <Text color={"white"} ml={3}>
+                      In progress
+                    </Text>
+                  </Flex>
+                </Box>
               </Box>
-            </Flex>
+            </Box>
 
             <Flex justifyContent={"space-between"} bg={"#E8E8E8"} p={3}>
               <Text fontSize={1} color={"#444"} fontWeight={600}>
@@ -117,7 +115,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
                 <Text fontSize={1} color={"#444"} fontWeight={600}>
                   Transaction fee
                 </Text>
-                <Link href ml={1}>
+                <Link href="#" ml={1}>
                   <Tooltip
                     message="Pays the Ethereum network to process your transaction. Spent even if the transaction fails."
                     position="top"
@@ -145,7 +143,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
               <Text fontSize={1} color={"#444"} fontWeight={600}>
                 Estimated Time
               </Text>
-              <Text fontSize={1} color={"#444"}>
+              <Text fontSize={1} color={"#444"} ml={3}>
                 Less than 2 minutes
               </Text>
             </Flex>
@@ -154,11 +152,10 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
           <Button.Outline
             onClick={() => {
               toggleModal(isOpen);
-              // How can we call the web3 api here to cancel the tx?
             }}
             width={[1]}
           >
-            Cancel purchase
+            Close
           </Button.Outline>
         </Flex>
       </Card>
@@ -166,4 +163,4 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
   );
 }
 
-export default TxStartModal;
+export default TxPendingModal;

@@ -12,7 +12,6 @@ import {
   updateProgressAlertRemainingTime,
   updateProgressAlertTxFee
 } from "./../redux/actions";
-import { VISIBILITY_FILTERS } from "./../redux/constants";
 
 const ProressAlertsText = ({ progressAlerts }) => {
   return (

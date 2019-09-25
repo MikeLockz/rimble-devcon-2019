@@ -8,7 +8,7 @@ import {
   updateProgressAlertRemainingTime,
   updateProgressAlertTxFee
 } from "./../core/redux/actions";
-import { Heading, Box, Flex, Button, Pill, Text, Link, Card } from "rimble-ui";
+import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 
 function Lesson4({
   setRoute,

@@ -15,7 +15,7 @@ const Transaction = ({
   console.log("txActivityModal transaction", transaction);
 
   // Calls functions to update time and percent values
-  const interval = useInterval(
+  useInterval(
     () => {
       const { startTime, timeEstimate } = transaction.remainingTime;
       const percentComplete = getPercentComplete({ startTime, timeEstimate });

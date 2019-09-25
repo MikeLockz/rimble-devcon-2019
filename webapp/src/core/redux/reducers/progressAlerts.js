@@ -204,7 +204,7 @@ export default function(state = initialRimbleProgressAlert, action) {
       };
     }
     case RIMBLE_UPDATE_PROGRESSALERT_TXFEE: {
-      const { content, id, txHash, stackTempKey } = action.payload;
+      const { id, txHash, stackTempKey } = action.payload;
 
       const pa = getProgressAlertPosition({ state, id, txHash, stackTempKey });
 

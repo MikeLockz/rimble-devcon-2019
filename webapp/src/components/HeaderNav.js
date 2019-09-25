@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, Box, Icon, Button, Flex, Image } from "rimble-ui";
+import { Text, Box, Button, Flex, Image } from "rimble-ui";
 import styled from "styled-components";
 import logo from "../images/rimble-logo.svg";
 import walletIcon from "./../images/icon-wallet.svg";

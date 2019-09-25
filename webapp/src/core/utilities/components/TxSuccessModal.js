@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Flex, Box, Modal, Text, Heading, Icon, Link } from "rimble-ui";
-import RainbowBox from "../RainbowBox";
-import RainbowImage from "../RainbowImage";
+import RainbowBox from "./../../../components/RainbowBox";
+import RainbowImage from "./../../../components/RainbowImage";
 import EyeIcon from "./EyeIcon";
-import shortenAddress from "../../core/utilities/shortenAddress";
+import shortenAddress from "./../shortenAddress";
 
 function SuccessBody({
   toggleModal,
