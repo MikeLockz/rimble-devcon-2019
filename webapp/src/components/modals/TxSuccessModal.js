@@ -76,7 +76,7 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token }) {
         <Heading.h3>{token.description}</Heading.h3>
 
         <Flex alignItems={"center"} mt={3} mb={4} flexDirection={"column"}>
-          <RainbowImage src={"/images/conference.png"} />
+          <RainbowImage src={"images/" + token.image} />
         </Flex>
 
         <Flex
@@ -148,10 +148,10 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token }) {
             </Text>
             <Flex alignItems={"flex-end"} flexDirection={"column"}>
               <Text color={"#444"} lineHeight={"1em"}>
-                {token.price} ETH
+                {token.ethPrice} ETH
               </Text>
               <Text color={"#615E66"} fontSize={"10px"}>
-                $1450 USD
+                ${token.usdPrice} USD
               </Text>
             </Flex>
           </Flex>
