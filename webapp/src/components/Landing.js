@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-
 import BuyCardContainer from "./BuyCard.container";
-
 import ConnectionBanner from "@rimble/connection-banner";
-
 import { Box, Flex, Text, Link } from "rimble-ui";
-
-import backgroundImage from "./../images/background.jpg";
 import tokenDetails from "./../tokenDetails";
 import appConfig from "../appConfig";
-
-const BodyBox = styled(Box)`
-  background: no-repeat center center url(${backgroundImage}) #fffff8;
-`;
 
 function Landing({ drizzle, drizzleState, store }, props) {
   const [currentNetwork, setCurrentNetwork] = useState(null);
@@ -27,7 +17,7 @@ function Landing({ drizzle, drizzleState, store }, props) {
     if (!currentNetwork) {
       getNetwork();
     }
-  }, [drizzleState]);
+  }, [drizzleState, currentNetwork]);
 
   const getNetwork = () => {
     window.web3.version.getNetwork((error, networkId) => {

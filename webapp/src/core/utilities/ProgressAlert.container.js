@@ -12,7 +12,6 @@ import TxActivityModal from "./components/TxActivityModal";
 import { toggleProgressAlert, toggleTxActivityModal } from "./../redux/actions";
 
 const ProgressAlerts = ({
-  rimble,
   progressAlerts,
   toggleProgressAlert,
   toggleTxActivityModal,
@@ -25,7 +24,6 @@ const ProgressAlerts = ({
 
   if (progressAlerts && progressAlerts.length === 1) {
     const { id } = progressAlerts[0];
-    const { startTime, timeEstimate } = progressAlerts[0].remainingTime;
 
     return (
       <ProgressAlert
@@ -83,10 +81,6 @@ const ProgressAlertContainer = ({
     if (timeEstimate === null) {
       return timeString;
     }
-
-    const secondsRemaining = timeEstimate - startTime / 1000;
-
-    // need to get seconds remaining
 
     const now = Date.now();
     const remainingSeconds = Math.round(

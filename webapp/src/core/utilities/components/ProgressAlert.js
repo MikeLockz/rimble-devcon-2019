@@ -5,112 +5,26 @@ import styled from "styled-components";
 import transferringIcon from "./multipleTxIcon.svg";
 import ProgressBar from "./ProgressBar";
 
-function ProgressAlert(
-  {
-    progressAlert,
-    toggleProgressAlert,
-    getPercentComplete,
-    getTimeToCompletionString
-  },
-  props
-) {
+function ProgressAlert({
+  progressAlert,
+  toggleProgressAlert,
+  getPercentComplete,
+  getTimeToCompletionString
+}) {
   const [progress, setProgress] = useState(0); // percent of estimated time elapsed // KEEP!
   const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(null); // keep
-  const [remainingTime, setRemainingTime] = useState(
-    progressAlert.timeEstimate
-  ); // estimated seconds until complete
-  const [timeString, setTimeString] = useState("calculating..."); // human-friendly time until complete
   const [delay] = useState(1000); // set "tick" time for timer
-  const [status, setStatus] = useState("pending");
-  // const [error, setError] = useState(props.error);
-  const [error, setError] = useState({});
+
+  const { status } = progressAlert;
+  const { startTime, timeEstimate } = progressAlert.remainingTime;
 
   useEffect(() => {
-    // console.log("props", props);
-    // console.log("progressAlert", props);
-    setRemainingTime(progressAlert.timeEstimate);
-    setEstimatedCompletionTime(progressAlert.timeEstimate);
-    setError(progressAlert.error);
-    setStatus(progressAlert.status);
     // checkStatus();
   }, [progressAlert]);
 
-  const resetProgressAlert = () => {
-    setProgress(0);
-    setStatus("pending");
-  };
-
-  const checkStatus = () => {
-    // console.log("Object.keys(error).length", Object.keys(error).length);
-    // if (Object.keys(error).length !== 0) {
-    //   setStatus("error");
-    // } else if (remainingTime === 0) {
-    //   setStatus("success");
-    // } else {
-    //   setStatus("pending");
-    // }
-    // console.log("status", status);
-  };
-
-  // Determines the amount of time remaining
-  const calculateTimeRemaining = () => {
-    setRemainingTime(remainingTime - 1);
-    timeToString();
-  };
-
-  // Reads the value of RemainingTime and outputs a hunman-friendly string of time remaining
-  const timeToString = () => {
-    if (remainingTime === null) {
-      return;
-    }
-    const now = Date.now();
-
-    const timeObject = new Date();
-    const estimatedCompletion = new Date(timeObject.getTime() + remainingTime);
-
-    let diff = now - estimatedCompletion;
-    diff = Math.abs(Math.floor(diff));
-
-    const days = Math.floor(diff / (24 * 60 * 60));
-    let leftSec = diff - days * 24 * 60 * 60;
-
-    const hrs = Math.floor(leftSec / (60 * 60));
-    leftSec = leftSec - hrs * 60 * 60;
-
-    const min = Math.floor(leftSec / 60);
-    leftSec = leftSec - min * 60;
-
-    if (min > 1) {
-      setTimeString("~" + min + " minutes");
-    } else if (min === 1) {
-      setTimeString("~ 1 minute remaining");
-    } else if (leftSec > 30) {
-      setTimeString("less than 1 minute remaining");
-    } else {
-      setTimeString("less than 30 seconds remaining");
-    }
-  };
-
-  // Determines percent complete based on time remaining and estimated time
-  const calculatePercentComplete = () => {
-    // console.log(
-    //   "calculatePercentComplete: progress, remainingTime",
-    //   progress,
-    //   remainingTime,
-    //   status
-    // );
-
-    const currentProgress = Math.round(
-      ((estimatedCompletionTime - remainingTime) / estimatedCompletionTime) *
-        100
-    );
-    setProgress(currentProgress);
-  };
-
   // Calls functions to update time and percent values
-  const interval = useInterval(
+  useInterval(
     () => {
-      const { startTime, timeEstimate } = progressAlert.remainingTime;
       const percentComplete = getPercentComplete({ startTime, timeEstimate });
       console.log("percentComplete", percentComplete);
       setProgress(percentComplete);
@@ -118,9 +32,7 @@ function ProgressAlert(
       console.log("timeString", timeString);
       setEstimatedCompletionTime(timeString);
     },
-    !progressAlert.completed &&
-      progress < 100 &&
-      progressAlert.status === "pending"
+    !progressAlert.completed && progress < 100 && status === "pending"
       ? delay
       : null // how to know when to stop timer?
   );
@@ -132,7 +44,7 @@ function ProgressAlert(
       </Box>
       <Flex p={3} alignItems={"center"} justifyContent={"space-between"}>
         <Flex alignItems={"center"}>
-          {progress <= 100 && status === "pending" && (
+          {status === "pending" && (
             <Flex
               bg="#DADADA"
               borderRadius={"50%"}
@@ -143,20 +55,6 @@ function ProgressAlert(
               mr={3}
             >
               <Text fontSize={"12px"}>{progress}%</Text>
-            </Flex>
-          )}
-
-          {status === "success" && (
-            <Flex
-              bg="#00BF6F"
-              borderRadius={"50%"}
-              height={"32px"}
-              width={"32px"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              mr={3}
-            >
-              <Icon name="Check" />
             </Flex>
           )}
 
@@ -194,23 +92,10 @@ function ProgressAlert(
             mainColor={"white"}
             onClick={e => {
               toggleProgressAlert(progressAlert.id);
-              // resetProgressAlert();
             }}
           >
-            Undo
+            Acknowledge
           </Button.Outline>
-        )}
-
-        {status !== "pending" && (
-          <Button
-            mainColor="primary"
-            p={0}
-            onClick={e => {
-              toggleProgressAlert(progressAlert.id);
-            }}
-          >
-            <Icon name="Close" />
-          </Button>
         )}
       </Flex>
     </StyledProgressAlert>

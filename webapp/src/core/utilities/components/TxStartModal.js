@@ -14,9 +14,8 @@ import {
 import EyeIcon from "./EyeIcon";
 import MetaMaskLoader from "./MetaMaskLoader";
 import shortenAddress from "./../shortenAddress";
-import { drizzleConnect } from "@drizzle/react-plugin";
 
-function TxStartModal({ isOpen, toggleModal, address, transaction }, props) {
+function TxStartModal({ isOpen, toggleModal, address, transaction }) {
   console.log("TxStartModal - transaction", transaction);
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
