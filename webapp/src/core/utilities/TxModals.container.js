@@ -31,15 +31,13 @@ const TxModalsContainer = ({
 }) => {
   return (
     <Box>
-      <TxModalsDebug />
-
+      {process.env.NODE_ENV === "development" && <TxModalsDebug />}
       <WrongNetwork
         isOpen={rimble.showWrongNetworkModal}
         toggleModal={() => {
           toggleWrongNetworkModal(false);
         }}
       />
-
       {/* Only show when there is a currentTxId value */}
       {rimble.currentTxId && (
         <>
@@ -82,14 +80,12 @@ const TxModalsContainer = ({
           />
         </>
       )}
-
       <TxErrorModal
         isOpen={rimble.showTxErrorModal}
         toggleModal={() => {
           toggleTxErrorModal();
         }}
       />
-
       <TxLowBalanceModal
         isOpen={rimble.showTxLowBalanceModal}
         toggleModal={() => {

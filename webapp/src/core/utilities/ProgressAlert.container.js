@@ -3,7 +3,6 @@ import { drizzleConnect } from "@drizzle/react-plugin";
 import { Box } from "rimble-ui";
 import TxModalsContainer from "./TxModals.container";
 import { getProgressAlertsByVisibilityFilter } from "./../redux/selectors";
-import appConfig from "./../../appConfig";
 import ProgressAlertDebug from "./ProgressAlertDebug";
 import ProgressAlert, {
   MultipleProgressAlerts
@@ -140,7 +139,7 @@ const ProgressAlertContainer = ({
       />
 
       <TxModalsContainer address={address} store={store} />
-      {appConfig.debugMode && <ProgressAlertDebug />}
+      {process.env.NODE_ENV === "development" && <ProgressAlertDebug />}
     </Box>
   );
 };
