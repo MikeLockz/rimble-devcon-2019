@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Modal, Box, Button, Flex, Heading, Text, Card } from "rimble-ui";
 import ProgressBar from "./ProgressBar";
 import ProgressPercentCircle from "./ProgressPercentCircle";
 
-const Transaction = ({ transaction }) => {
-  console.log("transaction", transaction);
+const Transaction = ({ transaction, getPercentComplete }) => {
+  const [progress, setProgress] = useState(null); // percent of timer that has elapsed
+  const [delay] = useState(1000); // set "tick" time for timer
+
+  console.log("txActivityModal transaction", transaction);
+
+  // Calls functions to update time and percent values
+  const interval = useInterval(
+    () => {
+      const { startTime, timeEstimate } = transaction.remainingTime;
+      const percentComplete = getPercentComplete({ startTime, timeEstimate });
+      console.log("percentComplete", percentComplete);
+      setProgress(percentComplete);
+    },
+    !transaction.completed && transaction.status === "pending" && progress < 100
+      ? delay
+      : null // how to know when to stop timer?
+  );
+
   return (
     <Box px={3} py={2}>
       <Text fontWeight={"bold"}>{transaction.content.token.name}</Text>
-      <ProgressBar
-        percent={transaction.remainingTime.percent}
-        height={"10px"}
-      />
+      <ProgressBar percent={progress} height={"10px"} />
       <Flex justifyContent={"space-between"} mt={2} alignItems={"center"}>
         <Box mr={3}>
           <Text fontSize={"14px"}>
@@ -22,20 +36,23 @@ const Transaction = ({ transaction }) => {
           </Text>
         </Box>
 
-        <ProgressPercentCircle
-          percent={transaction.remainingTime.percent}
-          ml={3}
-        />
+        <ProgressPercentCircle percent={progress} ml={3} />
       </Flex>
     </Box>
   );
 };
 
 function TxActivityModal(
-  { isOpen, toggleModal, address, progressAlerts, transactions },
+  {
+    isOpen,
+    toggleModal,
+    address,
+    progressAlerts,
+    transactions,
+    getPercentComplete
+  },
   props
 ) {
-  console.log("transactions", transactions);
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -53,6 +70,7 @@ function TxActivityModal(
                     <Transaction
                       transaction={transaction}
                       key={`pat-${transaction.id}`}
+                      getPercentComplete={getPercentComplete}
                     />
                   );
                 })
@@ -71,6 +89,27 @@ function TxActivityModal(
       </Card>
     </Modal>
   );
+}
+
+// Duplicated between ProgressAlert and txActivityModal so that each component can start/stop timers independently
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest function.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
 }
 
 export default TxActivityModal;

@@ -61,7 +61,9 @@ export default function(state = initialRimbleProgressAlert, action) {
             remainingTime: {
               string: "Calculating remaining time...",
               percent: null,
-              seconds: null
+              seconds: null,
+              timeEstimate: null, // waiting for time estimate from API
+              startTime: Date.now()
             },
             completed: false,
             status: "unknown",
@@ -96,7 +98,11 @@ export default function(state = initialRimbleProgressAlert, action) {
               ...state.byIds,
               [pa]: {
                 ...state.byIds[pa],
-                status: status
+                status: status,
+                remainingTime: {
+                  ...state.byIds[pa].remainingTime, // to keep original properties
+                  startTime: Date.now() // set new start time for calculating estimated completion time in TxStartModal
+                }
               }
             }
           };
@@ -108,7 +114,10 @@ export default function(state = initialRimbleProgressAlert, action) {
               [pa]: {
                 ...state.byIds[pa],
                 status: status,
-                timeEstimate: 10
+                remainingTime: {
+                  ...state.byIds[pa].remainingTime, // to keep original properties
+                  startTime: Date.now() // set new start time for progressAlert and TxActivityModal progress bars
+                }
               }
             }
           };
@@ -140,22 +149,6 @@ export default function(state = initialRimbleProgressAlert, action) {
           };
         default:
           return state;
-      }
-      if (status === "pending") {
-      } else if (status === "success") {
-      } else if (status) {
-        return {
-          ...state,
-          byIds: {
-            ...state.byIds,
-            [pa]: {
-              ...state.byIds[pa],
-              status: status
-            }
-          }
-        };
-      } else {
-        return state;
       }
     }
     case RIMBLE_SET_PROGRESSALERT_TX_HASH: {
@@ -192,7 +185,7 @@ export default function(state = initialRimbleProgressAlert, action) {
       };
     }
     case RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME: {
-      const { content, id, txHash, stackTempKey } = action.payload;
+      const { timeEstimate, id, txHash, stackTempKey } = action.payload;
 
       const pa = getProgressAlertPosition({ state, id, txHash, stackTempKey });
 
@@ -203,9 +196,8 @@ export default function(state = initialRimbleProgressAlert, action) {
           [pa]: {
             ...state.byIds[pa],
             remainingTime: {
-              string: "Less than 2 minutes remaining",
-              percent: 38,
-              seconds: 100
+              ...state.byIds[pa].remainingTime, // to keep original startTime property
+              timeEstimate: timeEstimate // 100 seconds, can be updated at any time
             }
           }
         }

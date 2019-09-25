@@ -50,7 +50,16 @@ const ProgressAlertDebug = ({
   updateProgressAlertTxFee
 }) => {
   const handleAddProgressAlert = () => {
-    addProgressAlert({ message: "I am progressAlert!" });
+    addProgressAlert({
+      message: "I am progressAlert!",
+      token: {
+        id: "DevConAttendance",
+        name: "Conference ticket",
+        ethPrice: "5.63",
+        usdPrice: "1,000.00",
+        image: "conference.png"
+      }
+    });
   };
 
   const handleToggleProgressAlert = () => {

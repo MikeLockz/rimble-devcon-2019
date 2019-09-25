@@ -5,8 +5,11 @@ import styled from "styled-components";
 import transferringIcon from "./multipleTxIcon.svg";
 import ProgressBar from "./ProgressBar";
 
-function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
-  const [progress, setProgress] = useState(0); // percent of estimated time elapsed
+function ProgressAlert(
+  { progressAlert, toggleProgressAlert, getPercentComplete },
+  props
+) {
+  const [progress, setProgress] = useState(0); // percent of estimated time elapsed // KEEP!
   const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(
     props.timeEstimate
   );
@@ -104,23 +107,22 @@ function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
   // Calls functions to update time and percent values
   const interval = useInterval(
     () => {
-      if (progressAlert.status !== "error") {
-        calculateTimeRemaining();
-        calculatePercentComplete();
-        checkStatus();
-      }
+      const { startTime, timeEstimate } = progressAlert.remainingTime;
+      const percentComplete = getPercentComplete({ startTime, timeEstimate });
+      console.log("percentComplete", percentComplete);
+      setProgress(percentComplete);
     },
-    remainingTime >= 0 ? delay : null // will stop the timer when remaining time is 0
+    !progressAlert.completed &&
+      progress < 100 &&
+      progressAlert.status === "pending"
+      ? delay
+      : null // how to know when to stop timer?
   );
 
   return (
     <StyledProgressAlert>
       <Box>
-        <ProgressBar
-          className={status}
-          height={"8px"}
-          percent={progressAlert.remainingTime.percent}
-        />
+        <ProgressBar className={status} height={"8px"} percent={progress} />
       </Box>
       <Flex p={3} alignItems={"center"} justifyContent={"space-between"}>
         <Flex alignItems={"center"}>
@@ -134,9 +136,7 @@ function ProgressAlert({ progressAlert, toggleProgressAlert }, props) {
               alignItems={"center"}
               mr={3}
             >
-              <Text fontSize={"12px"}>
-                {progressAlert.remainingTime.percent}%
-              </Text>
+              <Text fontSize={"12px"}>{progress}%</Text>
             </Flex>
           )}
 
@@ -217,6 +217,7 @@ const StyledProgressAlert = styled(Box)`
   }
 `;
 
+// Duplicated in TxActivityModal so that each component can manage progress
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 

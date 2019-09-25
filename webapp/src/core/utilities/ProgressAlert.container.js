@@ -14,19 +14,23 @@ const ProgressAlerts = ({
   rimble,
   progressAlerts,
   toggleProgressAlert,
-  toggleTxActivityModal
+  toggleTxActivityModal,
+  getPercentComplete
 }) => {
   const handleToggleProgressAlert = stackId => {
-    console.log("handleToggleProgressAlert", stackId);
     toggleProgressAlert(stackId);
   };
 
   if (progressAlerts && progressAlerts.length === 1) {
+    const { id } = progressAlerts[0];
+    const { startTime, timeEstimate } = progressAlerts[0].remainingTime;
+
     return (
       <ProgressAlert
-        key={`pa-${progressAlerts[0].id}`}
+        key={`pa-${id}`}
         progressAlert={progressAlerts[0]}
         toggleProgressAlert={handleToggleProgressAlert}
+        getPercentComplete={getPercentComplete}
       />
     );
   }
@@ -48,12 +52,33 @@ const ProgressAlertContainer = ({
   toggleProgressAlert,
   toggleTxActivityModal
 }) => {
+  // Put functions to calculate progress bar percentage here so that it can be shared between progress alerts and modal
+  const getPercentComplete = ({ startTime, timeEstimate }) => {
+    // Can't calculate percent
+    if (timeEstimate === null) {
+      return null;
+    }
+    const estimatedCompletionTime = startTime + timeEstimate;
+    const percentComplete =
+      ((Date.now() - startTime) / (estimatedCompletionTime - startTime)) * 100;
+
+    // Return max 100
+    if (Math.round(percentComplete) > 100) {
+      return 100;
+    } else {
+      return Math.round(percentComplete);
+    }
+  };
+
+  // how to run this every second here?
+
   return (
     <Box>
       <ProgressAlerts
         progressAlerts={progressAlerts}
         toggleProgressAlert={toggleProgressAlert}
         toggleTxActivityModal={toggleTxActivityModal}
+        getPercentComplete={getPercentComplete}
       />
       <TxActivityModal
         isOpen={rimble.showTxActivityModal}
@@ -61,6 +86,7 @@ const ProgressAlertContainer = ({
         toggleModal={() => {
           toggleTxActivityModal(!rimble.showTxActivityModal);
         }}
+        getPercentComplete={getPercentComplete}
       />
       {appConfig.debugMode && <ProgressAlertDebug />}
     </Box>

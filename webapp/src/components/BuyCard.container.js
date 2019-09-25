@@ -27,8 +27,6 @@ function BuyCardContainer({ token, address, addProgressAlert, store }) {
   return (
     <DrizzleContext.Consumer>
       {({ drizzle, drizzleState }) => {
-        console.log("DrizzleContext.Consumer store", store);
-
         return (
           <BuyCard
             drizzle={drizzle}

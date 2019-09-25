@@ -69,14 +69,22 @@ export const updateProgressAlertContent = ({
 };
 
 export const updateProgressAlertRemainingTime = ({
-  content,
+  timeEstimate,
   txHash,
   id,
   stackTempKey
 }) => {
+  // generate random time here, remove when hooked up to Saga that will fetch this automatically?
+  const getRandom = () => {
+    const min = 10 * 1000; // 10s
+    const max = 100 * 1000; // 100s
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+  timeEstimate = getRandom();
+
   return {
     type: RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME,
-    payload: { content, txHash, id, stackTempKey }
+    payload: { timeEstimate, txHash, id, stackTempKey }
   };
 };
 
