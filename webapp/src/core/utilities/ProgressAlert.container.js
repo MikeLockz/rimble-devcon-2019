@@ -15,7 +15,8 @@ const ProgressAlerts = ({
   progressAlerts,
   toggleProgressAlert,
   toggleTxActivityModal,
-  getPercentComplete
+  getPercentComplete,
+  getTimeToCompletionString
 }) => {
   const handleToggleProgressAlert = stackId => {
     toggleProgressAlert(stackId);
@@ -31,6 +32,7 @@ const ProgressAlerts = ({
         progressAlert={progressAlerts[0]}
         toggleProgressAlert={handleToggleProgressAlert}
         getPercentComplete={getPercentComplete}
+        getTimeToCompletionString={getTimeToCompletionString}
       />
     );
   }
@@ -70,7 +72,57 @@ const ProgressAlertContainer = ({
     }
   };
 
-  // how to run this every second here?
+  // Reads the value of RemainingTime and outputs a hunman-friendly string of time remaining
+  const getTimeToCompletionString = ({ timeEstimate, startTime }) => {
+    let timeString = "Calculating remaining time..";
+
+    // Not enough info, leave value alone
+    if (timeEstimate === null) {
+      return timeString;
+    }
+
+    const secondsRemaining = timeEstimate - startTime / 1000;
+
+    // need to get seconds remaining
+
+    const now = Date.now();
+    const remainingSeconds = Math.round(
+      (timeEstimate + startTime - Date.now()) / 1000
+    );
+    console.log("remainingSeconds", remainingSeconds);
+
+    const timeObject = new Date();
+    const estimatedCompletion = new Date(
+      timeObject.getTime() + remainingSeconds
+    );
+
+    let diff = now - estimatedCompletion;
+    diff = Math.abs(Math.floor(diff));
+
+    const days = Math.floor(diff / (24 * 60 * 60));
+    let leftSec = diff - days * 24 * 60 * 60;
+
+    const hrs = Math.floor(leftSec / (60 * 60));
+    leftSec = leftSec - hrs * 60 * 60;
+
+    const min = Math.floor(leftSec / 60);
+    leftSec = leftSec - min * 60;
+
+    if (min > 1) {
+      timeString = "~" + min + " minutes";
+    } else if (min === 1) {
+      timeString = "~ 1 minute remaining";
+    } else if (leftSec > 30) {
+      timeString = "less than 1 minute remaining";
+    } else if (leftSec > 5) {
+      timeString = "less than 30 seconds remaining";
+    } else {
+      timeString = "expected to finish soon";
+    }
+
+    console.log("timeString", timeString);
+    return timeString;
+  };
 
   return (
     <Box>
@@ -79,6 +131,7 @@ const ProgressAlertContainer = ({
         toggleProgressAlert={toggleProgressAlert}
         toggleTxActivityModal={toggleTxActivityModal}
         getPercentComplete={getPercentComplete}
+        getTimeToCompletionString={getTimeToCompletionString}
       />
       <TxActivityModal
         isOpen={rimble.showTxActivityModal}
@@ -87,6 +140,7 @@ const ProgressAlertContainer = ({
           toggleTxActivityModal(!rimble.showTxActivityModal);
         }}
         getPercentComplete={getPercentComplete}
+        getTimeToCompletionString={getTimeToCompletionString}
       />
       {appConfig.debugMode && <ProgressAlertDebug />}
     </Box>

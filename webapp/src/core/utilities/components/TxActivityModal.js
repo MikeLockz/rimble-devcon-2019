@@ -3,8 +3,13 @@ import { Modal, Box, Button, Flex, Heading, Text, Card } from "rimble-ui";
 import ProgressBar from "./ProgressBar";
 import ProgressPercentCircle from "./ProgressPercentCircle";
 
-const Transaction = ({ transaction, getPercentComplete }) => {
+const Transaction = ({
+  transaction,
+  getPercentComplete,
+  getTimeToCompletionString
+}) => {
   const [progress, setProgress] = useState(null); // percent of timer that has elapsed
+  const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(null);
   const [delay] = useState(1000); // set "tick" time for timer
 
   console.log("txActivityModal transaction", transaction);
@@ -16,10 +21,14 @@ const Transaction = ({ transaction, getPercentComplete }) => {
       const percentComplete = getPercentComplete({ startTime, timeEstimate });
       console.log("percentComplete", percentComplete);
       setProgress(percentComplete);
+
+      const timeString = getTimeToCompletionString({ startTime, timeEstimate });
+      console.log("timeString", timeString);
+      setEstimatedCompletionTime(timeString);
     },
     !transaction.completed && transaction.status === "pending" && progress < 100
       ? delay
-      : null // how to know when to stop timer?
+      : null
   );
 
   return (
@@ -32,7 +41,7 @@ const Transaction = ({ transaction, getPercentComplete }) => {
             Transferring your ticket to your account...
           </Text>
           <Text fontSize={"14px"} color={"pink"}>
-            {transaction.remainingTime.string}
+            {estimatedCompletionTime}
           </Text>
         </Box>
 
@@ -49,7 +58,8 @@ function TxActivityModal(
     address,
     progressAlerts,
     transactions,
-    getPercentComplete
+    getPercentComplete,
+    getTimeToCompletionString
   },
   props
 ) {
@@ -71,6 +81,7 @@ function TxActivityModal(
                       transaction={transaction}
                       key={`pat-${transaction.id}`}
                       getPercentComplete={getPercentComplete}
+                      getTimeToCompletionString={getTimeToCompletionString}
                     />
                   );
                 })

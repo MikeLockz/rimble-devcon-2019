@@ -6,13 +6,16 @@ import transferringIcon from "./multipleTxIcon.svg";
 import ProgressBar from "./ProgressBar";
 
 function ProgressAlert(
-  { progressAlert, toggleProgressAlert, getPercentComplete },
+  {
+    progressAlert,
+    toggleProgressAlert,
+    getPercentComplete,
+    getTimeToCompletionString
+  },
   props
 ) {
   const [progress, setProgress] = useState(0); // percent of estimated time elapsed // KEEP!
-  const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(
-    props.timeEstimate
-  );
+  const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(null); // keep
   const [remainingTime, setRemainingTime] = useState(
     progressAlert.timeEstimate
   ); // estimated seconds until complete
@@ -111,6 +114,9 @@ function ProgressAlert(
       const percentComplete = getPercentComplete({ startTime, timeEstimate });
       console.log("percentComplete", percentComplete);
       setProgress(percentComplete);
+      const timeString = getTimeToCompletionString({ startTime, timeEstimate });
+      console.log("timeString", timeString);
+      setEstimatedCompletionTime(timeString);
     },
     !progressAlert.completed &&
       progress < 100 &&
@@ -177,7 +183,7 @@ function ProgressAlert(
               {status === "error"
                 ? "Error: " + progressAlert.content.error
                 : null}
-              {status === "pending" ? progressAlert.remainingTime.string : null}
+              {status === "pending" ? estimatedCompletionTime : null}
               {status === "success" ? "Complete!" : null}
             </Text>
           </Flex>
