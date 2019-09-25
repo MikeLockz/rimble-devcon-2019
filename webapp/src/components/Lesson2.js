@@ -3,7 +3,7 @@ import RainbowBox from "./RainbowBox";
 import { drizzleConnect } from "@drizzle/react-plugin";
 import {
   toggleWrongNetworkModal,
-  toggleTxSuccessModal,
+  toggleTxStartModal,
   setCurrentTxId,
   addProgressAlert,
   updateProgressAlertRemainingTime,
@@ -14,13 +14,13 @@ import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 function Lesson2({
   setRoute,
   toggleWrongNetworkModal,
-  toggleTxSuccessModal,
+  toggleTxStartModal,
   setCurrentTxId,
   addProgressAlert,
   updateProgressAlertRemainingTime,
   updateProgressAlertTxFee
 }) {
-  const handleTxSuccessModal = () => {
+  const handleTxStartModal = () => {
     addProgressAlert({
       token: {
         id: "DevConAttendance",
@@ -44,7 +44,7 @@ function Lesson2({
       content: {}
     });
     setCurrentTxId(0);
-    toggleTxSuccessModal(true);
+    toggleTxStartModal(true);
   };
 
   return (
@@ -112,12 +112,7 @@ function Lesson2({
             >
               Show wrong network modal
             </Button>
-            <Button
-              size={"medium"}
-              mr={3}
-              mb={3}
-              onClick={handleTxSuccessModal}
-            >
+            <Button size={"medium"} mr={3} mb={3} onClick={handleTxStartModal}>
               Show transaction confirmation
             </Button>
           </Box>
@@ -134,7 +129,7 @@ function Lesson2({
 const mapDispatchToProps = dispatch => {
   return {
     toggleWrongNetworkModal: value => dispatch(toggleWrongNetworkModal(value)),
-    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value)),
+    toggleTxStartModal: value => dispatch(toggleTxStartModal(value)),
     setCurrentTxId: value => dispatch(setCurrentTxId(value)),
     addProgressAlert: value => dispatch(addProgressAlert(value)),
     updateProgressAlertRemainingTime: value =>

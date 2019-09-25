@@ -3,7 +3,7 @@ import RainbowBox from "./RainbowBox";
 import { drizzleConnect } from "@drizzle/react-plugin";
 import {
   toggleTxStartModal,
-  toggleTxSuccessModal,
+  toggleTxPendingModal,
   setCurrentTxId,
   addProgressAlert,
   updateProgressAlertRemainingTime,
@@ -14,7 +14,7 @@ import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 function Lesson3({
   setRoute,
   toggleTxStartModal,
-  toggleTxSuccessModal,
+  toggleTxPendingModal,
   setCurrentTxId,
   addProgressAlert,
   updateProgressAlertRemainingTime,
@@ -47,7 +47,7 @@ function Lesson3({
     toggleTxStartModal(true);
   };
 
-  const handleTxSuccessModal = () => {
+  const handleTxPendingModal = () => {
     addProgressAlert({
       token: {
         id: "DevConAttendance",
@@ -71,7 +71,7 @@ function Lesson3({
       content: {}
     });
     setCurrentTxId(0);
-    toggleTxSuccessModal(true);
+    toggleTxPendingModal(true);
   };
 
   return (
@@ -133,15 +133,15 @@ function Lesson3({
             my={4}
             style={{ textAlign: "center" }}
           >
+            <Button size={"medium"} mr={3} mb={3} onClick={handleTxStartModal}>
+              Show transaction confirmation
+            </Button>
             <Button
               size={"medium"}
               mr={3}
               mb={3}
-              onClick={handleTxSuccessModal}
+              onClick={handleTxPendingModal}
             >
-              Show transaction confirmation
-            </Button>
-            <Button size={"medium"} mr={3} mb={3} onClick={handleTxStartModal}>
               Start transaction
             </Button>
           </Box>
@@ -158,7 +158,7 @@ function Lesson3({
 const mapDispatchToProps = dispatch => {
   return {
     toggleTxStartModal: value => dispatch(toggleTxStartModal(value)),
-    toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value)),
+    toggleTxPendingModal: value => dispatch(toggleTxPendingModal(value)),
     setCurrentTxId: value => dispatch(setCurrentTxId(value)),
     addProgressAlert: value => dispatch(addProgressAlert(value)),
     updateProgressAlertRemainingTime: value =>

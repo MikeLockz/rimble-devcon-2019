@@ -2,7 +2,7 @@ import React from "react";
 import RainbowBox from "./RainbowBox";
 import { drizzleConnect } from "@drizzle/react-plugin";
 import {
-  toggleTxStartModal,
+  toggleTxPendingModal,
   setCurrentTxId,
   addProgressAlert,
   updateProgressAlertRemainingTime,
@@ -12,13 +12,13 @@ import { Heading, Box, Flex, Button, Pill, Text, Link, Card } from "rimble-ui";
 
 function Lesson4({
   setRoute,
-  toggleTxStartModal,
+  toggleTxPendingModal,
   setCurrentTxId,
   addProgressAlert,
   updateProgressAlertRemainingTime,
   updateProgressAlertTxFee
 }) {
-  const handleTxStartModal = () => {
+  const handleTxPendingModal = () => {
     addProgressAlert({
       token: {
         id: "DevConAttendance",
@@ -42,7 +42,7 @@ function Lesson4({
       content: {}
     });
     setCurrentTxId(0);
-    toggleTxStartModal(true);
+    toggleTxPendingModal(true);
   };
 
   return (
@@ -102,7 +102,12 @@ function Lesson4({
             <Button size={"medium"} mr={3} mb={3}>
               Show too much feedback
             </Button>
-            <Button size={"medium"} mr={3} mb={3} onClick={handleTxStartModal}>
+            <Button
+              size={"medium"}
+              mr={3}
+              mb={3}
+              onClick={handleTxPendingModal}
+            >
               Start transaction
             </Button>
           </Box>
@@ -118,7 +123,7 @@ function Lesson4({
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleTxStartModal: value => dispatch(toggleTxStartModal(value)),
+    toggleTxPendingModal: value => dispatch(toggleTxPendingModal(value)),
     setCurrentTxId: value => dispatch(setCurrentTxId(value)),
     addProgressAlert: value => dispatch(addProgressAlert(value)),
     updateProgressAlertRemainingTime: value =>

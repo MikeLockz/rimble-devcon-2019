@@ -4,7 +4,7 @@ import { Flex, Box, Link } from "rimble-ui";
 
 const StyledLinkContainer = styled(Box)`
   background: ${props =>
-    props.routeName === props.route ? props.theme.colors.primary : "white"};
+    props.routeName === props.route ? props.theme.colors.primary : ""};
   a,
   a:hover {
     color: ${props =>
