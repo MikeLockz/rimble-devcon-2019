@@ -1,18 +1,18 @@
 import React from "react";
-import "./index.css";
+import "./../index.css";
 
 // Drizzle for state and contract interactions
 import { DrizzleContext } from "@drizzle/react-plugin";
 
 // App-specific config and settings
-import appConfig from "./appConfig";
+import appConfig from "../appConfig";
 
 // Theming for look and feel
 import { ThemeProvider } from "styled-components";
-import CustomTheme from "./CustomTheme";
+import CustomTheme from "../CustomTheme";
 
 // Components that build layout
-import Body from "./components/Body";
+import Body from "./Body";
 
 const App = ({ drizzle, store }) => {
   return (

@@ -14,16 +14,20 @@ function Landing({ drizzle, drizzleState, store }) {
       setAddress(drizzleState.accounts["0"]);
       setCurrentNetwork(drizzleState.web3.networkId);
     }
-    if (!currentNetwork) {
-      getNetwork();
-    }
+    // if (!currentNetwork) {
+    //   getNetwork();
+    // }
   }, [drizzleState, currentNetwork]);
 
-  const getNetwork = () => {
-    window.web3.version.getNetwork((error, networkId) => {
-      setCurrentNetwork(parseInt(networkId));
-    });
-  };
+  // const getNetwork = () => {
+  //   console.log("drizzle", drizzle);
+  //   debugger;
+  //   if (drizzle !== null) {
+  //     window.web3.version.getNetwork((error, networkId) => {
+  //       setCurrentNetwork(parseInt(networkId));
+  //     });
+  //   }
+  // };
 
   return (
     <Box>
