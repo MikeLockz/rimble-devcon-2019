@@ -17,13 +17,7 @@ const drizzle = new Drizzle(drizzleOptions, drizzleStore);
 
 const DrizzleLoader = () => {
   const hasWeb3Provider = () => {
-    console.log(
-      "typeof window.ethereum !== undefined",
-      typeof window.ethereum !== "undefined"
-    );
     const hasWeb3Provider = typeof window.ethereum !== "undefined";
-    console.log("hasWeb3Provider", hasWeb3Provider);
-    debugger;
     return hasWeb3Provider;
   };
 

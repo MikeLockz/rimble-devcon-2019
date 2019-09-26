@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
+import { drizzleConnect } from "@drizzle/react-plugin";
 import BuyCardContainer from "./BuyCard.container";
 import ConnectionBanner from "@rimble/connection-banner";
 import { Box, Flex, Text, Link } from "rimble-ui";
 import tokenDetails from "./../tokenDetails";
 import appConfig from "../appConfig";
 
-function Landing({ drizzle, drizzleState, store }) {
+function Landing({ drizzle, drizzleState, drizzleStatus, account, networkId }) {
   const [currentNetwork, setCurrentNetwork] = useState(null);
   const [address, setAddress] = useState(null);
 
+  // Set account
   useEffect(() => {
-    if (drizzleState) {
-      setAddress(drizzleState.accounts["0"]);
-      setCurrentNetwork(drizzleState.web3.networkId);
+    if (account) {
+      setAddress(account);
     }
-    // if (!currentNetwork) {
-    //   getNetwork();
-    // }
-  }, [drizzleState, currentNetwork]);
+  }, [account]);
 
-  // const getNetwork = () => {
-  //   console.log("drizzle", drizzle);
-  //   debugger;
-  //   if (drizzle !== null) {
-  //     window.web3.version.getNetwork((error, networkId) => {
-  //       setCurrentNetwork(parseInt(networkId));
-  //     });
-  //   }
-  // };
+  // Set current network
+  useEffect(() => {
+    if (networkId) {
+      setCurrentNetwork(networkId);
+    }
+    if (!drizzleStatus.initialized && window.web3 && drizzle !== null) {
+      window.web3.version.getNetwork((error, networkId) => {
+        setCurrentNetwork(parseInt(networkId));
+      });
+    }
+  }, [networkId, drizzleStatus, drizzle]);
 
   return (
     <Box>
@@ -63,4 +63,15 @@ function Landing({ drizzle, drizzleState, store }) {
   );
 }
 
-export default Landing;
+/*
+ * Export connected component.
+ */
+const mapStateToProps = state => {
+  return {
+    drizzleStatus: state.drizzleStatus,
+    address: state.accounts[0],
+    networkId: state.web3.networkId
+  };
+};
+
+export default drizzleConnect(Landing, mapStateToProps);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, Box, Button, Flex, Image } from "rimble-ui";
 import styled from "styled-components";
+import { drizzleConnect } from "@drizzle/react-plugin";
 import logo from "../images/rimble-logo.svg";
 import walletIcon from "./../images/icon-wallet.svg";
 import balanceIcon from "./../images/icon-balance.svg";
@@ -16,23 +17,26 @@ const connectWallet = () => {
   return;
 };
 
-function HeaderNav({ drizzle, drizzleState, preflightCheck }) {
-  const [account, setAccount] = useState("");
+function HeaderNav({ drizzle, preflightCheck, address, accountBalances }) {
+  const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState(null);
 
   useEffect(() => {
-    if (drizzleState) {
-      // update account
-      setAccount(drizzleState.accounts["0"]);
-      // update balance
-      setBalance(drizzleState.accountBalances[drizzleState.accounts["0"]]);
+    if (address) {
+      setAccount(address);
     }
-  }, [drizzleState]);
+  }, [address]);
+
+  useEffect(() => {
+    if (Object.keys(accountBalances).length > 0 && address !== null) {
+      setBalance(accountBalances[address].toString());
+    }
+  }, [accountBalances, address]);
 
   return (
     <StyledHeader justifyContent={"space-between"} p={3} bg={"white"}>
       <Image src={logo} />
-      {account ? (
+      {account && balance ? (
         <Flex>
           <Flex alignItems={"center"} mr={4}>
             <Image src={walletIcon} mr={2} />
@@ -84,4 +88,16 @@ function HeaderNav({ drizzle, drizzleState, preflightCheck }) {
   );
 }
 
-export default HeaderNav;
+/*
+ * Export connected component.
+ */
+const mapStateToProps = state => {
+  console.log("state", state);
+  return {
+    drizzleStatus: state.drizzleStatus,
+    address: state.accounts[0],
+    accountBalances: state.accountBalances
+  };
+};
+
+export default drizzleConnect(HeaderNav, mapStateToProps);

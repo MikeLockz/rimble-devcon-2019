@@ -27,6 +27,12 @@ function Body({ drizzle, drizzleState, store }) {
     }
   }, [drizzleState]);
 
+  const preflightCheck = () => {
+    if (window.ethereum) {
+      window.ethereum.enable();
+    }
+  };
+
   return (
     <BodyBox height={"100%"}>
       <Flex
@@ -34,16 +40,14 @@ function Body({ drizzle, drizzleState, store }) {
         justifyContent={"space-between"}
         height={"100%"}
       >
-        <HeaderNav drizzle={drizzle} drizzleState={drizzleState} />
+        <HeaderNav
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+          preflightCheck={preflightCheck}
+        />
         {
           {
-            Home: (
-              <Landing
-                drizzle={drizzle}
-                drizzleState={drizzleState}
-                store={store}
-              />
-            ),
+            Home: <Landing drizzle={drizzle} drizzleState={drizzleState} />,
             Diagram: <Diagram setRoute={setRoute} />,
             Lesson1: (
               <Lesson1 address={address} store={store} setRoute={setRoute} />
