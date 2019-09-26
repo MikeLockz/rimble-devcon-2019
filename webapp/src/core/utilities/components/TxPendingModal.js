@@ -65,6 +65,7 @@ function TxPendingModal({
             borderStyle={"solid"}
             overflow={"hidden"}
             my={4}
+            width={[1]}
           >
             <Box>
               <Box bg={"primary"}>

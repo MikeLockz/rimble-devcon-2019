@@ -14,7 +14,8 @@ import {
   updateProgressAlertRemainingTime,
   setCurrentTxId,
   updateProgressAlertTxFee,
-  enableBuyButton
+  enableBuyButton,
+  updateProgressAlertToken
 } from "./../redux/actions";
 
 // This middleware will just add the property "async dispatch"
@@ -114,6 +115,20 @@ const contractEventNotifier = store => next => action => {
       updateProgressAlertContent({
         content: { receipt: { ...action.receipt } },
         txHash: action.txHash
+      })
+    );
+
+    console.log("About to dispatch token", action);
+    store.dispatch(
+      updateProgressAlertToken({
+        txHash: action.txHash,
+        token: {
+          tokenId: action.receipt.events.Transfer.returnValues.tokenId,
+          contractAddress: action.receipt.events.Transfer.address,
+          txHash: action.txHash,
+          gasUsed: action.receipt.gasUsed,
+          cumulativeGasUsed: action.receipt.cumulativeGasUsed
+        }
       })
     );
   }

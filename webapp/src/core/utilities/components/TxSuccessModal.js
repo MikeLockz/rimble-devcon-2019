@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { DrizzleContext } from "@drizzle/react-plugin";
 import { Button, Flex, Box, Modal, Text, Heading, Icon, Link } from "rimble-ui";
 import RainbowBox from "./../../../components/RainbowBox";
 import RainbowImage from "./../../../components/RainbowImage";
@@ -31,8 +32,9 @@ function SuccessBody({
         <Flex alignItems={"center"} mt={3} mb={4} flexDirection={"column"}>
           <RainbowImage src={"images/" + token.image} />
           <Text mt={4} fontSize={3} lineHeight={1} fontWeight={600}>
-            {token.description}
+            {token.name} - #{token.tokenId}
           </Text>
+          <Text>{token.description}</Text>
           <Link
             fontWeight={"normal"}
             textAlign={"center"}
@@ -55,7 +57,7 @@ function SuccessBody({
   );
 }
 
-function TokenDetails({ toggleModal, toggleShowTokenDetails, token }) {
+function TokenDetails({ toggleModal, toggleShowTokenDetails, token, drizzle }) {
   return (
     <Box>
       <Flex justifyContent={"space-between"}>
@@ -95,16 +97,19 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token }) {
 
           <Flex justifyContent={"space-between"} bg={"#E8E8E8"} p={3}>
             <Text fontSize={1} color={"#444"} fontWeight={600} mr={3}>
-              Owner address
+              Contract address
             </Text>
             <Link
               fontWeight={"normal"}
-              href={"https://rinkeby.etherscan.io/address/" + token.owner}
+              href={
+                "https://rinkeby.etherscan.io/address/" + token.contractAddress
+              }
               target={"_blank"}
             >
               <Flex alignItems={"center"}>
                 <Text fontSize={1} fontWeight={600} color={"primary"}>
-                  {token.owner && shortenAddress(token.owner)}
+                  {token.contractAddress &&
+                    shortenAddress(token.contractAddress)}
                 </Text>
                 <EyeIcon />
               </Flex>
@@ -118,18 +123,16 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token }) {
             alignItems={"center"}
           >
             <Text fontSize={1} color={"#444"} fontWeight={600} mr={3}>
-              Previous owner
+              Transfer Receipt
             </Text>
             <Link
               fontWeight={"normal"}
-              href={
-                "https://rinkeby.etherscan.io/address/" + token.previousOwner
-              }
+              href={"https://rinkeby.etherscan.io/tx/" + token.txHash}
               target={"_blank"}
             >
               <Flex alignItems={"center"}>
                 <Text fontSize={1} fontWeight={600} color={"primary"}>
-                  {token.owner && shortenAddress(token.previousOwner)}
+                  {token.txHash && shortenAddress(token.txHash)}
                 </Text>
                 <EyeIcon />
               </Flex>
@@ -148,10 +151,34 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token }) {
             </Text>
             <Flex alignItems={"flex-end"} flexDirection={"column"}>
               <Text color={"#444"} lineHeight={"1em"}>
-                {token.ethPrice} ETH
+                ${token.usdPrice} USD
               </Text>
               <Text color={"#615E66"} fontSize={"10px"}>
-                ${token.usdPrice} USD
+                {token.ethPrice} ETH
+              </Text>
+            </Flex>
+          </Flex>
+
+          <Flex
+            justifyContent={"space-between"}
+            bg={"#E8E8E8"}
+            py={2}
+            px={3}
+            alignItems={"center"}
+          >
+            <Text fontSize={1} color={"#444"} fontWeight={600}>
+              Transfer Fee
+            </Text>
+            <Flex alignItems={"flex-end"} flexDirection={"column"}>
+              <Text color={"#444"} lineHeight={"1em"}>
+                ${token.cumulativeGasUsed} USD
+              </Text>
+              <Text color={"#615E66"} fontSize={"10px"}>
+                {drizzle.web3.utils.fromWei(
+                  token.cumulativeGasUsed.toString(),
+                  "gwei"
+                )}{" "}
+                ETH
               </Text>
             </Flex>
           </Flex>
@@ -166,7 +193,7 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token }) {
               Issue number
             </Text>
             <Text fontSize={1} color={"#444"}>
-              {token.number}
+              {token.tokenId}/2000
             </Text>
           </Flex>
         </Flex>
@@ -175,7 +202,7 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token }) {
   );
 }
 
-function TxSuccessModal({ isOpen, toggleModal, transaction }, props) {
+function TxSuccessModal({ isOpen, toggleModal, transaction, drizzle }, props) {
   const [showTokenDetails, setShowTokenDetails] = useState(false);
 
   const toggleShowTokenDetails = () => {
@@ -191,26 +218,33 @@ function TxSuccessModal({ isOpen, toggleModal, transaction }, props) {
   const token = { ...transaction.content.token };
 
   return (
-    <Modal isOpen={isOpen}>
-      <Box maxWidth={"436px"} bg={"background"}>
-        <RainbowBox height={"5px"} />
-        {showTokenDetails ? (
-          <TokenDetails
-            toggleModal={toggleModal}
-            toggleShowTokenDetails={toggleShowTokenDetails}
-            token={token}
-          />
-        ) : (
-          <SuccessBody
-            toggleModal={toggleModal}
-            toggleShowTokenDetails={toggleShowTokenDetails}
-            shareNews={shareNews}
-            giftTicket={giftTicket}
-            token={token}
-          />
-        )}
-      </Box>
-    </Modal>
+    <DrizzleContext.Consumer>
+      {({ drizzle }) => {
+        return (
+          <Modal isOpen={isOpen}>
+            <Box maxWidth={"436px"} bg={"background"}>
+              <RainbowBox height={"5px"} />
+              {showTokenDetails ? (
+                <TokenDetails
+                  toggleModal={toggleModal}
+                  toggleShowTokenDetails={toggleShowTokenDetails}
+                  token={token}
+                  drizzle={drizzle}
+                />
+              ) : (
+                <SuccessBody
+                  toggleModal={toggleModal}
+                  toggleShowTokenDetails={toggleShowTokenDetails}
+                  shareNews={shareNews}
+                  giftTicket={giftTicket}
+                  token={token}
+                />
+              )}
+            </Box>
+          </Modal>
+        );
+      }}
+    </DrizzleContext.Consumer>
   );
 }
 

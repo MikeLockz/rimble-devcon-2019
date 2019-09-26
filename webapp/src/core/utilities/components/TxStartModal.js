@@ -39,6 +39,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }) {
             borderStyle={"solid"}
             overflow={"hidden"}
             my={4}
+            width={[1]}
           >
             <Box bg={"primary"} px={3} py={2}>
               <Text color={"white"}>{transaction.content.token.name}</Text>

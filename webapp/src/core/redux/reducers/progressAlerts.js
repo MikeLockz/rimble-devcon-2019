@@ -4,6 +4,7 @@ import {
   RIMBLE_SET_PROGRESSALERT_STATUS,
   RIMBLE_SET_PROGRESSALERT_TX_HASH,
   RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
+  RIMBLE_UPDATE_PROGRESSALERT_TOKEN,
   RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME,
   RIMBLE_UPDATE_PROGRESSALERT_TXFEE
 } from "../actionTypes";
@@ -179,6 +180,28 @@ export default function(state = initialRimbleProgressAlert, action) {
             content: {
               ...state.byIds[pa].content,
               ...content
+            }
+          }
+        }
+      };
+    }
+    case RIMBLE_UPDATE_PROGRESSALERT_TOKEN: {
+      const { token, id, txHash, stackTempKey } = action.payload;
+
+      const pa = getProgressAlertPosition({ state, id, txHash, stackTempKey });
+
+      return {
+        ...state,
+        byIds: {
+          ...state.byIds,
+          [pa]: {
+            ...state.byIds[pa],
+            content: {
+              ...state.byIds[pa].content,
+              token: {
+                ...state.byIds[pa].content.token,
+                ...token
+              }
             }
           }
         }

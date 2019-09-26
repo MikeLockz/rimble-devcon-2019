@@ -9,6 +9,7 @@ import {
   setProgressAlertStatus,
   setProgressAlertTxHash,
   updateProgressAlertContent,
+  updateProgressAlertToken,
   updateProgressAlertRemainingTime,
   updateProgressAlertTxFee
 } from "./../redux/actions";
@@ -45,6 +46,7 @@ const ProgressAlertDebug = ({
   setProgressAlertStatus,
   setProgressAlertTxHash,
   updateProgressAlertContent,
+  updateProgressAlertToken,
   updateProgressAlertRemainingTime,
   updateProgressAlertTxFee
 }) => {
@@ -98,6 +100,14 @@ const ProgressAlertDebug = ({
       content: {}
     });
   };
+
+  const handleUpdateProgressAlertToken = ({ txHash }) => {
+    updateProgressAlertToken({
+      txHash,
+      token: { tokenId: 999 }
+    });
+  };
+
   return (
     <Box m={3}>
       <Heading as={"h4"}>Progress Alert Debug</Heading>
@@ -186,6 +196,17 @@ const ProgressAlertDebug = ({
           >
             Update Progress Alert TxFee by txHash
           </Button.Outline>
+
+          <Button.Outline
+            size={"small"}
+            onClick={() => {
+              handleUpdateProgressAlertToken({
+                txHash: "0x123"
+              });
+            }}
+          >
+            Update Progress Alert Token
+          </Button.Outline>
         </Box>
 
         <Button.Outline
@@ -227,6 +248,8 @@ const mapDispatchToProps = dispatch => {
     setProgressAlertTxHash: value => dispatch(setProgressAlertTxHash(value)),
     updateProgressAlertContent: value =>
       dispatch(updateProgressAlertContent(value)),
+    updateProgressAlertToken: value =>
+      dispatch(updateProgressAlertToken(value)),
     updateProgressAlertRemainingTime: value =>
       dispatch(updateProgressAlertRemainingTime(value)),
     updateProgressAlertTxFee: value => dispatch(updateProgressAlertTxFee(value))
