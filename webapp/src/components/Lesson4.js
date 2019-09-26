@@ -10,6 +10,9 @@ import {
 } from "./../core/redux/actions";
 import { Heading, Box, Flex, Button, Pill, Text, Card } from "rimble-ui";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Lesson4({
   setRoute,
   toggleTxPendingModal,
@@ -43,6 +46,41 @@ function Lesson4({
     });
     setCurrentTxId(0);
     toggleTxPendingModal(true);
+  };
+
+  const handleTooManyTx = () => {
+    const messages = [
+      "Transaction success!",
+      "Transaction receipt confirmed",
+      "Transaction confirmation 12",
+      "Transaction confirmation 11",
+      "Transaction confirmation 10",
+      "Transaction confirmation 9",
+      "Transaction confirmation 8",
+      "Transaction confirmation 7",
+      "Transaction confirmation 6",
+      "Transaction confirmation 5",
+      "Transaction confirmation 4",
+      "Transaction confirmation 3",
+      "Transaction confirmation 2",
+      "Transaction confirmation 1",
+      "Transaction pending",
+      "Transaction accepted to mempool",
+      "Sending transaction to mempool",
+      "Signing transaction",
+      "Creating transaction hash",
+      "Initiating transaction"
+    ];
+
+    (function displayMessages(i) {
+      setTimeout(function() {
+        toast.success(messages[i], {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
+        });
+        if (--i) displayMessages(i);
+      }, 200);
+    })(messages.length);
   };
 
   return (
@@ -99,7 +137,7 @@ function Lesson4({
             </Text>
           </Box>
           <Box my={4} style={{ textAlign: "center" }}>
-            <Button size={"medium"} mr={3} mb={3}>
+            <Button size={"medium"} mr={3} mb={3} onClick={handleTooManyTx}>
               Show too much feedback
             </Button>
             <Button
@@ -113,6 +151,7 @@ function Lesson4({
           </Box>
         </Card>
       </Box>
+      <ToastContainer />
     </Box>
   );
 }
