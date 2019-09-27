@@ -14,6 +14,7 @@ import {
 import EyeIcon from "./EyeIcon";
 import MetaMaskLoader from "./MetaMaskLoader";
 import shortenAddress from "./../shortenAddress";
+import EthToFiat from "./EthToFiat";
 
 function TxStartModal({ isOpen, toggleModal, address, transaction }) {
   return (
@@ -97,7 +98,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }) {
                   {transaction.content.token.ethPrice} ETH
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
-                  ${transaction.content.token.usdPrice} USD
+                  $<EthToFiat eth={transaction.content.token.ethPrice} /> USD
                 </Text>
               </Flex>
             </Flex>
@@ -124,7 +125,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }) {
               </Flex>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
                 <Text color={"#444"} lineHeight={"1em"}>
-                  ${transaction.txFee.usd}
+                  $<EthToFiat eth={transaction.txFee.eth} />
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
                   {transaction.txFee.eth} ETH

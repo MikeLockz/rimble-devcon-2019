@@ -9,6 +9,7 @@ import ProgressAlert, {
 } from "./components/ProgressAlert";
 import TxActivityModal from "./components/TxActivityModal";
 import { toggleProgressAlert, toggleTxActivityModal } from "./../redux/actions";
+import ExternalDataDebug from "./ExternalDataDebug";
 
 const ProgressAlerts = ({
   progressAlerts,
@@ -144,6 +145,7 @@ const ProgressAlertContainer = ({
         getTimeToCompletionString={getTimeToCompletionString}
       />
       {process.env.NODE_ENV === "development" && <ProgressAlertDebug />}
+      {process.env.NODE_ENV === "development" && <ExternalDataDebug />}
     </Box>
   );
 };

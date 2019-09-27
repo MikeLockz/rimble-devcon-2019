@@ -15,6 +15,7 @@ import ProgressBar from "./ProgressBar";
 import ProgressPercentCircle from "./ProgressPercentCircle";
 import EyeIcon from "./EyeIcon";
 import shortenAddress from "./../shortenAddress";
+import EthToFiat from "./EthToFiat";
 
 function TxPendingModal({
   isOpen,
@@ -116,7 +117,7 @@ function TxPendingModal({
                   {transaction.content.token.ethPrice} ETH
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
-                  ${transaction.content.token.usdPrice} USD
+                  $<EthToFiat eth={transaction.content.token.ethPrice} /> USD
                 </Text>
               </Flex>
             </Flex>
@@ -143,7 +144,7 @@ function TxPendingModal({
               </Flex>
               <Flex alignItems={"flex-end"} flexDirection={"column"}>
                 <Text color={"#444"} lineHeight={"1em"}>
-                  ${transaction.txFee.usd}
+                  $<EthToFiat eth={transaction.txFee.eth} />
                 </Text>
                 <Text color={"#615E66"} fontSize={"10px"}>
                   {transaction.txFee.eth} ETH
@@ -161,7 +162,9 @@ function TxPendingModal({
                 Estimated Time
               </Text>
               <Text fontSize={1} color={"#444"} ml={3}>
-                {estimatedCompletionTime}
+                {estimatedCompletionTime
+                  ? estimatedCompletionTime
+                  : "Less than 2 minutes"}
               </Text>
             </Flex>
           </Flex>

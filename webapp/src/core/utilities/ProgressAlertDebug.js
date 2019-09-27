@@ -58,7 +58,14 @@ const ProgressAlertDebug = ({
         name: "Conference ticket",
         ethPrice: "5.63",
         usdPrice: "1,000.00",
-        image: "conference.png"
+        image: "conference.png",
+        tokenId: 99,
+        contractAddress:
+          "https://rinkeby.etherscan.io/address/0xb0a4ba3e61f4610d7c3f498a08acd24fd585f056",
+        txHash:
+          "https://rinkeby.etherscan.io/tx/0x632c1a2f1002cdb2d7e11c18c314a1732d89f616613f89f0ea86b8973b0edcca",
+        gasUsed: 89021,
+        cumulativeGasUsed: 143204
       }
     });
   };

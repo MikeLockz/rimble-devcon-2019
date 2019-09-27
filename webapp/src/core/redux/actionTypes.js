@@ -31,3 +31,7 @@ export const RIMBLE_SET_CURRENT_TX_ID = "RIMBLE_SET_CURRENT_TX_ID";
 
 // Function to fix race-conditions with drizzle
 export const RIMBLE_ENABLE_BUY_BUTTON = "RIMBLE_ENABLE_BUY_BUTTON";
+
+// External data
+export const RIMBLE_FETCH_ETH_PRICE = "RIMBLE_FETCH_ETH_PRICE";
+export const RIMBLE_RECEIVED_ETH_PRICE = "RIMBLE_RECEIVED_ETH_PRICE";

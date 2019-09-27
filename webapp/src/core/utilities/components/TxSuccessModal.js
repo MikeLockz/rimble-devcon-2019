@@ -5,6 +5,7 @@ import RainbowBox from "./../../../components/RainbowBox";
 import RainbowImage from "./../../../components/RainbowImage";
 import EyeIcon from "./EyeIcon";
 import shortenAddress from "./../shortenAddress";
+import EthToFiat from "./EthToFiat";
 
 function SuccessBody({
   toggleModal,
@@ -151,7 +152,7 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token, drizzle }) {
             </Text>
             <Flex alignItems={"flex-end"} flexDirection={"column"}>
               <Text color={"#444"} lineHeight={"1em"}>
-                ${token.usdPrice} USD
+                $<EthToFiat eth={token.ethPrice} />
               </Text>
               <Text color={"#615E66"} fontSize={"10px"}>
                 {token.ethPrice} ETH
@@ -171,7 +172,13 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token, drizzle }) {
             </Text>
             <Flex alignItems={"flex-end"} flexDirection={"column"}>
               <Text color={"#444"} lineHeight={"1em"}>
-                ${token.cumulativeGasUsed} USD
+                <EthToFiat
+                  eth={drizzle.web3.utils.fromWei(
+                    token.cumulativeGasUsed.toString(),
+                    "gwei"
+                  )}
+                />{" "}
+                USD
               </Text>
               <Text color={"#615E66"} fontSize={"10px"}>
                 {drizzle.web3.utils.fromWei(

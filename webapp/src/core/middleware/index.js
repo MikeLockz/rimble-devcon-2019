@@ -3,6 +3,9 @@ import drizzleOptions from "../../drizzleOptions";
 import progressAlerts from "./../redux/reducers/progressAlerts";
 import rimbleVisibilityFilter from "./../redux/reducers/visibilityFilter";
 import { txModals } from "./../redux/reducers/txModals";
+import appRootSaga from "./../redux/sagas/externalData";
+import externalData from "./../redux/reducers/externalData";
+
 import {
   toggleTxStartModal,
   toggleTxPendingModal,
@@ -160,14 +163,18 @@ const contractEventNotifier = store => next => action => {
 const appReducers = {
   progressAlerts: progressAlerts,
   visibilityFilter: rimbleVisibilityFilter,
-  txModals: txModals
+  txModals: txModals,
+  externalData: externalData
 };
+
+const appSagas = [appRootSaga];
 
 const appMiddlewares = [contractEventNotifier, asyncDispatchMiddleware];
 
 export default generateStore({
   drizzleOptions,
   appReducers,
+  appSagas,
   appMiddlewares,
   disableReduxDevTools: false
 });
