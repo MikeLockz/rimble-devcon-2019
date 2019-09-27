@@ -40,7 +40,6 @@ const TxModalsContainer = ({
         id: "DevConAttendance",
         name: "Conference ticket",
         ethPrice: "5.63",
-        usdPrice: "1,000.00",
         image: "conference.png"
       }
     });
@@ -62,7 +61,6 @@ const TxModalsContainer = ({
         id: "DevConAttendance",
         name: "Conference ticket",
         ethPrice: "5.63",
-        usdPrice: "1,000.00",
         image: "conference.png",
         tokenId: 99,
         contractAddress:
@@ -91,7 +89,6 @@ const TxModalsContainer = ({
         id: "DevConAttendance",
         name: "Conference ticket",
         ethPrice: "5.63",
-        usdPrice: "1,000.00",
         image: "conference.png",
         successTitle: "You're going to DevCon!",
         successInstructions:

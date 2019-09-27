@@ -26,7 +26,6 @@ function Lesson3({
         id: "DevConAttendance",
         name: "Conference ticket",
         ethPrice: "5.63",
-        usdPrice: "1,000.00",
         image: "conference.png",
         successTitle: "You're going to DevCon!",
         successInstructions:
@@ -58,7 +57,6 @@ function Lesson3({
         id: "DevConAttendance",
         name: "Conference ticket",
         ethPrice: "5.63",
-        usdPrice: "1,000.00",
         image: "conference.png",
         successTitle: "You're going to DevCon!",
         successInstructions:

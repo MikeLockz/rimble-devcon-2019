@@ -57,7 +57,6 @@ const ProgressAlertDebug = ({
         id: "DevConAttendance",
         name: "Conference ticket",
         ethPrice: "5.63",
-        usdPrice: "1,000.00",
         image: "conference.png",
         tokenId: 99,
         contractAddress:

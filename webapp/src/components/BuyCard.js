@@ -3,6 +3,7 @@ import { Card, Button, Flex, Box, Text } from "rimble-ui";
 import RainbowBox from "./RainbowBox";
 import RainbowImage from "./RainbowImage";
 import { ContractForm } from "@drizzle/react-components";
+import EthToFiat from "./../core/utilities/components/EthToFiat";
 
 function BuyCard({
   token,
@@ -36,7 +37,7 @@ function BuyCard({
           </Flex>
           <Flex justifyContent={"flex-end"} width={1}>
             <Text color={"#979797"} lineHeight={"1.4em"}>
-              ${token.usdPrice} USD
+              $<EthToFiat eth={token.ethPrice} /> USD
             </Text>
           </Flex>
           {/* Use drizzle's ContractForm component, with custom renderprop for styling. This way we can get contract events from the redux store */}

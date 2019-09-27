@@ -238,7 +238,6 @@ export default function(state = initialRimbleProgressAlert, action) {
           [pa]: {
             ...state.byIds[pa],
             txFee: {
-              usd: 0.42,
               eth: 0.00112
             }
           }
