@@ -3,7 +3,6 @@ import { drizzleConnect } from "@drizzle/react-plugin";
 
 const EthToFiat = ({ eth, externalData, fetchEthPrice }) => {
   const getFiatValue = eth => {
-    console.log("eth", eth);
     if (Object.keys(externalData.ethPrice).length === 0) {
       fetchEthPrice("usd");
       return "can't convert";

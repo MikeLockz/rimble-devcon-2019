@@ -121,7 +121,6 @@ const contractEventNotifier = store => next => action => {
       })
     );
 
-    console.log("About to dispatch token", action);
     store.dispatch(
       updateProgressAlertToken({
         txHash: action.txHash,
