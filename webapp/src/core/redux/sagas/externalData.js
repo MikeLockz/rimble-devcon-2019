@@ -5,7 +5,7 @@ import {
   RIMBLE_CALL_TX_GAS_PRICE,
   RIMBLE_RECEIVED_TX_GAS_PRICE,
   RIMBLE_FETCH_GAS_STATION_RECENT_TX,
-  RIMBLE_RECEIVED_GAS_STATION_RECENT_TX,
+  RIMBLE_RECEIVE_TX_TIME_ESTIMATE,
   RIMBLE_ERROR_GAS_STATION_RECENT_TX
 } from "../actionTypes";
 
@@ -41,19 +41,35 @@ export function* callTxGasPrice(action) {
   } catch (error) {}
 }
 
+const findClosestPrediction = (gasStationInfo, gas) => {
+  //const counts = [4, 9, 15, 6, 2];
+  const counts = gasStationInfo.map(entry => {
+    return entry.gasprice;
+  });
+
+  const goal = gas;
+  const closest = counts.reduce(function(prev, curr) {
+    return Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev;
+  });
+  const index = counts.indexOf(closest);
+  const closestGas = gasStationInfo[index];
+
+  return closestGas;
+};
+
 export function* fetchGasStationRecentTx(action) {
   try {
-    const recentTxs = yield fetch(
+    const txEstimate = yield fetch(
       "https://ethgasstation.info/json/predictTable.json"
     )
       .then(response => {
         return response.json();
       })
       .then(responseJson => {
-        console.log("responseJson", responseJson);
-        return responseJson;
+        const closestPrediction = findClosestPrediction(responseJson, 1);
+        return closestPrediction;
       });
-    yield put({ type: RIMBLE_RECEIVED_GAS_STATION_RECENT_TX, recentTxs });
+    yield put({ type: RIMBLE_RECEIVE_TX_TIME_ESTIMATE, txEstimate });
   } catch (error) {
     yield put({ type: RIMBLE_ERROR_GAS_STATION_RECENT_TX, error });
   }

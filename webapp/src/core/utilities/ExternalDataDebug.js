@@ -7,8 +7,11 @@ import { DrizzleContext } from "@drizzle/react-plugin";
 const ExternalDataDebug = ({
   fetchEthPrice,
   callTxGasPrice,
-  fetchGasStationRecentTx
+  fetchGasStationRecentTx,
+  externalData
 }) => {
+  console.log("externalData:", externalData);
+
   const handleFetchEthPrice = () => {
     // call saga?
     fetchEthPrice("usd");
@@ -52,6 +55,7 @@ const ExternalDataDebug = ({
                 >
                   callTxGasPrice
                 </Button>
+                <pre>{JSON.stringify(externalData.txGas, null, 2)}</pre>
               </Box>
               <Box>
                 <Button
@@ -61,6 +65,7 @@ const ExternalDataDebug = ({
                 >
                   fetchGasStationRecentTx
                 </Button>
+                <pre>{JSON.stringify(externalData.txEstimate, null, 2)}</pre>
               </Box>
             </Box>
           </Box>
