@@ -125,7 +125,7 @@ const ProgressAlertDebug = ({
         borderRadius={3}
         borderStyle={"solid"}
       >
-        <ProgressBar percent={12} height={"20px"} />
+        <ProgressBar percent={99} height={"20px"} />
         <Button.Outline size={"small"} onClick={handleAddProgressAlert}>
           Add Progress Alert
         </Button.Outline>
