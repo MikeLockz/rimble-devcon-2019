@@ -1,6 +1,5 @@
 import {
   RIMBLE_RECEIVED_ETH_PRICE,
-  RIMBLE_RECEIVED_TX_GAS_PRICE,
   RIMBLE_RECEIVE_TX_TIME_ESTIMATE,
   RIMBLE_RECEIVE_AVG_TX_GAS_AND_TIME,
   RIMBLE_RECEIVE_ESTIMATE_TX_GAS
@@ -22,16 +21,6 @@ export default function(state = initialRimbleExternalData, action) {
         ...state,
         ethPrice: {
           ...quote
-        }
-      };
-    }
-    case RIMBLE_RECEIVED_TX_GAS_PRICE: {
-      const { gas } = action;
-      console.log("gas", gas);
-      return {
-        ...state,
-        txGas: {
-          ...gas
         }
       };
     }

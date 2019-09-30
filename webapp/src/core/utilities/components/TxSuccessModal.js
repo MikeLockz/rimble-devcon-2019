@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Button, Flex, Box, Modal, Text, Heading, Icon, Link } from "rimble-ui";
 import RainbowBox from "./../../../components/RainbowBox";
@@ -58,7 +58,13 @@ function SuccessBody({
   );
 }
 
-function TokenDetails({ toggleModal, toggleShowTokenDetails, token, drizzle }) {
+function TokenDetails({
+  toggleModal,
+  toggleShowTokenDetails,
+  token,
+  drizzle,
+  txGasEth
+}) {
   return (
     <Box>
       <Flex justifyContent={"space-between"}>
@@ -172,19 +178,10 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token, drizzle }) {
             </Text>
             <Flex alignItems={"flex-end"} flexDirection={"column"}>
               <Text color={"#444"} lineHeight={"1em"}>
-                <EthToFiat
-                  eth={drizzle.web3.utils.fromWei(
-                    token.cumulativeGasUsed.toString(),
-                    "gwei"
-                  )}
-                />{" "}
-                USD
+                <EthToFiat eth={txGasEth} /> USD
               </Text>
               <Text color={"#615E66"} fontSize={"10px"}>
-                {drizzle.web3.utils.fromWei(
-                  token.cumulativeGasUsed.toString(),
-                  "gwei"
-                )}{" "}
+                {txGasEth}
                 ETH
               </Text>
             </Flex>
@@ -209,7 +206,10 @@ function TokenDetails({ toggleModal, toggleShowTokenDetails, token, drizzle }) {
   );
 }
 
-function TxSuccessModal({ isOpen, toggleModal, transaction, drizzle }, props) {
+function TxSuccessModal(
+  { isOpen, toggleModal, transaction, drizzle, callTxGasPrice },
+  props
+) {
   const [showTokenDetails, setShowTokenDetails] = useState(false);
 
   const toggleShowTokenDetails = () => {
@@ -221,6 +221,16 @@ function TxSuccessModal({ isOpen, toggleModal, transaction, drizzle }, props) {
   const giftTicket = () => {
     return;
   };
+
+  useEffect(() => {
+    if (
+      transaction.status === "success" &&
+      Object.keys(transaction.txFee).length <= 1
+    ) {
+      // TODO: Is there a better place to call this? How can we get web3 access inside the action without passing it in as a param?
+      callTxGasPrice({ web3: drizzle.web3, txHash: transaction.txHash });
+    }
+  }, [transaction, callTxGasPrice, drizzle]);
 
   const token = { ...transaction.content.token };
 
@@ -237,6 +247,7 @@ function TxSuccessModal({ isOpen, toggleModal, transaction, drizzle }, props) {
                   toggleShowTokenDetails={toggleShowTokenDetails}
                   token={token}
                   drizzle={drizzle}
+                  txGasEth={transaction.txFee.txGasEth}
                 />
               ) : (
                 <SuccessBody

@@ -9,6 +9,7 @@ import {
   RIMBLE_UPDATE_PROGRESSALERT_TXFEE,
   RIMBLE_FETCH_AVG_TX_GAS_AND_TIME,
   RIMBLE_CALL_ESTIMATE_TX_GAS,
+  RIMBLE_CALL_TX_GAS_PRICE,
   SET_FILTER,
   RIMBLE_TOGGLE_NETWORK_MODAL,
   RIMBLE_TOGGLE_TX_START_MODAL,
@@ -112,6 +113,13 @@ export const updateProgressAlertTxFee = ({
   return {
     type: RIMBLE_UPDATE_PROGRESSALERT_TXFEE,
     payload: { content, txHash, id, stackTempKey }
+  };
+};
+
+export const callTxGasPrice = ({ web3, txHash }) => {
+  return {
+    type: RIMBLE_CALL_TX_GAS_PRICE,
+    payload: { web3, txHash }
   };
 };
 

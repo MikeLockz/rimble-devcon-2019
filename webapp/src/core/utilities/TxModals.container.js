@@ -14,11 +14,13 @@ import {
   toggleTxPendingModal,
   toggleTxSuccessModal,
   toggleTxErrorModal,
-  toggleTxLowBalanceModal
+  toggleTxLowBalanceModal,
+  callTxGasPrice
 } from "../redux/actions";
 import { getProgressAlertById } from "../redux/selectors";
 
 const TxModalsContainer = ({
+  drizzle,
   address,
   rimble,
   store,
@@ -31,7 +33,8 @@ const TxModalsContainer = ({
   toggleTxLowBalanceModal,
   getPercentComplete,
   getTimeToCompletionString,
-  calculateTxFee
+  calculateTxFee,
+  callTxGasPrice
 }) => {
   return (
     <Box>
@@ -88,6 +91,8 @@ const TxModalsContainer = ({
               store,
               rimble.currentTxId.stackId
             )}
+            callTxGasPrice={callTxGasPrice}
+            drizzle={drizzle}
           />
         </>
       )}
@@ -127,7 +132,8 @@ const mapDispatchToProps = dispatch => {
     toggleTxPendingModal: value => dispatch(toggleTxPendingModal(value)),
     toggleTxSuccessModal: value => dispatch(toggleTxSuccessModal(value)),
     toggleTxErrorModal: value => dispatch(toggleTxErrorModal(value)),
-    toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value))
+    toggleTxLowBalanceModal: value => dispatch(toggleTxLowBalanceModal(value)),
+    callTxGasPrice: value => dispatch(callTxGasPrice(value))
   };
 };
 

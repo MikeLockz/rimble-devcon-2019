@@ -16,7 +16,6 @@ import {
   updateProgressAlertContent,
   updateProgressAlertRemainingTime,
   setCurrentTxId,
-  updateProgressAlertTxFee,
   enableBuyButton,
   updateProgressAlertToken,
   fetchAvgTxGasAndTime
@@ -90,7 +89,7 @@ const contractEventNotifier = store => next => action => {
       setProgressAlertStatus({ status: "pending", id: action.stackId })
     );
 
-    store.dispatch(updateProgressAlertTxFee({ txHash: action.txHash }));
+    // store.dispatch(updateProgressAlertTxFee({ txHash: action.txHash })); // TODO: remove all references, not used anymore
 
     store.dispatch(updateProgressAlertRemainingTime({ id: action.stackId }));
 

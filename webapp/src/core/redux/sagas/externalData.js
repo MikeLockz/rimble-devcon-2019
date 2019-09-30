@@ -28,22 +28,23 @@ export function* callTxGasPrice(action) {
 
   try {
     const transaction = yield call(web3.eth.getTransaction, txHash);
-    const txGas = transaction.gas; // returns 214806, units
+    const txGasUsed = transaction.gas;
     const txGasPrice = parseInt(
       web3.utils.fromWei(transaction.gasPrice, "gwei")
     ); // normalize units
+
     const txGasEstimate = web3.utils.fromWei(
-      (txGas * txGasPrice).toString(),
+      (txGasUsed * txGasPrice).toString(),
       "gwei"
     );
 
-    const gas = {
+    const txGas = {
       txGasPrice: txGasPrice,
-      txGas: txGas,
-      txGasEstimate: txGasEstimate
+      txGasUsed: txGasUsed,
+      txGasEth: parseFloat(txGasEstimate)
     };
 
-    yield put({ type: RIMBLE_RECEIVED_TX_GAS_PRICE, gas });
+    yield put({ type: RIMBLE_RECEIVED_TX_GAS_PRICE, txGas, txHash });
   } catch (error) {}
 }
 

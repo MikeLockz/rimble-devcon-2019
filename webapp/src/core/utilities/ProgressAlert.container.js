@@ -106,8 +106,6 @@ const ProgressAlertContainer = ({
     const min = Math.floor(leftSec / 60);
     leftSec = leftSec - min * 60;
 
-    console.log("leftSec", leftSec);
-
     if (min > 1) {
       timeString = "~" + min + " minutes";
     } else if (min === 1) {
@@ -152,6 +150,7 @@ const ProgressAlertContainer = ({
       />
 
       <TxModalsContainer
+        drizzle={drizzle}
         address={address}
         store={store}
         getPercentComplete={getPercentComplete}
