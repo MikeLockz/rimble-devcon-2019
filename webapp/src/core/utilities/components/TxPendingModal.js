@@ -157,7 +157,7 @@ function TxPendingModal({
               alignItems={"center"}
             >
               <Text fontSize={1} color={"#444"} fontWeight={600}>
-                Estimated Time
+                Estimated Wait
               </Text>
               <Text fontSize={1} color={"#444"} ml={3}>
                 {estimatedCompletionTime
