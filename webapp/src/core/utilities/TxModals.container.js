@@ -22,6 +22,7 @@ const TxModalsContainer = ({
   address,
   rimble,
   store,
+  externalData,
   toggleWrongNetworkModal,
   toggleTxStartModal,
   toggleTxPendingModal,
@@ -29,7 +30,8 @@ const TxModalsContainer = ({
   toggleTxErrorModal,
   toggleTxLowBalanceModal,
   getPercentComplete,
-  getTimeToCompletionString
+  getTimeToCompletionString,
+  calculateTxFee
 }) => {
   return (
     <Box>
@@ -53,6 +55,8 @@ const TxModalsContainer = ({
               store,
               rimble.currentTxId.stackId
             )}
+            externalData={externalData}
+            calculateTxFee={calculateTxFee}
           />
 
           <TxPendingModal
@@ -70,6 +74,8 @@ const TxModalsContainer = ({
             )}
             getPercentComplete={getPercentComplete}
             getTimeToCompletionString={getTimeToCompletionString}
+            externalData={externalData}
+            calculateTxFee={calculateTxFee}
           />
 
           <TxSuccessModal
@@ -109,7 +115,8 @@ const mapStateToProps = state => {
   return {
     contracts: state.contracts,
     rimble: state.txModals,
-    store: state
+    store: state,
+    externalData: state.externalData
   };
 };
 const mapDispatchToProps = dispatch => {

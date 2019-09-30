@@ -1,12 +1,17 @@
 import {
   RIMBLE_RECEIVED_ETH_PRICE,
   RIMBLE_RECEIVED_TX_GAS_PRICE,
-  RIMBLE_RECEIVE_TX_TIME_ESTIMATE
+  RIMBLE_RECEIVE_TX_TIME_ESTIMATE,
+  RIMBLE_RECEIVE_AVG_TX_GAS_AND_TIME,
+  RIMBLE_RECEIVE_ESTIMATE_TX_GAS
 } from "../actionTypes";
 
 // Initialize rimbleAlert store
 const initialRimbleExternalData = {
-  ethPrice: {}
+  ethPrice: {},
+  txGas: {},
+  txTimeEstimate: {},
+  txGasEstimate: {}
 };
 
 export default function(state = initialRimbleExternalData, action) {
@@ -34,9 +39,24 @@ export default function(state = initialRimbleExternalData, action) {
       const { txEstimate } = action;
       return {
         ...state,
-        txEstimate: {
+        txTimeEstimate: {
           ...txEstimate
         }
+      };
+    }
+    case RIMBLE_RECEIVE_AVG_TX_GAS_AND_TIME: {
+      const { gasStationInfo } = action;
+      return {
+        ...state,
+        gasStationInfo: {
+          ...gasStationInfo
+        }
+      };
+    }
+    case RIMBLE_RECEIVE_ESTIMATE_TX_GAS: {
+      return {
+        ...state,
+        txGasEstimate: action.txGasEstimate
       };
     }
     default: {

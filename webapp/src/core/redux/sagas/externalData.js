@@ -6,7 +6,13 @@ import {
   RIMBLE_RECEIVED_TX_GAS_PRICE,
   RIMBLE_FETCH_GAS_STATION_RECENT_TX,
   RIMBLE_RECEIVE_TX_TIME_ESTIMATE,
-  RIMBLE_ERROR_GAS_STATION_RECENT_TX
+  RIMBLE_ERROR_GAS_STATION_RECENT_TX,
+  RIMBLE_FETCH_AVG_TX_GAS_AND_TIME,
+  RIMBLE_RECEIVE_AVG_TX_GAS_AND_TIME,
+  RIMBLE_ERROR_AVG_TX_GAS_AND_TIME,
+  RIMBLE_CALL_ESTIMATE_TX_GAS,
+  RIMBLE_RECEIVE_ESTIMATE_TX_GAS,
+  RIMBLE_ERROR_ESTIMATE_TX_GAS
 } from "../actionTypes";
 
 // fetch data from service using sagas
@@ -75,11 +81,56 @@ export function* fetchGasStationRecentTx(action) {
   }
 }
 
+export function* fetchAvgTxGasAndTime(action) {
+  try {
+    const gasStationInfo = yield fetch(
+      "https://ethgasstation.info/json/ethgasAPI.json"
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJson => {
+        const avgTxGas = responseJson.average / 10; // ethgasstationapi adds a 0, normalize to gwei
+        const avgTxWait = responseJson.avgWait * 60; // in minutes, need to normalize to seconds
+        return { avgTxGas: avgTxGas, avgTxWait: avgTxWait };
+      });
+    yield put({ type: RIMBLE_RECEIVE_AVG_TX_GAS_AND_TIME, gasStationInfo });
+  } catch (error) {
+    yield put({ type: RIMBLE_ERROR_AVG_TX_GAS_AND_TIME, error });
+  }
+}
+
+export function* callEstimateTxGas(action) {
+  const { address, contract, tokenId } = action.payload;
+
+  try {
+    // const contract = web3.eth.contract(abi).at(token_address);
+    let estimatedGasAmount = yield contract.methods
+      .mint(address)
+      .estimateGas({
+        from: address
+      })
+      .then(estimatedGasAmount => {
+        return estimatedGasAmount;
+      });
+
+    yield put({
+      type: RIMBLE_RECEIVE_ESTIMATE_TX_GAS,
+      txGasEstimate: estimatedGasAmount,
+      tokenId
+    });
+  } catch (error) {
+    yield put({ type: RIMBLE_ERROR_ESTIMATE_TX_GAS, error });
+  }
+}
+
 // app root saga
 export function* appRootSaga() {
   yield takeEvery(RIMBLE_FETCH_ETH_PRICE, fetchEthPrice);
   yield takeEvery(RIMBLE_CALL_TX_GAS_PRICE, callTxGasPrice);
   yield takeEvery(RIMBLE_FETCH_GAS_STATION_RECENT_TX, fetchGasStationRecentTx);
+  yield takeEvery(RIMBLE_FETCH_AVG_TX_GAS_AND_TIME, fetchAvgTxGasAndTime);
+  yield takeEvery(RIMBLE_CALL_ESTIMATE_TX_GAS, callEstimateTxGas);
 }
 
 export default appRootSaga;

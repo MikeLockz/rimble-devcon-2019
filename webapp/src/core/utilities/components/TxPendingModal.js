@@ -16,6 +16,7 @@ import ProgressPercentCircle from "./ProgressPercentCircle";
 import EyeIcon from "./EyeIcon";
 import shortenAddress from "./../shortenAddress";
 import EthToFiat from "./EthToFiat";
+import TxFee from "./TxFee";
 
 function TxPendingModal({
   isOpen,
@@ -23,7 +24,8 @@ function TxPendingModal({
   address,
   transaction,
   getPercentComplete,
-  getTimeToCompletionString
+  getTimeToCompletionString,
+  calculateTxFee
 }) {
   const [progress, setProgress] = useState(null); // percent of estimated time elapsed
   const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(null); // string of time remaining
@@ -142,14 +144,10 @@ function TxPendingModal({
                   </Tooltip>
                 </Link>
               </Flex>
-              <Flex alignItems={"flex-end"} flexDirection={"column"}>
-                <Text color={"#444"} lineHeight={"1em"}>
-                  $<EthToFiat eth={transaction.txFee.eth} />
-                </Text>
-                <Text color={"#615E66"} fontSize={"10px"}>
-                  {transaction.txFee.eth} ETH
-                </Text>
-              </Flex>
+              <TxFee
+                calculateTxFee={calculateTxFee}
+                txGasEstimate={transaction.txFee.txGasEstimate}
+              />
             </Flex>
 
             <Flex

@@ -7,6 +7,8 @@ import {
   RIMBLE_UPDATE_PROGRESSALERT_TOKEN,
   RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME,
   RIMBLE_UPDATE_PROGRESSALERT_TXFEE,
+  RIMBLE_FETCH_AVG_TX_GAS_AND_TIME,
+  RIMBLE_CALL_ESTIMATE_TX_GAS,
   SET_FILTER,
   RIMBLE_TOGGLE_NETWORK_MODAL,
   RIMBLE_TOGGLE_TX_START_MODAL,
@@ -75,7 +77,6 @@ export const updateProgressAlertToken = ({
   id,
   stackTempKey
 }) => {
-  console.log("updateProgressAlertToken", token, txHash);
   return {
     type: RIMBLE_UPDATE_PROGRESSALERT_TOKEN,
     payload: { token, txHash, id, stackTempKey }
@@ -111,6 +112,20 @@ export const updateProgressAlertTxFee = ({
   return {
     type: RIMBLE_UPDATE_PROGRESSALERT_TXFEE,
     payload: { content, txHash, id, stackTempKey }
+  };
+};
+
+export const fetchAvgTxGasAndTime = () => {
+  return {
+    type: RIMBLE_FETCH_AVG_TX_GAS_AND_TIME,
+    payload: {}
+  };
+};
+
+export const callEstimateTxGas = ({ contract, address }) => {
+  return {
+    type: RIMBLE_CALL_ESTIMATE_TX_GAS,
+    payload: { contract, address }
   };
 };
 

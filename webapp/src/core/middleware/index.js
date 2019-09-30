@@ -18,7 +18,8 @@ import {
   setCurrentTxId,
   updateProgressAlertTxFee,
   enableBuyButton,
-  updateProgressAlertToken
+  updateProgressAlertToken,
+  fetchAvgTxGasAndTime
 } from "./../redux/actions";
 
 // This middleware will just add the property "async dispatch"
@@ -72,10 +73,6 @@ const contractEventNotifier = store => next => action => {
     store.dispatch(
       setProgressAlertStatus({ status: "initiated", id: action.stackId })
     );
-
-    store.dispatch(
-      updateProgressAlertTxFee({ stackTempKey: action.stackTempKey })
-    );
   }
 
   if (action.type === "TX_BROADCASTED") {
@@ -92,6 +89,8 @@ const contractEventNotifier = store => next => action => {
     store.dispatch(
       setProgressAlertStatus({ status: "pending", id: action.stackId })
     );
+
+    store.dispatch(updateProgressAlertTxFee({ txHash: action.txHash }));
 
     store.dispatch(updateProgressAlertRemainingTime({ id: action.stackId }));
 
@@ -154,7 +153,17 @@ const contractEventNotifier = store => next => action => {
   }
 
   if (action.type === "DRIZZLE_INITIALIZED") {
+    // Enable buy button (fixes crash)
     store.dispatch(enableBuyButton(true));
+
+    // Fetch current price of ETH
+    store.dispatch({
+      type: "RIMBLE_FETCH_ETH_PRICE",
+      payload: { value: "usd" }
+    });
+
+    // Estimate gas price, based on "average" current gas price
+    store.dispatch(fetchAvgTxGasAndTime());
   }
   return next(action);
 };

@@ -1,12 +1,18 @@
 import React from "react";
 import BuyCard from "./BuyCard";
 import { drizzleConnect, DrizzleContext } from "@drizzle/react-plugin";
-import { addProgressAlert } from "./../core/redux/actions";
 
 // Drizzle for state and contract interactions
-import {} from "@drizzle/react-plugin";
+import { addProgressAlert } from "./../core/redux/actions";
 
-function BuyCardContainer({ token, address, addProgressAlert, store }) {
+function BuyCardContainer({
+  token,
+  address,
+  addProgressAlert,
+  store,
+  progressAlerts,
+  callEstimateTxGas
+}) {
   // ToDo: Can this be refactored and put someplace else more reusable?
   const preflightCheck = ({ token, drizzle, address, callback, event }) => {
     // Check that the wallet is connected
@@ -15,6 +21,10 @@ function BuyCardContainer({ token, address, addProgressAlert, store }) {
 
     // Update UI to show started modal and include token details
     addProgressAlert({ token });
+
+    const contract = drizzle.contracts[token.id];
+    const tokenId = progressAlerts.allIds.length; // guess the length based on how many previous txs because drizzle doesn't return one
+    callEstimateTxGas({ contract, address, tokenId: tokenId });
 
     // can call redux dispatch add action here that we have token details
     callback(event);
@@ -45,12 +55,15 @@ function BuyCardContainer({ token, address, addProgressAlert, store }) {
  */
 const mapStateToProps = state => {
   return {
-    store: state
+    store: state,
+    progressAlerts: state.progressAlerts
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    addProgressAlert: value => dispatch(addProgressAlert(value))
+    addProgressAlert: value => dispatch(addProgressAlert(value)),
+    callEstimateTxGas: value =>
+      dispatch({ type: "RIMBLE_CALL_ESTIMATE_TX_GAS", payload: { ...value } })
   };
 };
 

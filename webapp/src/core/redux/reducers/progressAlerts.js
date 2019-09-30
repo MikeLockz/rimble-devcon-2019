@@ -6,7 +6,8 @@ import {
   RIMBLE_UPDATE_PROGRESSALERT_CONTENT,
   RIMBLE_UPDATE_PROGRESSALERT_TOKEN,
   RIMBLE_UPDATE_PROGRESSALERT_REMAININGTIME,
-  RIMBLE_UPDATE_PROGRESSALERT_TXFEE
+  RIMBLE_UPDATE_PROGRESSALERT_TXFEE,
+  RIMBLE_RECEIVE_ESTIMATE_TX_GAS
 } from "../actionTypes";
 
 // Initialize rimbleAlert store
@@ -69,7 +70,10 @@ export default function(state = initialRimbleProgressAlert, action) {
             completed: false,
             status: "unknown",
             txHash: "0x123",
-            stackTempKey: "123"
+            stackTempKey: "123",
+            txFee: {
+              txGasEstimate: null
+            }
           }
         }
       };
@@ -239,6 +243,22 @@ export default function(state = initialRimbleProgressAlert, action) {
             ...state.byIds[pa],
             txFee: {
               eth: 0.00112
+            }
+          }
+        }
+      };
+    }
+    case RIMBLE_RECEIVE_ESTIMATE_TX_GAS: {
+      const { tokenId, txGasEstimate } = action;
+
+      return {
+        ...state,
+        byIds: {
+          ...state.byIds,
+          [tokenId]: {
+            ...state.byIds[tokenId],
+            txFee: {
+              txGasEstimate: txGasEstimate
             }
           }
         }

@@ -58,16 +58,19 @@ function BuyCard({
                     onClick={e => {
                       e.target.value = drizzleState.accounts[0]; // set the recepient contract argument after drizzleState is available
 
+                      // This function will get ran once all preflight checks pass
                       const callback = e => {
                         handleInputChange(e);
                       };
+
+                      // Pass the event into the preflight check so that it can be passed again into the callback
                       const event = e;
 
                       // Passing to intercepting function to make sure network and balance will allow tx to happen
                       preflightCheck({
                         token,
                         drizzle,
-                        address,
+                        address: drizzleState.accounts[0],
                         callback,
                         event
                       });

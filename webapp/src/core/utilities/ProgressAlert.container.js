@@ -53,7 +53,9 @@ const ProgressAlertContainer = ({
   toggleProgressAlert,
   toggleTxActivityModal,
   address,
-  store
+  store,
+  drizzle,
+  externalData
 }) => {
   // Put functions to calculate progress bar percentage here so that it can be shared between progress alerts and modal
   const getPercentComplete = ({ startTime, timeEstimate }) => {
@@ -119,6 +121,13 @@ const ProgressAlertContainer = ({
     return timeString;
   };
 
+  // Returns tx gas estimate in eth
+  const calculateTxFee = ({ txGasEstimate }) => {
+    const totalGas = txGasEstimate * externalData.gasStationInfo.avgTxGas;
+    const eth = drizzle.web3.utils.fromWei(totalGas.toString(), "gwei"); // normalize from gas units to eth
+    return eth;
+  };
+
   return (
     <Box>
       <ProgressAlerts
@@ -143,6 +152,7 @@ const ProgressAlertContainer = ({
         store={store}
         getPercentComplete={getPercentComplete}
         getTimeToCompletionString={getTimeToCompletionString}
+        calculateTxFee={calculateTxFee}
       />
       {process.env.NODE_ENV === "development" && <ProgressAlertDebug />}
       {process.env.NODE_ENV === "development" && <ExternalDataDebug />}
@@ -161,7 +171,8 @@ const mapStateToProps = state => {
   return {
     rimble: state.txModals,
     progressAlerts: progressAlerts,
-    transactions: progressAlerts
+    transactions: progressAlerts,
+    externalData: state.externalData
   };
 };
 const mapDispatchToProps = dispatch => {

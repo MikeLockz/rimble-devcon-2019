@@ -69,7 +69,11 @@ function Body({ drizzle, drizzleState, store }) {
         <LessonNavigation setRoute={setRoute} route={route} />
       </Flex>
 
-      <ProgressAlertContainer address={address} store={store} />
+      <ProgressAlertContainer
+        address={address}
+        store={store}
+        drizzle={drizzle}
+      />
     </BodyBox>
   );
 }

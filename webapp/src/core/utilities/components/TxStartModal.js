@@ -15,8 +15,16 @@ import EyeIcon from "./EyeIcon";
 import MetaMaskLoader from "./MetaMaskLoader";
 import shortenAddress from "./../shortenAddress";
 import EthToFiat from "./EthToFiat";
+import TxFee from "./TxFee";
 
-function TxStartModal({ isOpen, toggleModal, address, transaction }) {
+const TxStartModal = ({
+  isOpen,
+  toggleModal,
+  address,
+  transaction,
+  externalData,
+  calculateTxFee
+}) => {
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -123,14 +131,10 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }) {
                   </Tooltip>
                 </Link>
               </Flex>
-              <Flex alignItems={"flex-end"} flexDirection={"column"}>
-                <Text color={"#444"} lineHeight={"1em"}>
-                  $<EthToFiat eth={transaction.txFee.eth} />
-                </Text>
-                <Text color={"#615E66"} fontSize={"10px"}>
-                  {transaction.txFee.eth} ETH
-                </Text>
-              </Flex>
+              <TxFee
+                calculateTxFee={calculateTxFee}
+                txGasEstimate={transaction.txFee.txGasEstimate}
+              />
             </Flex>
 
             <Flex
@@ -143,7 +147,7 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }) {
                 Estimated Time
               </Text>
               <Text fontSize={1} color={"#444"}>
-                Less than 2 minutes
+                {"loading"}
               </Text>
             </Flex>
           </Flex>
@@ -160,6 +164,6 @@ function TxStartModal({ isOpen, toggleModal, address, transaction }) {
       </Card>
     </Modal>
   );
-}
+};
 
 export default TxStartModal;
