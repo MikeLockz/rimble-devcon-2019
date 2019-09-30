@@ -1,21 +1,38 @@
-import { Box } from "rimble-ui";
-import styled from "styled-components";
+import React from "react";
+import { Flex, Box } from "rimble-ui";
+import styled, { keyframes } from "styled-components";
 
-const ProgressBar = styled(Box)`
+const backwardsMoving = keyframes`
+  0%{background-position:0% 50%}
+  50%{background-position:-50% 50%}
+  100%{background-position:-100% 50%}
+`;
+
+const StyledProgressBar = styled(Flex)`
   & {
-    width: ${props => (props.percent ? `${props.percent}%` : 0)};
+    width: 100%;
     transition: all 0.15s ease;
     background: linear-gradient(
       270deg,
       #efa59e 0%,
-      #f5ccd1 17.19%,
-      #f7ceb3 33.85%,
-      #eccfa5 52.08%,
-      #b9d8ae 68.23%,
-      #97d6e3 84.37%,
-      #9fb1e8 100%
+      #f5ccd1 8.3%,
+      #f7ceb3 16.6%,
+      #eccfa5 25%,
+      #b9d8ae 33.3%,
+      #97d6e3 41.6%,
+      #9fb1e8 50%,
+      #97d6e3 58.3%,
+      #b9d8ae 66.6%,
+      #eccfa5 75%,
+      #f7ceb3 83.3%,
+      #f5ccd1 91.6%,
+      #efa59e 100%
     );
+    background-size: 200% 100%;
     transform: matrix(-1, 0, 0, 1, 0, 0);
+    animation: ${backwardsMoving} 2500ms linear infinite;
+    justify-content: flex-start;
+    height: ${props => props.height};
   }
   &.error {
     background: ${props => props.theme.colors.danger};
@@ -25,4 +42,16 @@ const ProgressBar = styled(Box)`
   }
 `;
 
+const ProgressBarReveal = styled(Box)`
+  background-color: ${props => props.theme.colors.background};
+  width: ${props => (props.percent ? `calc(100% - ${props.percent}%)` : 0)};
+  height: ${props => props.height};
+`;
+const ProgressBar = props => {
+  return (
+    <StyledProgressBar {...props}>
+      <ProgressBarReveal {...props} />
+    </StyledProgressBar>
+  );
+};
 export default ProgressBar;

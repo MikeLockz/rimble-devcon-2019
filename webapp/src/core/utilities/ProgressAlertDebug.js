@@ -2,6 +2,7 @@ import React from "react";
 import { drizzleConnect } from "@drizzle/react-plugin";
 import { Box, Text, Button, Heading } from "rimble-ui";
 import { getProgressAlertsByVisibilityFilter } from "./../redux/selectors";
+import ProgressBar from "./components/ProgressBar";
 
 import {
   addProgressAlert,
@@ -124,6 +125,7 @@ const ProgressAlertDebug = ({
         borderRadius={3}
         borderStyle={"solid"}
       >
+        <ProgressBar percent={12} height={"20px"} />
         <Button.Outline size={"small"} onClick={handleAddProgressAlert}>
           Add Progress Alert
         </Button.Outline>
