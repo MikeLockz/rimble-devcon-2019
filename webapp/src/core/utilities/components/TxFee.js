@@ -27,7 +27,9 @@ const TxFee = ({ txGasEstimate, calculateTxFee }) => {
           </Text>
         </>
       ) : (
-        <Text color={"#444"}>Calculating fee</Text>
+        <Text color={"#444"} fontSize={0}>
+          Calculating fee
+        </Text>
       )}
     </Flex>
   );

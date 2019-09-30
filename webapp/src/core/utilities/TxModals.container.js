@@ -57,6 +57,7 @@ const TxModalsContainer = ({
             )}
             externalData={externalData}
             calculateTxFee={calculateTxFee}
+            getTimeToCompletionString={getTimeToCompletionString}
           />
 
           <TxPendingModal

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Box,
@@ -23,8 +23,21 @@ const TxStartModal = ({
   address,
   transaction,
   externalData,
-  calculateTxFee
+  calculateTxFee,
+  getTimeToCompletionString
 }) => {
+  const [estimatedCompletionTime, setEstimatedCompletionTime] = useState(null); // string of time remaining
+
+  useEffect(() => {
+    if (externalData.gasStationInfo) {
+      const timeString = getTimeToCompletionString({
+        startTime: Date.now(),
+        timeEstimate: externalData.gasStationInfo.avgTxWait * 1000 // convert to ms
+      });
+      setEstimatedCompletionTime(timeString);
+    }
+  }, [externalData, getTimeToCompletionString, setEstimatedCompletionTime]);
+
   return (
     <Modal width={"auto"} m={3} minWidth={"300px"} isOpen={isOpen}>
       <Card borderRadius={1} maxWidth={"436px"}>
@@ -147,7 +160,9 @@ const TxStartModal = ({
                 Estimated Time
               </Text>
               <Text fontSize={1} color={"#444"}>
-                {"loading"}
+                {estimatedCompletionTime
+                  ? estimatedCompletionTime
+                  : "Less than 2 minutes"}
               </Text>
             </Flex>
           </Flex>

@@ -106,6 +106,8 @@ const ProgressAlertContainer = ({
     const min = Math.floor(leftSec / 60);
     leftSec = leftSec - min * 60;
 
+    console.log("leftSec", leftSec);
+
     if (min > 1) {
       timeString = "~" + min + " minutes";
     } else if (min === 1) {
@@ -123,7 +125,9 @@ const ProgressAlertContainer = ({
 
   // Returns tx gas estimate in eth
   const calculateTxFee = ({ txGasEstimate }) => {
-    const totalGas = txGasEstimate * externalData.gasStationInfo.avgTxGas;
+    const totalGas = Math.round(
+      txGasEstimate * externalData.gasStationInfo.avgTxGas
+    ); // need to round to prevent decimals that can happen from api
     const eth = drizzle.web3.utils.fromWei(totalGas.toString(), "gwei"); // normalize from gas units to eth
     return eth;
   };
