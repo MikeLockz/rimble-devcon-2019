@@ -20,7 +20,7 @@ const tokenDetails = [
       "Show this ticket token in your wallet when you arrive at the after party."
   },
   {
-    id: "DevConFood",
+    id: "DevConHackathon",
     name: "Hackathon ticket",
     ethPrice: "0.025",
     image: "hackathon.jpg",

@@ -1,6 +1,6 @@
-var Metadata = artifacts.require("./Metadata.sol");
+var AttendanceMetadata = artifacts.require("./AttendanceMetadata.sol");
+var PartiesMetadata = artifacts.require("./PartiesMetadata.sol");
 var HackathonMetadata = artifacts.require("./HackathonMetadata.sol");
-var RimbleToken = artifacts.require("./RimbleToken.sol");
 var DevConAttendance = artifacts.require("./DevConAttendance.sol");
 var DevConHackathon = artifacts.require("./DevConHackathon.sol");
 var DevConParties = artifacts.require("./DevConParties.sol");
@@ -10,20 +10,12 @@ let _ = "        ";
 module.exports = (deployer, helper, accounts) => {
   deployer.then(async () => {
     try {
-      // Deploy Metadata.sol
-      await deployer.deploy(Metadata);
-      let metadata = await Metadata.deployed();
-      console.log(_ + "Metadata deployed at: " + metadata.address);
-
-      // Deploy RimbleToken.sol
-      await deployer.deploy(
-        RimbleToken,
-        "DevCon VI Ticket",
-        "DC6A",
-        metadata.address
+      // Deploy AttendanceMetadata.sol
+      await deployer.deploy(AttendanceMetadata);
+      let attendanceMetadata = await AttendanceMetadata.deployed();
+      console.log(
+        _ + "AttendanceMetadata deployed at: " + attendanceMetadata.address
       );
-      let rimbleToken = await RimbleToken.deployed();
-      console.log(_ + "RimbleToken deployed at: " + rimbleToken.address);
 
       // Deploy DevConAttendance.sol
       await deployer.deploy(
@@ -54,6 +46,13 @@ module.exports = (deployer, helper, accounts) => {
       let devConHackathon = await DevConHackathon.deployed();
       console.log(
         _ + "DevConHackathon deployed at: " + devConHackathon.address
+      );
+
+      // Deploy PartiersMetadata.sol
+      await deployer.deploy(PartiesMetadata);
+      let partiesMetadata = await PartiesMetadata.deployed();
+      console.log(
+        _ + "PartiesMetadata deployed at: " + partiesMetadata.address
       );
 
       // Deploy DevConParties.sol

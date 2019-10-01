@@ -1,6 +1,6 @@
-var Metadata = artifacts.require("./Metadata.sol");
+var AttendanceMetadata = artifacts.require("./AttendanceMetadata.sol");
 var HackathonMetadata = artifacts.require("./HackathonMetadata.sol");
-var RimbleToken = artifacts.require("./RimbleToken.sol");
+var PartiesMetadata = artifacts.require("./PartiesMetadata.sol");
 var DevConAttendance = artifacts.require("./DevConAttendance.sol");
 var DevConHackathon = artifacts.require("./DevConHackathon.sol");
 var DevConParties = artifacts.require("./DevConParties.sol");
@@ -10,10 +10,19 @@ let _ = "        ";
 module.exports = (deployer, helper, accounts) => {
   deployer.then(async () => {
     try {
-      // Deploy Metadata.sol
-      await deployer.deploy(Metadata, { replace: true });
-      let metadata = await Metadata.deployed();
-      console.log(_ + "Metadata deployed at: " + metadata.address);
+      // Deploy AttendanceMetadata.sol
+      await deployer.deploy(AttendanceMetadata, { replace: true });
+      let attendanceMetadata = await AttendanceMetadata.deployed();
+      console.log(
+        _ + "AttendanceMetadata deployed at: " + attendanceMetadata.address
+      );
+
+      // Deploy PartiesMetadata.sol
+      await deployer.deploy(PartiesMetadata, { replace: true });
+      let partiesMetadata = await PartiesMetadata.deployed();
+      console.log(
+        _ + "PartiesMetadata deployed at: " + partiesMetadata.address
+      );
 
       // Deploy HackathonMetadata.sol
       await deployer.deploy(HackathonMetadata, { replace: true });

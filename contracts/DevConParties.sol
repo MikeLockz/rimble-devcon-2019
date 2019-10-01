@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
 import "../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "./Metadata.sol";
+import "./PartiesMetadata.sol";
 
 /**
  * The DevConParties contract
@@ -18,7 +18,7 @@ contract DevConParties is ERC721Full, Ownable {
         metadata = _metadata;
     }
     function tokenURI(uint _tokenId) external view returns (string memory _infoUrl) {
-        return Metadata(metadata).tokenURI(_tokenId);
+        return PartiesMetadata(metadata).tokenURI(_tokenId);
     }
 
 }

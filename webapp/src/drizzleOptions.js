@@ -1,10 +1,10 @@
 // Drizzle contracts
 import DevConAttendance from "./contracts/DevConAttendance.json";
-import DevConFood from "./contracts/DevConFood.json";
+import DevConHackathon from "./contracts/DevConHackathon.json";
 import DevConParties from "./contracts/DevConParties.json";
 
 const drizzleOptions = {
-  contracts: [DevConAttendance, DevConFood, DevConParties],
+  contracts: [DevConAttendance, DevConHackathon, DevConParties],
   web3: {
     fallback: {
       type: "ws",
