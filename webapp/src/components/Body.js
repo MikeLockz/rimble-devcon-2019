@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import HeaderNav from "./HeaderNav";
 import Landing from "./Landing";
 import Diagram from "./Diagram";
@@ -11,11 +10,6 @@ import Lesson5 from "./Lesson5";
 import LessonNavigation from "./LessonNavigation";
 import ProgressAlertContainer from "../core/utilities/ProgressAlert.container";
 import { Box, Flex } from "rimble-ui";
-import backgroundImage from "./../images/background.jpg";
-
-const BodyBox = styled(Box)`
-  background: no-repeat center center url(${backgroundImage}) #fffff8;
-`;
 
 function Body({ drizzle, drizzleState, store }) {
   const [address, setAddress] = useState(null);
@@ -34,7 +28,7 @@ function Body({ drizzle, drizzleState, store }) {
   };
 
   return (
-    <BodyBox height={"100%"}>
+    <Box height={"100%"}>
       <Flex
         flexDirection={"column"}
         justifyContent={"space-between"}
@@ -74,7 +68,7 @@ function Body({ drizzle, drizzleState, store }) {
         store={store}
         drizzle={drizzle}
       />
-    </BodyBox>
+    </Box>
   );
 }
 

@@ -1,7 +1,8 @@
 var Metadata = artifacts.require("./Metadata.sol");
+var HackathonMetadata = artifacts.require("./HackathonMetadata.sol");
 var RimbleToken = artifacts.require("./RimbleToken.sol");
 var DevConAttendance = artifacts.require("./DevConAttendance.sol");
-var DevConFood = artifacts.require("./DevConFood.sol");
+var DevConHackathon = artifacts.require("./DevConHackathon.sol");
 var DevConParties = artifacts.require("./DevConParties.sol");
 
 let _ = "        ";
@@ -36,15 +37,24 @@ module.exports = (deployer, helper, accounts) => {
         _ + "DevConAttendance deployed at: " + devConAttendance.address
       );
 
-      // Deploy DevConFood.sol
-      await deployer.deploy(
-        DevConFood,
-        "DevCon VI Food",
-        "DC6F",
-        metadata.address
+      // Deploy HackathonMetadata.sol
+      await deployer.deploy(HackathonMetadata);
+      let hackathonMetadata = await HackathonMetadata.deployed();
+      console.log(
+        _ + "HackathonMetadata deployed at: " + hackathonMetadata.address
       );
-      let devConFood = await DevConFood.deployed();
-      console.log(_ + "DevConFood deployed at: " + devConFood.address);
+
+      // Deploy DevConHackathon.sol
+      await deployer.deploy(
+        DevConHackathon,
+        "DevCon VI Hackathon",
+        "DC6F",
+        hackathonMetadata.address
+      );
+      let devConHackathon = await DevConHackathon.deployed();
+      console.log(
+        _ + "DevConHackathon deployed at: " + devConHackathon.address
+      );
 
       // Deploy DevConParties.sol
       await deployer.deploy(

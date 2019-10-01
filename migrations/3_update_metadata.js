@@ -1,7 +1,8 @@
 var Metadata = artifacts.require("./Metadata.sol");
+var HackathonMetadata = artifacts.require("./HackathonMetadata.sol");
 var RimbleToken = artifacts.require("./RimbleToken.sol");
 var DevConAttendance = artifacts.require("./DevConAttendance.sol");
-var DevConFood = artifacts.require("./DevConFood.sol");
+var DevConHackathon = artifacts.require("./DevConHackathon.sol");
 var DevConParties = artifacts.require("./DevConParties.sol");
 
 let _ = "        ";
@@ -14,6 +15,13 @@ module.exports = (deployer, helper, accounts) => {
       let metadata = await Metadata.deployed();
       console.log(_ + "Metadata deployed at: " + metadata.address);
 
+      // Deploy HackathonMetadata.sol
+      await deployer.deploy(HackathonMetadata, { replace: true });
+      let hackathonMetadata = await HackathonMetadata.deployed();
+      console.log(
+        _ + "HackathonMetadata deployed at: " + hackathonMetadata.address
+      );
+
       // Deploy RimbleToken.sol
       let rimbleToken = await RimbleToken.deployed();
       console.log(_ + "RimbleToken deployed at: " + rimbleToken.address);
@@ -24,9 +32,15 @@ module.exports = (deployer, helper, accounts) => {
         _ + "DevConAttendance deployed at: " + devConAttendance.address
       );
 
-      // Deploy DevConFood.sol
-      let devConFood = await DevConFood.deployed();
-      console.log(_ + "DevConFood deployed at: " + devConFood.address);
+      // Deploy DevConHackathon.sol
+      let devConHackathon = await DevConHackathon.deployed();
+      console.log(
+        _ + "DevConHackathon deployed at: " + devConHackathon.address
+      );
+
+      // Deploy DevConParties.sol
+      let devConParties = await DevConParties.deployed();
+      console.log(_ + "DevConParties deployed at: " + devConParties.address);
 
       // Update the rimbleToken with the new metadata address
       await rimbleToken.updateMetadata(metadata.address);
@@ -39,8 +53,10 @@ module.exports = (deployer, helper, accounts) => {
       );
 
       // Update the devConFood with the new metadata address
-      await devConFood.updateMetadata(metadata.address);
-      console.log(_ + "DevConFood metadata updated to " + metadata.address);
+      await devConHackathon.updateMetadata(hackathonMetadata.address);
+      console.log(
+        _ + "DevConHackathon metadata updated to " + hackathonMetadata.address
+      );
 
       // Update the devConParties with the new metadata address
       await devConParties.updateMetadata(metadata.address);

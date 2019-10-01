@@ -1,12 +1,12 @@
 pragma solidity ^0.5.0;
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
 import "../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "./Metadata.sol";
+import "./HackathonMetadata.sol";
 
 /**
- * The DevConFood contract
+ * The DevConHackathon contract
  */
-contract DevConFood is ERC721Full, Ownable {
+contract DevConHackathon is ERC721Full, Ownable {
     address public metadata;
     constructor(string memory name, string memory symbol, address _metadata) public ERC721Full(name, symbol) {
         metadata = _metadata;
@@ -18,7 +18,7 @@ contract DevConFood is ERC721Full, Ownable {
         metadata = _metadata;
     }
     function tokenURI(uint _tokenId) external view returns (string memory _infoUrl) {
-        return Metadata(metadata).tokenURI(_tokenId);
+        return HackathonMetadata(metadata).tokenURI(_tokenId);
     }
 
 }
